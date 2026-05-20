@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用帮助
+    url: https://github.com/OLDBAI213/hermes-feishu-zh/blob/main/docs/troubleshooting.md
+    about: 查看故障排除文档
