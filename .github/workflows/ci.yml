@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON
+        shell: pwsh
+        run: |
+          $jsonFiles = @(
+            "manifest.json",
+            "patches/feishu-card-zh.replacements.json",
+            "patches/feishu-display-upgrade.replacements.json"
+          )
+          foreach ($file in $jsonFiles) {
+            if (Test-Path $file) {
+              try {
+                Get-Content $file -Raw | ConvertFrom-Json | Out-Null
+                Write-Host "✓ $file is valid JSON"
+              } catch {
+                Write-Host "✗ $file is invalid JSON"
+                exit 1
+              }
+            }
+          }
+
+      - name: Validate YAML
+        shell: pwsh
+        run: |
+          $yamlFiles = @(
+            "patches/stable.config.yaml",
+            "patches/enhanced.config.yaml",
+            "plugins/lark-cli-toolbox/plugin.yaml"
+          )
+          foreach ($file in $yamlFiles) {
+            if (Test-Path $file) {
+              Write-Host "✓ $file exists"
+            }
+          }
+
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          $psFiles = @(
+            "install.ps1",
+            "verify.ps1",
+            "tests/check-package.ps1",
+            "tests/test-zh-display.ps1"
+          )
+          foreach ($file in $psFiles) {
+            if (Test-Path $file) {
+              try {
+                $null = [System.Management.Automation.Language.Parser]::ParseFile($file, [ref]$null, [ref]$null)
+                Write-Host "✓ $file syntax OK"
+              } catch {
+                Write-Host "✗ $file syntax error"
+                exit 1
+              }
+            }
+          }
+
+      - name: Package check
+        shell: pwsh
+        run: |
+          .\tests\check-package.ps1
