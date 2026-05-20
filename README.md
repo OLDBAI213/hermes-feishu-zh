@@ -1,5 +1,10 @@
 # hermes-feishu-zh
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Hermes Agent](https://img.shields.io/badge/Hermes_Agent-%3E%3D0.14.0-9B59B6.svg)](https://github.com/NousResearch/hermes-agent)
+[![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
+[![Feishu](https://img.shields.io/badge/Feishu-中文-4ECDC4.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
+
 Hermes Agent 社区扩展：飞书中文显示 + lark-cli 工具箱。
 
 这不是 Hermes Agent 官方项目，是社区扩展。帮助 Windows 上的 Hermes 用户一键开启飞书中文显示、稳定的 `post` 输出格式，以及可选的 `lark-cli` 工具箱，不会覆盖你现有的 Hermes 配置。
