@@ -50,6 +50,14 @@ Restart Hermes gateway after install:
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -RestartGateway
 ```
 
+## Uninstall
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
+```
+
+This removes the plugin, cleans config, and restores source files from backup.
+
 ## Profiles
 
 `stable` is the default. It merges config, installs the `lark-cli-toolbox` plugin, and uses Feishu `post` output.
