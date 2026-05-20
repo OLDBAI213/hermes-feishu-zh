@@ -1,0 +1,222 @@
+[
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"once\": \"Approved once\",\n    \"session\": \"Approved for session\",\n    \"always\": \"Approved permanently\",\n    \"deny\": \"Denied\",",
+    "replace": "\"once\": \"已批准一次\",\n    \"session\": \"本轮会话已批准\",\n    \"always\": \"已永久批准\",\n    \"deny\": \"已拒绝\","
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"title\": {\"content\": \"⚠️ Command Approval Required\", \"tag\": \"plain_text\"},",
+    "replace": "\"title\": {\"content\": \"⚠️ 需要确认命令\", \"tag\": \"plain_text\"},"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"content\": f\"```\\n{cmd_preview}\\n```\\n**Reason:** {description}\",",
+    "replace": "\"content\": f\"```\\n{cmd_preview}\\n```\\n**原因:** {description}\","
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "description: str = \"dangerous command\",",
+    "replace": "description: str = \"需要确认的命令\","
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "_btn(\"✅ Allow Once\", \"approve_once\", \"primary\"),\n                            _btn(\"✅ Session\", \"approve_session\"),\n                            _btn(\"✅ Always\", \"approve_always\"),\n                            _btn(\"❌ Deny\", \"deny\", \"danger\"),",
+    "replace": "_btn(\"✅ 仅本次\", \"approve_once\", \"primary\"),\n                            _btn(\"✅ 本轮会话\", \"approve_session\"),\n                            _btn(\"✅ 永久允许\", \"approve_always\"),\n                            _btn(\"❌ 拒绝\", \"deny\", \"danger\"),"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "default_hint = f\"\\n\\nDefault: `{default}`\" if default else \"\"",
+    "replace": "default_hint = f\"\\n\\n默认值: `{default}`\" if default else \"\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"title\": {\"content\": \"⚕ Update Needs Your Input\", \"tag\": \"plain_text\"},",
+    "replace": "\"title\": {\"content\": \"⚕ 更新需要你确认\", \"tag\": \"plain_text\"},"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "_btn(\"✓ Yes\", \"y\", \"primary\"),\n                        _btn(\"✗ No\", \"n\", \"danger\"),",
+    "replace": "_btn(\"✓ 是\", \"y\", \"primary\"),\n                        _btn(\"✗ 否\", \"n\", \"danger\"),"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "label = \"Yes\" if yes else \"No\"",
+    "replace": "label = \"是\" if yes else \"否\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"title\": {\"content\": f\"{'✅' if yes else '❌'} Update prompt answered: {label}\", \"tag\": \"plain_text\"},",
+    "replace": "\"title\": {\"content\": f\"{'✅' if yes else '❌'} 已回复更新确认: {label}\", \"tag\": \"plain_text\"},"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "{\"tag\": \"markdown\", \"content\": f\"Answered by **{user_name}**\"},",
+    "replace": "{\"tag\": \"markdown\", \"content\": f\"由 **{user_name}** 回复\"},"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "label = _APPROVAL_LABEL_MAP.get(choice, \"Resolved\")",
+    "replace": "label = _APPROVAL_LABEL_MAP.get(choice, \"已处理\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"content\": f\"{icon} **{label}** by {user_name}\",",
+    "replace": "\"content\": f\"{icon} **{label}**，操作者: {user_name}\","
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "error=\"Not connected\"",
+    "replace": "error=\"未连接\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"send failed\"",
+    "replace": "\"发送失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"update failed\"",
+    "replace": "\"更新消息失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "f\"Image file not found: {image_path}\"",
+    "replace": "f\"图片文件不存在: {image_path}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"image upload failed\"",
+    "replace": "\"图片上传失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"Feishu image upload missing image_key\"",
+    "replace": "\"飞书图片上传缺少 image_key\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"image send failed\"",
+    "replace": "\"图片发送失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"chat lookup failed\"",
+    "replace": "\"会话查询失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"message lookup failed\"",
+    "replace": "\"消息查询失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "f\"File not found: {file_path}\"",
+    "replace": "f\"文件不存在: {file_path}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"file upload failed\"",
+    "replace": "\"文件上传失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"Feishu file upload missing file_key\"",
+    "replace": "\"飞书文件上传缺少 file_key\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\"file send failed\"",
+    "replace": "\"文件发送失败\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "RuntimeError(\"Feishu send failed\")",
+    "replace": "RuntimeError(\"飞书发送失败\")"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "f\"[Session was just handed off from CLI (\\\"{cli_title}\\\") to this \"\n            f\"channel. The full prior conversation history is loaded above. \"\n            f\"Briefly confirm you're working here and summarize what we were \"\n            f\"working on, so the user can continue from this device.]\"",
+    "replace": "f\"[会话刚从 CLI（\\\"{cli_title}\\\"）转交到这个消息渠道。\"\n            f\"上面的历史对话已经加载完成。请简短确认你正在这里继续工作，\"\n            f\"并概括刚才正在处理的事情，方便用户从当前设备无缝继续。]\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "desc = approval_data.get(\"description\", \"dangerous command\")",
+    "replace": "desc = approval_data.get(\"description\", \"需要确认的命令\")"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "✅ Hermes update finished.",
+    "replace": "✅ Hermes 更新完成。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "❌ Hermes update failed (exit code {}).",
+    "replace": "❌ Hermes 更新失败（退出码 {}）。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "default_hint = f\" (default: {default})\" if default else \"\"",
+    "replace": "default_hint = f\"（默认值: {default}）\" if default else \"\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "⚕ **Update needs your input:**",
+    "replace": "⚕ **更新需要你确认:**"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "Reply `/approve` (yes) or `/deny` (no), ",
+    "replace": "回复 `/approve`（是）或 `/deny`（否），"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "or type your answer directly.",
+    "replace": "也可以直接输入你的回答。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "❌ Hermes update timed out after 30 minutes.",
+    "replace": "❌ Hermes 更新超过 30 分钟未完成，已超时。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "msg = f\"❌ Hermes update failed.\\n\\n```\\n{output}\\n```\"",
+    "replace": "msg = f\"❌ Hermes 更新失败。\\n\\n```\\n{output}\\n```\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "✅ Hermes update finished successfully.",
+    "replace": "✅ Hermes 更新已成功完成。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "❌ Hermes update failed. Check the gateway logs or run `hermes update` manually for details.",
+    "replace": "❌ Hermes 更新失败。请查看 gateway 日志，或在终端手动运行 `hermes update`。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "♻ Gateway restarted successfully. Your session continues.",
+    "replace": "♻ Gateway 已重启成功，你的会话会继续保留。"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "\"\\n\\nℹ️ Future /clear, /new, /reset, and /undo will run \"\n                    \"without confirmation. Re-enable via \"\n                    \"`approvals.destructive_slash_confirm: true` in config.yaml.\"",
+    "replace": "\"\\n\\nℹ️ 以后 /clear、/new、/reset 和 /undo 会直接执行，\"\n                    \"不再二次确认。如需恢复确认，请在 config.yaml 中设置 \"\n                    \"`approvals.destructive_slash_confirm: true`。\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "⚠️ **Confirm /{command}**",
+    "replace": "⚠️ **确认 /{command}**"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "Choose:\\n\"\n            \"• **Approve Once** — proceed this time only\\n\"\n            \"• **Always Approve** — proceed and silence this prompt permanently\\n\"\n            \"• **Cancel** — keep current conversation\\n\\n\"\n            \"_Text fallback: reply `/approve`, `/always`, or `/cancel`._",
+    "replace": "请选择:\\n\"\n            \"• **仅本次批准** - 只执行这一次\\n\"\n            \"• **永久批准** - 执行，并以后不再提示\\n\"\n            \"• **取消** - 保留当前会话\\n\\n\"\n            \"_文本备用方式: 回复 `/approve`、`/always` 或 `/cancel`。_"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "f\"⚠️ **Dangerous command requires approval:**\\n\"\n                    f\"```\\n{cmd_preview}\\n```\\n\"\n                    f\"Reason: {desc}\\n\\n\"\n                    f\"Reply `/approve` to execute, `/approve session` to approve this pattern \"\n                    f\"for the session, `/approve always` to approve permanently, or `/deny` to cancel.\"",
+    "replace": "f\"⚠️ **需要确认命令:**\\n\"\n                    f\"```\\n{cmd_preview}\\n```\\n\"\n                    f\"原因: {desc}\\n\\n\"\n                    f\"回复 `/approve` 执行，`/approve session` 在本轮会话批准这类命令，\"\n                    f\"`/approve always` 永久批准，或回复 `/deny` 取消。\""
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "    require_mention: bool = True\n",
+    "replace": "    require_mention: bool = True\n    outbound_format: str = \"auto\"  # \"auto\" | \"text\" | \"post\" | \"card\"\n    card_mode: bool = False\n"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "\n\ndef _build_markdown_post_rows(content: str) -> List[List[Dict[str, str]]]:\n",
+    "replace": "\n\ndef _build_markdown_card_payload(content: str) -> str:\n    \"\"\"Build a Feishu interactive card for richer assistant responses.\n\n    Feishu post messages render basic markdown, but cards give us a more\n    inspectable container and a dedicated body block. Keep the card deliberately\n    simple so it stays compatible across Feishu/Lark clients.\n    \"\"\"\n    return json.dumps(\n        {\n            \"config\": {\n                \"wide_screen_mode\": True,\n                \"enable_forward\": True,\n            },\n            \"header\": {\n                \"template\": \"blue\",\n                \"title\": {\"tag\": \"plain_text\", \"content\": \"Hermes\"},\n            },\n            \"elements\": [\n                {\n                    \"tag\": \"markdown\",\n                    \"content\": content or \" \",\n                }\n            ],\n        },\n        ensure_ascii=False,\n    )\n\n\ndef _build_markdown_post_rows(content: str) -> List[List[Dict[str, str]]]:\n"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "            require_mention=_to_boolean(\n                extra.get(\"require_mention\", os.getenv(\"FEISHU_REQUIRE_MENTION\", \"true\"))\n            ),\n",
+    "replace": "            require_mention=_to_boolean(\n                extra.get(\"require_mention\", os.getenv(\"FEISHU_REQUIRE_MENTION\", \"true\"))\n            ),\n            outbound_format=str(extra.get(\"outbound_format\") or os.getenv(\"HERMES_FEISHU_OUTBOUND_FORMAT\", \"auto\")).strip().lower(),\n            card_mode=_to_boolean(extra.get(\"card_mode\", os.getenv(\"HERMES_FEISHU_CARD_MODE\", \"false\"))),\n"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "        self._allow_bots = settings.allow_bots\n        self._require_mention = settings.require_mention\n",
+    "replace": "        self._allow_bots = settings.allow_bots\n        self._require_mention = settings.require_mention\n        self._outbound_format = settings.outbound_format\n        if self._outbound_format not in {\"auto\", \"text\", \"post\", \"card\"}:\n            logger.warning(\"[Feishu] Unknown outbound_format=%r, falling back to auto\", self._outbound_format)\n            self._outbound_format = \"auto\"\n        self._card_mode = settings.card_mode or self._outbound_format == \"card\"\n"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "    def _build_outbound_payload(self, content: str) -> tuple[str, str]:\n",
+    "replace": "    def _build_outbound_payload(self, content: str) -> tuple[str, str]:\n        if self._card_mode:\n            return \"interactive\", _build_markdown_card_payload(content)\n        if self._outbound_format == \"text\":\n            text_payload = {\"text\": content}\n            return \"text\", json.dumps(text_payload, ensure_ascii=False)\n        if self._outbound_format == \"post\":\n            return \"post\", _build_markdown_post_payload(content)\n"
+  }
+]

@@ -1,0 +1,26 @@
+display:
+  gateway_locale: zh
+  language: zh
+  final_response_markdown: strip
+  interim_assistant_messages: true
+  platforms:
+    feishu:
+      interim_assistant_messages: false
+      runtime_footer:
+        delivery: status_card
+        enabled: true
+        fields:
+        - model
+        - provider
+        - context
+        style: zh_detailed
+      show_reasoning: false
+      streaming: true
+      tool_preview_length: 120
+      tool_progress: new
+platforms:
+  feishu:
+    enabled: true
+    extra:
+      card_mode: false
+      outbound_format: post

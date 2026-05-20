@@ -1,0 +1,71 @@
+{
+  "manifest_version": 1,
+  "name": "hermes-feishu-zh",
+  "version": "0.1.0",
+  "description": "Hermes Agent community extension for Feishu Chinese display, stable post output, and lark-cli toolbox integration.",
+  "license": "MIT",
+  "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
+  "target": {
+    "product": "Hermes Agent",
+    "version_range": ">=0.14.0",
+    "platforms": [
+      "windows"
+    ]
+  },
+  "profiles": {
+    "stable": {
+      "default": true,
+      "description": "Merge Chinese Feishu display config, install lark-cli toolbox, and use Feishu post output."
+    },
+    "enhanced": {
+      "default": false,
+      "description": "Stable profile plus interactive card output and enhanced Feishu display source patch."
+    }
+  },
+  "entrypoints": {
+    "install": "install.ps1",
+    "verify": "verify.ps1",
+    "rollback": "install.ps1 -Rollback latest"
+  },
+  "modifies": {
+    "config": [
+      "config.yaml"
+    ],
+    "plugins": [
+      "plugins/lark-cli-toolbox"
+    ],
+    "source_optional": [
+      "hermes-agent/gateway/platforms/feishu.py"
+    ]
+  },
+  "backup": {
+    "directory": "backups/hermes-feishu-zh-<timestamp>",
+    "files": [
+      "config.yaml",
+      ".env",
+      "plugins/lark-cli-toolbox",
+      "patched source files"
+    ]
+  },
+  "verify": {
+    "command": "powershell -ExecutionPolicy Bypass -File .\\verify.ps1",
+    "checks": [
+      "Hermes CLI resolves",
+      "display.language == zh",
+      "display.gateway_locale == zh",
+      "Feishu outbound_format is post or card",
+      "lark-cli-toolbox plugin loads",
+      "lark_cli tools are registered",
+      "lark-cli doctor passes when installed",
+      "gateway_state is running and feishu is connected when gateway is enabled"
+    ]
+  },
+  "does_not_contain": [
+    "FEISHU_APP_ID",
+    "FEISHU_APP_SECRET",
+    "FEISHU_ALLOWED_USERS",
+    "XIAOMI_API_KEY",
+    "API keys",
+    "tokens"
+  ]
+}

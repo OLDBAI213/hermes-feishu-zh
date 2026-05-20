@@ -1,0 +1,20 @@
+name: lark-cli-toolbox
+version: 0.1.0
+description: "Expose lark-cli as Hermes tools for personal Feishu docs, messages, tasks, calendar, Markdown, and Base workflows."
+author: local
+kind: standalone
+platforms:
+  - windows
+provides_tools:
+  - lark_cli_doctor
+  - lark_docs_search
+  - lark_docs_fetch
+  - lark_markdown_fetch
+  - lark_markdown_create
+  - lark_messages_search
+  - lark_messages_get
+  - lark_chat_messages_list
+  - lark_tasks_list
+  - lark_task_create
+  - lark_calendar_agenda
+  - lark_base_query
