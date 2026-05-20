@@ -25,7 +25,8 @@
   "entrypoints": {
     "install": "install.ps1",
     "verify": "verify.ps1",
-    "rollback": "install.ps1 -Rollback latest"
+    "rollback": "install.ps1 -Rollback latest",
+    "uninstall": "install.ps1 -Uninstall"
   },
   "modifies": {
     "config": [

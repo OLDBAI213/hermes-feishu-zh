@@ -63,6 +63,23 @@ Backups are stored under:
 <HERMES_HOME>\backups\hermes-feishu-zh-<timestamp>
 ```
 
+## Uninstall
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
+```
+
+This will:
+- Remove the `lark-cli-toolbox` plugin
+- Clean up config.yaml (remove lark_cli toolsets, reset display settings)
+- Restore source files from backup if available
+
+Then restart the gateway:
+
+```powershell
+hermes gateway restart
+```
+
 ## Requirements
 
 - Windows PowerShell or PowerShell 7

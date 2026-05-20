@@ -4,6 +4,7 @@ param(
     [string]$Profile = "stable",
     [switch]$VerifyOnly,
     [string]$Rollback = "",
+    [switch]$Uninstall,
     [switch]$RestartGateway,
     [switch]$NoLarkCliToolbox,
     [switch]$NoSourceZh,
@@ -295,6 +296,98 @@ function Invoke-Verify {
     & $verify -HermesHome $HermesRoot
 }
 
+function Remove-Installation {
+    param([string]$HermesRoot)
+    Write-Step "Uninstall hermes-feishu-zh"
+
+    # 1. Remove lark-cli-toolbox plugin
+    $pluginPath = Join-Path $HermesRoot "plugins\lark-cli-toolbox"
+    if (Test-Path -LiteralPath $pluginPath) {
+        Remove-Item -LiteralPath $pluginPath -Recurse -Force
+        Write-Host "  Removed plugin: lark-cli-toolbox"
+    }
+
+    # 2. Remove lark_cli from config
+    $configPath = Join-Path $HermesRoot "config.yaml"
+    if (Test-Path -LiteralPath $configPath) {
+        $python = $Python
+        $removeScript = @'
+import sys
+from pathlib import Path
+from ruamel.yaml import YAML
+
+config_path = Path(sys.argv[1])
+yaml = YAML()
+yaml.preserve_quotes = True
+config = yaml.load(config_path.read_text(encoding="utf-8")) or {}
+
+# Remove lark-cli-toolbox from plugins.enabled
+plugins = config.get("plugins", {})
+enabled = plugins.get("enabled", [])
+if "lark-cli-toolbox" in enabled:
+    enabled.remove("lark-cli-toolbox")
+    plugins["enabled"] = enabled
+
+# Remove lark_cli from platform_toolsets
+pts = config.get("platform_toolsets", {})
+for key in ["cli", "feishu"]:
+    lst = pts.get(key, [])
+    if "lark_cli" in lst:
+        lst.remove("lark_cli")
+        pts[key] = lst
+
+# Remove lark_cli from toolsets
+ts = config.get("toolsets", [])
+if "lark_cli" in ts:
+    ts.remove("lark_cli")
+    config["toolsets"] = ts
+
+# Reset display settings to defaults
+display = config.get("display", {})
+display.pop("gateway_locale", None)
+display.pop("language", None)
+display.pop("tui_auto_resume_recent", None)
+feishu_display = display.get("platforms", {}).get("feishu", {})
+feishu_display.pop("streaming", None)
+feishu_display.pop("tool_progress", None)
+feishu_display.pop("tool_preview_length", None)
+feishu_display.pop("runtime_footer", None)
+feishu_display.pop("interim_assistant_messages", None)
+feishu_display.pop("show_reasoning", None)
+feishu_display.pop("cleanup_progress", None)
+
+# Reset feishu platform extra
+feishu_platform = config.get("platforms", {}).get("feishu", {}).get("extra", {})
+feishu_platform.pop("card_mode", None)
+feishu_platform.pop("outbound_format", None)
+
+with config_path.open("w", encoding="utf-8") as f:
+    yaml.dump(config, f)
+
+print("Config cleaned")
+'@
+        $removeScript | & $python - $configPath
+        Write-Host "  Cleaned config.yaml"
+    }
+
+    # 3. Revert source patches (restore from backup if available)
+    $backupDir = Get-LatestBackup -HermesRoot $HermesRoot
+    if ($backupDir) {
+        Write-Host "  Restoring source files from backup: $($backupDir.Name)"
+        Get-ChildItem -LiteralPath $backupDir.FullName -File -Filter "*.bak" | ForEach-Object {
+            $relative = $_.BaseName -replace '__', '\'
+            $target = Join-Path $HermesRoot $relative
+            if (Test-Path -LiteralPath $target) {
+                Copy-Item -LiteralPath $_.FullName -Destination $target -Force
+            }
+        }
+    }
+
+    Write-Host ""
+    Write-Host "Uninstalled. Restart gateway to apply:"
+    Write-Host "  hermes gateway restart"
+}
+
 $HermesHome = Resolve-HermesHome -Requested $HermesHome
 $AgentRoot = Get-AgentRoot -HermesRoot $HermesHome
 $Python = Get-HermesPython -AgentRoot $AgentRoot
@@ -310,6 +403,11 @@ if ($Rollback) {
     if (-not $NoVerify) {
         Invoke-Verify -HermesRoot $HermesHome
     }
+    return
+}
+
+if ($Uninstall) {
+    Remove-Installation -HermesRoot $HermesHome
     return
 }
 
