@@ -1,63 +1,51 @@
-# Troubleshooting
+# 故障排除
 
-## Hermes home not found
+## 找不到 Hermes 目录
 
-Set `HERMES_HOME` or pass `-HermesHome`:
+设置 `HERMES_HOME` 或通过参数指定：
 
 ```powershell
-$env:HERMES_HOME = "C:\Users\<you>\.hermes"
+$env:HERMES_HOME = "C:\Users\<你的用户名>\.hermes"
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-## lark-cli doctor fails
+## lark-cli doctor 失败
 
-Bind `lark-cli` to the Hermes Feishu app:
+将 `lark-cli` 绑定到 Hermes 飞书应用：
 
 ```powershell
 lark-cli config bind --source hermes --identity bot-only
 ```
 
-If `user_identity` is only a warning, bot identity is still usable. Personal docs, calendar, and user-only resources can require a user login.
+如果只显示 `user_identity` 警告，机器人身份仍可使用。个人文档、日历等用户级资源可能需要配置用户登录。
 
-## Gateway result looks failed
+## Gateway 状态异常
 
-On Windows, the Scheduled Task result can show a non-zero value after a detached or stopped long-running process. Prefer these checks:
+在 Windows 上，Scheduled Task 结果可能在进程分离或停止后显示非零值。建议使用以下命令检查：
 
 ```powershell
 hermes gateway status
 Get-Content "$env:HERMES_HOME\gateway_state.json"
 ```
 
-The useful state is `gateway_state = running` and `platforms.feishu.state = connected`.
+正常状态应为 `gateway_state = running` 且 `platforms.feishu.state = connected`。
 
-## Enhanced patch fails
+## 增强模式补丁失败
 
-Use stable mode:
+使用 stable 模式：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Profile stable
 ```
 
-Enhanced mode patches Hermes source. If Hermes changed the Feishu adapter, the replacement markers may no longer match.
+增强模式会修改 Hermes 源码。如果 Hermes 更新了飞书适配器，替换标记可能不再匹配。
 
-## Chinese display not visible
+## 中文显示未生效
 
-Run:
+运行验证脚本：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\verify.ps1
 ```
 
-Expected config:
-
-```text
-display.language = zh
-display.gateway_locale = zh
-platforms.feishu.extra.outbound_format = post
-```
-
-## Restore previous state
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
-```
+检查配置是否正确合并、插件是否加载、源码标签是否替换成功。

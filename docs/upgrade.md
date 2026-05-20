@@ -1,52 +1,52 @@
-# Upgrade
+# 升级说明
 
-The installer is idempotent. Running it again should not duplicate `plugins.enabled`, `platform_toolsets`, or `toolsets` entries.
+安装器是幂等的。重复运行不会重复添加 `plugins.enabled`、`platform_toolsets` 或 `toolsets` 条目。
 
-## Update this extension
+## 更新本扩展
 
-If installed from GitHub through a checkout:
+如果通过 git checkout 安装：
 
 ```powershell
 git pull --ff-only
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-If using the one-line remote command, run the same install command again after the repository is updated.
+如果使用一键远程安装命令，仓库更新后重新运行相同的安装命令即可。
 
-## After Hermes upgrades
+## Hermes 升级后
 
-Run verification first:
+先运行验证：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -VerifyOnly
 ```
 
-If verification fails because source patch markers moved, reinstall stable mode:
+如果验证失败（源码补丁标记位置变化），重新安装 stable 模式：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Profile stable
 ```
 
-Only use enhanced mode after verification supports the new Hermes version.
+确认新版 Hermes 支持后再使用 enhanced 模式。
 
-## Rollback
+## 回滚
 
-Restore the newest package backup:
+恢复最新的备份：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
 ```
 
-Backups live under:
+备份存放在：
 
 ```text
 <HERMES_HOME>\backups\hermes-feishu-zh-<timestamp>
 ```
 
-Each backup contains a `backup-manifest.json` plus the files that existed before install.
+每个备份包含 `backup-manifest.json` 和安装前的原始文件。
 
-## Compatibility policy
+## 兼容性说明
 
-- Stable profile should survive normal Hermes upgrades because it uses config and plugin surfaces.
-- Enhanced profile may need patch updates after Hermes changes `gateway/platforms/feishu.py`.
-- Secrets are not stored in this repository. Existing `.env` values stay in the user's Hermes home.
+- stable 模式使用配置和插件接口，通常能承受 Hermes 正常升级
+- enhanced 模式在 Hermes 修改 `gateway/platforms/feishu.py` 后可能需要重新打补丁
+- 本仓库不存储密钥。现有的 `.env` 值保留在用户的 Hermes 目录中

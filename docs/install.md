@@ -1,75 +1,73 @@
-# Install
+# 安装指南
 
-`hermes-feishu-zh` is Windows-first and expects an existing Hermes Agent install.
+`hermes-feishu-zh` 面向 Windows 平台，需要先安装好 Hermes Agent。
 
-## Remote install
+## 在线安装
 
-After publishing, replace `OLDBAI213` with the GitHub owner:
+发布后将 `<owner>` 替换为 GitHub 仓库所有者：
 
 ```powershell
 iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/install.ps1)
 ```
 
-## Local install
+## 本地安装
 
-From this repository:
+从本仓库：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-## Options
+## 参数选项
 
-Stable profile:
+稳定模式（默认）：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Profile stable
 ```
 
-Enhanced profile:
+增强模式：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Profile enhanced
 ```
 
-Verify only:
+仅验证：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -VerifyOnly
 ```
 
-Rollback latest backup:
+回滚：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
 ```
 
-Restart Hermes gateway after install:
+安装后重启 Gateway：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -RestartGateway
 ```
 
-## Uninstall
+卸载：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
 ```
 
-This removes the plugin, cleans config, and restores source files from backup.
+## 模式说明
 
-## Profiles
+`stable` 是默认模式。它会合并配置、安装 `lark-cli-toolbox` 插件，并使用飞书 `post` 输出格式。
 
-`stable` is the default. It merges config, installs the `lark-cli-toolbox` plugin, and uses Feishu `post` output.
+`enhanced` 会额外补丁 Hermes 飞书源码，让普通回复也能使用交互式卡片输出。仅在你接受 Hermes 升级后可能需要重新打补丁的情况下使用。
 
-`enhanced` additionally patches Hermes Feishu source code so normal replies can use interactive card output. Use it only when you accept source patch compatibility checks after Hermes upgrades.
+## lark-cli 绑定
 
-## lark-cli binding
-
-The plugin can load without `lark-cli`, but tools need the CLI to be installed and bound:
+插件可以不依赖 `lark-cli` 加载，但工具需要 CLI 安装并绑定才能使用：
 
 ```powershell
 lark-cli config bind --source hermes --identity bot-only
 ```
 
-`bot-only` is enough for bot/app API access. User-only resources such as personal calendar or private docs may require a user login later.
+`bot-only` 足够用于机器人/应用 API 访问。个人日历、私有文档等用户级资源可能需要后续配置用户登录。
