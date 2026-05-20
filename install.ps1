@@ -35,9 +35,8 @@ function Resolve-HermesHome {
         if ($detectedHome) { $candidates += $detectedHome }
     }
 
-    $candidates += @(
-        "$HermesRoot\.hermes"
-    )
+    # Note: $HermesRoot is script-scope, not available inside this function.
+    # The fallback path is handled by the candidates loop above.
 
     foreach ($candidate in $candidates) {
         if (-not $candidate) { continue }

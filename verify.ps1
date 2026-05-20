@@ -23,7 +23,7 @@ function Resolve-HermesHome {
         $detectedHome = Split-Path -Parent $agentRoot
         if ($detectedHome) { $candidates += $detectedHome }
     }
-    $candidates += @("$HermesRoot\.hermes")
+    # Note: $HermesRoot is set later in script scope, not available here
     foreach ($candidate in $candidates) {
         if (-not $candidate) { continue }
         try { $full = [System.IO.Path]::GetFullPath($candidate) } catch { continue }
