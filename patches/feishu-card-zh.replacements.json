@@ -218,5 +218,75 @@
     "file": "hermes-agent/gateway/run.py",
     "find": "f\"⚠️ **Dangerous command requires approval:**\\n\"\n                    f\"```\\n{cmd_preview}\\n```\\n\"\n                    f\"Reason: {desc}\\n\\n\"\n                    f\"Reply `/approve` to execute, `/approve session` to approve this pattern \"\n                    f\"for the session, `/approve always` to approve permanently, or `/deny` to cancel.\"",
     "replace": "f\"⚠️ **需要确认命令:**\\n\"\n                    f\"```\\n{cmd_preview}\\n```\\n\"\n                    f\"原因: {desc}\\n\\n\"\n                    f\"回复 `/approve` 执行，`/approve session` 在本轮会话批准这类命令，\"\n                    f\"`/approve always` 永久批准，或回复 `/deny` 取消。\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "FALLBACK_POST_TEXT = \"[Rich Text]\"",
+    "replace": "FALLBACK_POST_TEXT = \"[富文本消息]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "FALLBACK_FORWARD_TEXT = \"[Merged Forward]\"",
+    "replace": "FALLBACK_FORWARD_TEXT = \"[合并转发消息]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "FALLBACK_SHARE_CHAT_TEXT = \"[Shared Chat]\"",
+    "replace": "FALLBACK_SHARE_CHAT_TEXT = \"[共享聊天]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "FALLBACK_INTERACTIVE_TEXT = \"[Interactive]\"",
+    "replace": "FALLBACK_INTERACTIVE_TEXT = \"[交互消息]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "FALLBACK_ATTACHMENT_TEXT = \"[Attachment]\"",
+    "replace": "FALLBACK_ATTACHMENT_TEXT = \"[附件]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "FALLBACK_EMOJI_TEXT = \"[Emoji]\"",
+    "replace": "FALLBACK_EMOJI_TEXT = \"[表情]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=429, text=\"Rate limit exceeded\")",
+    "replace": "return _web_response(status=429, text=\"请求过于频繁\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=415, text=\"Unsupported media type\")",
+    "replace": "return _web_response(status=415, text=\"不支持的媒体类型\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=413, text=\"Payload too large\")",
+    "replace": "return _web_response(status=413, text=\"请求体过大\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=408, text=\"Request timeout\")",
+    "replace": "return _web_response(status=408, text=\"请求超时\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=400, text=\"Invalid JSON\")",
+    "replace": "return _web_response(status=400, text=\"无效 JSON\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=401, text=\"Invalid signature\")",
+    "replace": "return _web_response(status=401, text=\"签名无效\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "return _web_response(status=400, text=\"Encrypted webhook body not supported\")",
+    "replace": "return _web_response(status=400, text=\"暂不支持加密 webhook 请求体\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment.py",
+    "find": "doc_title = doc_meta.get(\"title\", \"Untitled Document\")",
+    "replace": "doc_title = doc_meta.get(\"title\", \"未命名文档\")"
   }
 ]
