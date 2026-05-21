@@ -288,5 +288,100 @@
     "file": "hermes-agent/gateway/platforms/feishu_comment.py",
     "find": "doc_title = doc_meta.get(\"title\", \"Untitled Document\")",
     "replace": "doc_title = doc_meta.get(\"title\", \"未命名文档\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(f\"Rules file: {RULES_FILE}\")",
+    "replace": "print(f\"规则文件: {RULES_FILE}\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(f\"Pairing store: {PAIRING_FILE}\")",
+    "replace": "print(f\"配对文件: {PAIRING_FILE}\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(\"Top-level config:\")",
+    "replace": "print(\"顶层配置:\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(f\"Document rules ({len(cfg.documents)}):\")",
+    "replace": "print(f\"文档规则 ({len(cfg.documents)}):\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(\"Document rules: none\")",
+    "replace": "print(\"文档规则: 无\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(f\"Paired users ({len(approved)}):\")",
+    "replace": "print(f\"已配对用户 ({len(approved)}):\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Error: doc_key must be 'fileType:fileToken', got '{doc_key}'\"",
+    "replace": "\"错误: doc_key 必须是 'fileType:fileToken'，当前是 '{doc_key}'\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Document:       {doc_key}\"",
+    "replace": "\"文档:       {doc_key}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"User:           {user_open_id}\"",
+    "replace": "\"用户:           {user_open_id}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Matched rule:\"",
+    "replace": "\"命中规则:\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Enabled:        {rule.enabled}\"",
+    "replace": "\"启用:       {rule.enabled}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Policy:         {rule.policy}\"",
+    "replace": "\"策略:       {rule.policy}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Result:         {'Allow' if allowed else 'Deny'}\"",
+    "replace": "\"结果:       {'允许' if allowed else '拒绝'}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Usage: check <fileType:fileToken> <user_open_id>\"",
+    "replace": "\"用法: check <fileType:fileToken> <user_open_id>\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Usage: pairing <add|remove|list> [args]\"",
+    "replace": "\"用法: pairing <add|remove|list> [args]\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "\"Usage: pairing add <user_open_id>\"",
+    "replace": "\"用法: pairing add <user_open_id>\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "f\"Added: {args[2]}\"",
+    "replace": "f\"已添加: {args[2]}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "f\"Removed: {args[2]}\"",
+    "replace": "f\"已移除: {args[2]}\""
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+    "find": "print(\"Unknown command\")",
+    "replace": "print(\"未知命令\")"
   }
 ]
