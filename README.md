@@ -2,116 +2,127 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Hermes Agent](https://img.shields.io/badge/Hermes_Agent-%3E%3D0.14.0-9B59B6.svg)](https://github.com/NousResearch/hermes-agent)
-[![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
-[![Feishu](https://img.shields.io/badge/Feishu-中文-4ECDC4.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
+[![Feishu](https://img.shields.io/badge/Feishu-%E4%B8%AD%E6%96%87-4ECDC4.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh/releases)
 
-Hermes Agent 社区扩展：飞书中文显示 + lark-cli 工具箱。
+**让 Hermes Agent 在飞书里说中文。**
 
-这不是 Hermes Agent 官方项目，是社区扩展。帮助 Windows 上的 Hermes 用户一键开启飞书中文显示、稳定的 `post` 输出格式，以及可选的 `lark-cli` 工具箱，不会覆盖你现有的 Hermes 配置。
+社区扩展，一键安装，不改你现有配置。
 
-## 安装
+---
+
+## 为什么需要这个？
+
+Hermes Agent 默认在飞书里输出英文。对于中文用户来说：
+- 错误信息看不懂（`Rate limit exceeded` vs `请求过于频繁`）
+- 界面元素是英文（`Thinking...` vs `思考中...`）
+- Webhook 报错全是英文
+
+**hermes-feishu-zh** 把 77 处飞书输出替换为中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
+
+### 安装前 vs 安装后
+
+| 场景 | 安装前 | 安装后 |
+|------|--------|--------|
+| 消息占位符 | `[Rich text message]` | `[富文本消息]` |
+| Webhook 错误 | `Rate limit exceeded` | `请求过于频繁` |
+| Webhook 错误 | `Payload too large` | `请求体过大` |
+| 评论默认标题 | `Untitled document` | `未命名文档` |
+| CLI 输出 | 英文规则描述 | 中文规则描述 |
+
+---
+
+## 一键安装
 
 ```powershell
 iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/install.ps1)
 ```
 
-本地安装：
+安装器会：
+- ✅ 将中文配置合并到 `config.yaml`（保留你现有配置）
+- ✅ 安装 `lark-cli-toolbox` 插件
+- ✅ 设置飞书 `post` 输出格式（稳定显示 Markdown）
+- ✅ 自动备份，可随时回滚
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
-```
+---
 
-默认使用 `stable` 模式，会：
+## 功能
 
-- 将飞书中文显示配置 deep-merge 进 `config.yaml`
-- 保留你现有的模型、API、飞书凭证、会话和 `.env` 配置
-- 安装并启用 `lark-cli-toolbox` 插件
-- 使用飞书 `post` 输出格式，稳定显示 Markdown
+### 🔤 77 条中文替换规则
+覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统等。
+
+### 📦 lark-cli 工具箱
+飞书 API 命令行工具，支持文档操作、消息管理、日历查询等。中文输出。
+
+### 🛡️ 安全安装
 - 安装前自动备份
-- 安装后自动验证
+- 不修改 API 密钥、飞书凭证、用户 ID
+- 可一键回滚、一键卸载
 
-## 增强模式
+### 🔄 增强模式（可选）
+额外补丁 Hermes 源码，支持更丰富的卡片输出。适合追求极致体验的用户。
 
-增强模式会额外补丁 Hermes 飞书源码，支持更丰富的卡片输出。
+---
 
-```powershell
-iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/install.ps1) -Profile enhanced
-```
+## 快速开始
 
-增强模式会修改源码，Hermes 升级后可能需要重新打补丁。安装器会自动备份原文件并验证结果。
-
-## 验证
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -VerifyOnly
-```
-
-或：
+### 验证安装
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\verify.ps1
 ```
 
-验证检查包括：Hermes CLI、飞书显示配置、源码中文标签、`lark-cli` 插件、飞书输出模式、Gateway 连接状态。
-
-## 回滚
+### 回滚
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
 ```
 
-备份存放在：
-
-```text
-<HERMES_HOME>\backups\hermes-feishu-zh-<timestamp>
-```
-
-## 卸载
+### 卸载
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
 ```
 
-会执行：
-
-- 删除 `lark-cli-toolbox` 插件
-- 清理 config.yaml（移除 lark_cli 工具集、重置显示设置）
-- 从备份恢复源码文件（如有）
-
-卸载后重启 Gateway：
-
-```powershell
-hermes gateway restart
-```
+---
 
 ## 环境要求
 
 - Windows PowerShell 或 PowerShell 7
-- Hermes Agent 已安装且正常运行
-- `HERMES_HOME` 已设置，或通过 `hermes.exe` 能找到 Hermes
-- 飞书 Gateway 已在 Hermes 中配置
-- 可选：`lark-cli` 已安装并绑定到 Hermes（用于工具箱功能）
+- Hermes Agent >= 0.14.0 已安装
+- 飞书 Gateway 已配置
+- 可选：`lark-cli` 已安装（用于工具箱功能）
 
-绑定 `lark-cli`：
+---
 
-```powershell
-lark-cli config bind --source hermes --identity bot-only
+## 项目结构
+
+```
+hermes-feishu-zh/
+├── install.ps1          # 安装/回滚/卸载脚本
+├── verify.ps1           # 验证脚本
+├── manifest.json        # 扩展清单
+├── patches/             # 源码补丁（增强模式）
+├── plugins/             # lark-cli-toolbox 插件
+├── tools/               # 辅助工具
+├── docs/                # 文档
+└── tests/               # 测试
 ```
 
-`bot-only` 即可用于机器人 API 访问。个人日历、私有文档等用户级资源可能需要后续配置用户登录。
+---
 
-## 修改范围
+## 贡献
 
-安装器可能修改：
+欢迎提交 issue 和 PR！详见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-- `<HERMES_HOME>\config.yaml`
-- `<HERMES_HOME>\plugins\lark-cli-toolbox`
-- `<HERMES_HOME>\hermes-agent\gateway\platforms\feishu.py`
+## 许可证
 
-不包含也不传输 API 密钥、飞书密钥、用户 ID、会话或令牌。
+MIT License
 
-## 文档
+---
 
-- [安装指南](docs/install.md)
-- [升级说明](docs/upgrade.md)
-- [故障排除](docs/troubleshooting.md)
+<div align="center">
+
+**由 [小白 🤖](https://github.com/OLDBAI213) 独立维护** | Hermes Agent 社区扩展
+
+</div>
