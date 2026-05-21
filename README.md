@@ -5,20 +5,17 @@
 [![Feishu](https://img.shields.io/badge/Feishu-%E4%B8%AD%E6%96%87-4ECDC4.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
 [![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh/releases)
 
-**让 Hermes Agent 在飞书里说中文。**
+> **让 Hermes Agent 在飞书里说中文。** 一键安装，77 条汉化规则，不改你现有配置。
 
-社区扩展，一键安装，不改你现有配置。
+[English](#english) | 中文
 
 ---
 
-## 为什么需要这个？
+## 这是什么？
 
-Hermes Agent 默认在飞书里输出英文。对于中文用户来说：
-- 错误信息看不懂（`Rate limit exceeded` vs `请求过于频繁`）
-- 界面元素是英文（`Thinking...` vs `思考中...`）
-- Webhook 报错全是英文
+Hermes Agent 默认在飞书里输出英文 — 错误信息看不懂、界面元素是英文、Webhook 报错全是英文。
 
-**hermes-feishu-zh** 把 77 处飞书输出替换为中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
+**hermes-feishu-zh** 是一个社区扩展，把 77 处飞书输出替换为中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
 
 ### 安装前 vs 安装后
 
@@ -46,43 +43,44 @@ iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/insta
 
 ---
 
-## 功能
+## 功能特性
 
 ### 🔤 77 条中文替换规则
-覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统等。
+
+覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统等。完整列表见 [汉化规则文档](docs/)。
 
 ### 📦 lark-cli 工具箱
+
 飞书 API 命令行工具，支持文档操作、消息管理、日历查询等。中文输出。
 
+```bash
+# 示例：查询日历
+lark-cli calendar agenda
+
+# 示例：搜索文档
+lark-cli docs search "关键词"
+```
+
 ### 🛡️ 安全安装
+
 - 安装前自动备份
 - 不修改 API 密钥、飞书凭证、用户 ID
 - 可一键回滚、一键卸载
 
 ### 🔄 增强模式（可选）
+
 额外补丁 Hermes 源码，支持更丰富的卡片输出。适合追求极致体验的用户。
 
 ---
 
-## 快速开始
+## 快速命令
 
-### 验证安装
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\verify.ps1
-```
-
-### 回滚
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
-```
-
-### 卸载
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
-```
+| 操作 | 命令 |
+|------|------|
+| **安装** | `iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/install.ps1)` |
+| **验证** | `powershell -ExecutionPolicy Bypass -File .\verify.ps1` |
+| **回滚** | `powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest` |
+| **卸载** | `powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall` |
 
 ---
 
@@ -124,5 +122,40 @@ MIT License
 <div align="center">
 
 **由 [小白 🤖](https://github.com/OLDBAI213) 独立维护** | Hermes Agent 社区扩展
+
+</div>
+
+---
+
+## English
+
+**Make Hermes Agent speak Chinese in Feishu (Lark).**
+
+A community extension that replaces 77 English outputs with Chinese translations in Hermes Agent's Feishu integration. One-click install, preserves your existing config.
+
+### Quick Install
+
+```powershell
+iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/install.ps1)
+```
+
+### Features
+
+- 🔤 77 Chinese translation rules for Feishu messages, webhooks, CLI output
+- 📦 `lark-cli` toolbox for Feishu API operations
+- 🛡️ Safe install with auto-backup and one-click rollback
+- 🔄 Enhanced mode for richer card output (optional)
+
+### Requirements
+
+- Windows PowerShell 5.1+ or PowerShell 7+
+- Hermes Agent >= 0.14.0
+- Feishu Gateway configured
+
+---
+
+<div align="center">
+
+**Maintained by [XiaoBai 🤖](https://github.com/OLDBAI213)** | Community extension for Hermes Agent
 
 </div>
