@@ -538,5 +538,35 @@
     "file": "hermes-agent/gateway/run.py",
     "find": "\"The agent may have been waiting on an API response.\"",
     "replace": "\"Agent 可能正在等待 API 响应。\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "\"Your message will be delivered after the next tool call.\"",
+    "replace": "\"你的消息将在下一次工具调用后发送。\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "\"The agent may have been waiting on an API response.\"",
+    "replace": "\"Agent 可能正在等待 API 响应。\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "f\"The **{command_name}** skill is installed but disabled.\n\"",
+    "replace": "f\"**{command_name}** 技能已安装但被禁用。\n\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "f\"The **{command_name}** skill is available but not installed.\n\"",
+    "replace": "f\"**{command_name}** 技能可用但未安装。\n\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "f\"◆ Model: `{model}`\",",
+    "replace": "f\"◆ 模型: `{model}`\","
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "f\"◆ Provider: {provider or 'openrouter'}\",",
+    "replace": "f\"◆ 服务商: {provider or 'openrouter'}\","
   }
 ]
