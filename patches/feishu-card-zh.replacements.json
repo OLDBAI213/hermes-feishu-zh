@@ -468,5 +468,75 @@
     "file": "hermes-agent/gateway/run.py",
     "find": "            approx = estimate_messages_tokens_rough(msgs)\n            lines = [",
     "replace": "            approx = estimate_messages_tokens_rough(msgs)\n            if source.platform == Platform.FEISHU:\n                lines = [\n                    \"📊 会话\",\n                    f\"消息: {len(msgs)}\",\n                    f\"估算上下文: ~{approx:,}\",\n                    \"发送一条消息后可显示详细用量\",\n                ]\n                if account_lines:\n                    lines.append(\"\")\n                    lines.extend(account_lines)\n                return \"\\n\".join(lines)\n            lines = ["
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "    return text[: max(1, limit - 1)].rstrip() + \"…\"\n\n\n_GATEWAY_RATE_LIMIT_RE = re.compile(",
+    "replace": "    return text[: max(1, limit - 1)].rstrip() + \"…\"\n\n\ndef _platform_label_zh(platform: Any) -> str:\n    value = str(getattr(platform, \"value\", platform) or \"\").strip().lower()\n    return {\n        \"feishu\": \"飞书\",\n        \"lark\": \"飞书\",\n        \"telegram\": \"Telegram\",\n        \"discord\": \"Discord\",\n        \"slack\": \"Slack\",\n        \"whatsapp\": \"WhatsApp\",\n        \"wecom\": \"企业微信\",\n        \"weixin\": \"微信\",\n        \"qqbot\": \"QQ\",\n        \"local\": \"本地\",\n    }.get(value, value or \"未知\")\n\n\ndef _format_feishu_compact_status(\n    *,\n    session_entry: Any,\n    title: str | None,\n    db_total_tokens: int,\n    is_running: bool,\n    queue_depth: int,\n    connected_platforms: list[Any],\n    history: list[dict[str, Any]],\n) -> str:\n    label = title or str(getattr(session_entry, \"session_id\", \"\") or \"\")[:8] or \"当前会话\"\n    lines = [\n        \"📊 **当前状态**\",\n        f\"💬 会话：{label}\",\n        f\"⚙️ 运行：{'是' if is_running else '否'}\",\n    ]\n    if queue_depth:\n        lines.append(f\"📥 队列：{queue_depth} 条待处理\")\n    else:\n        lines.append(\"📥 队列：空\")\n    lines.append(f\"🧮 Token：{db_total_tokens:,}\")\n    if connected_platforms:\n        platforms = \"、\".join(_platform_label_zh(p) for p in connected_platforms)\n        lines.append(f\"🔌 连接：{platforms}\")\n\n    latest_user = \"\"\n    for msg in reversed(history or []):\n        if isinstance(msg, dict) and msg.get(\"role\") == \"user\":\n            latest_user = _gateway_content_preview_zh(msg.get(\"content\"))\n            if latest_user:\n                break\n    if latest_user:\n        lines.append(f\"🧭 最近：{latest_user}\")\n\n    return \"\\n\".join(lines)\n\n\n_GATEWAY_COMMAND_CATEGORY_ZH = {\n    \"Session\": \"会话\",\n    \"Configuration\": \"配置\",\n    \"Tools & Skills\": \"工具与技能\",\n    \"Info\": \"信息\",\n    \"Exit\": \"退出\",\n}\n\n_GATEWAY_COMMAND_DESCRIPTION_ZH = {\n    \"new\": \"开始新会话（新的会话 ID 和历史记录）\",\n    \"topic\": \"启用或查看 Telegram 私聊主题会话\",\n    \"retry\": \"重试上一条消息（重新发送给 Agent）\",\n    \"undo\": \"撤销上一轮用户/助手对话\",\n    \"title\": \"设置当前会话标题\",\n    \"branch\": \"从当前会话创建分支，探索另一条路径\",\n    \"compress\": \"手动压缩当前对话上下文\",\n    \"rollback\": \"列出或恢复文件系统检查点\",\n    \"stop\": \"停止所有正在运行的后台进程\",\n    \"approve\": \"批准待确认的危险命令\",\n    \"deny\": \"拒绝待确认的危险命令\",\n    \"background\": \"在后台运行一条提示\",\n    \"agents\": \"显示活动 Agent 和正在运行的任务\",\n    \"queue\": \"把提示排到下一轮（不打断当前任务）\",\n    \"steer\": \"在下一次工具调用后插入消息，不打断当前任务\",\n    \"goal\": \"设置跨多轮持续推进的长期目标\",\n    \"subgoal\": \"添加或管理当前目标的额外验收条件\",\n    \"status\": \"显示当前会话状态\",\n    \"whoami\": \"显示你的斜杠命令权限（管理员/用户）\",\n    \"profile\": \"显示当前配置档名称和 Hermes 主目录\",\n    \"sethome\": \"把当前聊天设为主通道\",\n    \"resume\": \"恢复之前命名的会话\",\n    \"sessions\": \"浏览并恢复历史会话\",\n    \"model\": \"切换当前会话使用的模型\",\n    \"codex-runtime\": \"切换 OpenAI/Codex 模型的 Codex app-server 运行时\",\n    \"personality\": \"设置预定义人格\",\n    \"verbose\": \"切换工具进度显示：关闭、新工具、全部、详细\",\n    \"footer\": \"切换最终回复里的运行元数据页脚\",\n    \"yolo\": \"切换 YOLO 模式（跳过危险命令确认）\",\n    \"reasoning\": \"管理推理强度和推理显示\",\n    \"fast\": \"切换快速模式（普通/快速）\",\n    \"voice\": \"切换语音模式\",\n    \"bundles\": \"列出技能包（可用 /<name> 作为多个技能的别名）\",\n    \"curator\": \"后台技能维护（状态、运行、固定、归档、列出归档）\",\n    \"kanban\": \"多配置档协作看板（任务、链接、评论）\",\n    \"reload-mcp\": \"从配置重新加载 MCP 服务器\",\n    \"reload-skills\": \"重新扫描 Hermes skills 目录中的新增或移除技能\",\n    \"commands\": \"浏览全部命令和技能（分页）\",\n    \"help\": \"显示可用命令\",\n    \"restart\": \"等待当前任务排空后平滑重启网关\",\n    \"usage\": \"显示当前会话的 Token 用量和速率限制\",\n    \"insights\": \"显示用量洞察和分析\",\n    \"platform\": \"暂停、恢复或列出故障的网关平台\",\n    \"update\": \"将 Hermes Agent 更新到最新版本\",\n    \"debug\": \"上传调试报告（系统信息和日志摘要）并获取分享链接\",\n}\n\n\ndef _is_feishu_zh_gateway_event(event: Any | None) -> bool:\n    source = getattr(event, \"source\", None)\n    if _gateway_platform_value(getattr(source, \"platform\", None)) != \"feishu\":\n        return False\n    try:\n        return _zh_enabled_for_gateway(_load_gateway_config(), \"feishu\")\n    except Exception:\n        return False\n\n\ndef _gateway_help_lines_for_event(event: Any | None) -> list[str]:\n    \"\"\"Render gateway command help, localized for Feishu Chinese mode.\"\"\"\n    if not _is_feishu_zh_gateway_event(event):\n        from hermes_cli.commands import gateway_help_lines\n\n        return gateway_help_lines()\n\n    from hermes_cli.commands import COMMAND_REGISTRY, _is_gateway_available, _resolve_config_gates\n\n    overrides = _resolve_config_gates()\n    lines: list[str] = []\n    current_category: str | None = None\n    for cmd in COMMAND_REGISTRY:\n        if not _is_gateway_available(cmd, overrides):\n            continue\n        if cmd.category != current_category:\n            current_category = cmd.category\n            lines.append(\"\")\n            lines.append(f\"**{_GATEWAY_COMMAND_CATEGORY_ZH.get(cmd.category, cmd.category)}：**\")\n\n        args = f\" {cmd.args_hint}\" if cmd.args_hint else \"\"\n        alias_parts: list[str] = []\n        for alias in cmd.aliases:\n            if alias.replace(\"-\", \"_\") == cmd.name.replace(\"-\", \"_\") and alias != cmd.name:\n                continue\n            alias_parts.append(f\"`/{alias}`\")\n        alias_note = f\"（别名：{', '.join(alias_parts)}）\" if alias_parts else \"\"\n        desc = _GATEWAY_COMMAND_DESCRIPTION_ZH.get(cmd.name, cmd.description)\n        lines.append(f\"`/{cmd.name}{args}` -- {desc}{alias_note}\")\n    return lines\n\n_GATEWAY_RATE_LIMIT_RE = re.compile("
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "        # Session recap — what was this session ABOUT? Pure local compute,\n        # no LLM call, no prompt-cache impact. Useful when juggling multiple\n        # gateway sessions and you want a one-glance reminder of where this\n        # one left off. Inspired by Claude Code 2.1.114's /recap.",
+    "replace": "        is_feishu_zh = (\n            bool(source)\n            and source.platform == Platform.FEISHU\n            and _zh_enabled_for_gateway(_load_gateway_config(), \"feishu\")\n        )\n        if is_feishu_zh:\n            try:\n                history = self.session_store.load_transcript(session_entry.session_id)\n            except Exception:\n                history = []\n            return _format_feishu_compact_status(\n                session_entry=session_entry,\n                title=title,\n                db_total_tokens=db_total_tokens,\n                is_running=is_running,\n                queue_depth=queue_depth,\n                connected_platforms=connected_platforms,\n                history=history,\n            )\n\n        # Session recap — what was this session ABOUT? Pure local compute,\n        # no LLM call, no prompt-cache impact. Useful when juggling multiple\n        # gateway sessions and you want a one-glance reminder of where this\n        # one left off. Inspired by Claude Code 2.1.114's /recap."
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "        from hermes_cli.commands import gateway_help_lines\n        lines = [\n            t(\"gateway.help.header\"),\n            *gateway_help_lines(),\n        ]",
+    "replace": "        lines = [\n            t(\"gateway.help.header\"),\n            *_gateway_help_lines_for_event(event),\n        ]"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "    async def _handle_commands_command(self, event: MessageEvent) -> str:\n        from hermes_cli.commands import gateway_help_lines\n\n        raw_args = event.get_command_args().strip()",
+    "replace": "    async def _handle_commands_command(self, event: MessageEvent) -> str:\n        raw_args = event.get_command_args().strip()"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "        entries = list(gateway_help_lines())",
+    "replace": "        entries = list(_gateway_help_lines_for_event(event))"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "            provider_label = get_label(current_provider)\n            lines = [t(\"gateway.model.current_label\", model=current_model or \"unknown\", provider=provider_label), \"\"]",
+    "replace": "            provider_label = get_label(current_provider)\n            unknown_model = \"未知\" if _is_feishu_zh_gateway_event(event) else \"unknown\"\n            lines = [t(\"gateway.model.current_label\", model=current_model or unknown_model, provider=provider_label), \"\"]"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "        loop = asyncio.get_running_loop()\n\n        # Run blocking I/O (dump capture, log reads, uploads) in a thread.",
+    "replace": "        loop = asyncio.get_running_loop()\n        report_label = \"报告\" if _is_feishu_zh_gateway_event(event) else \"Report\"\n\n        # Run blocking I/O (dump capture, log reads, uploads) in a thread."
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "                urls[\"Report\"] = upload_to_pastebin(report)",
+    "replace": "                urls[report_label] = upload_to_pastebin(report)"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "_INTERRUPT_REASON_STOP = \"Stop requested\"",
+    "replace": "_INTERRUPT_REASON_STOP = \"已停止\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "_INTERRUPT_REASON_RESET = \"Session reset requested\"",
+    "replace": "_INTERRUPT_REASON_RESET = \"会话已重置\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "_INTERRUPT_REASON_GATEWAY_SHUTDOWN = \"Gateway shutting down\"",
+    "replace": "_INTERRUPT_REASON_GATEWAY_SHUTDOWN = \"Gateway 正在关闭\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "_INTERRUPT_REASON_GATEWAY_RESTART = \"Gateway restarting\"",
+    "replace": "_INTERRUPT_REASON_GATEWAY_RESTART = \"Gateway 正在重启\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "\"Your message will be delivered after the next tool call.\"",
+    "replace": "\"你的消息将在下一次工具调用后发送。\""
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "\"The agent may have been waiting on an API response.\"",
+    "replace": "\"Agent 可能正在等待 API 响应。\""
   }
 ]
