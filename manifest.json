@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
   "name": "hermes-feishu-zh",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Hermes Agent community extension for Feishu Chinese display, basic Feishu adaptation, stable post output, and lark-cli toolbox integration.",
   "license": "MIT",
   "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
