@@ -2,7 +2,7 @@
   "manifest_version": 1,
   "name": "hermes-feishu-zh",
   "version": "0.2.1",
-  "description": "Hermes Agent 社区扩展：飞书中文显示 + lark-cli 工具箱。85 条汉化规则覆盖飞书平台所有用户可见字符串。",
+  "description": "Hermes Agent community extension for Feishu Chinese display, stable post output, and lark-cli toolbox integration.",
   "license": "MIT",
   "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
   "target": {
@@ -36,7 +36,11 @@
       "plugins/lark-cli-toolbox"
     ],
     "source_optional": [
-      "hermes-agent/gateway/platforms/feishu.py"
+      "hermes-agent/gateway/platforms/feishu.py",
+      "hermes-agent/gateway/platforms/feishu_comment.py",
+      "hermes-agent/gateway/platforms/feishu_comment_rules.py",
+      "hermes-agent/gateway/run.py",
+      "hermes-agent/tools/send_message_tool.py"
     ]
   },
   "backup": {
@@ -57,6 +61,8 @@
       "Feishu outbound_format is post or card",
       "lark-cli-toolbox plugin loads",
       "lark_cli tools are registered",
+      "Feishu source Chinese labels and compact mobile markers are present",
+      "MEDIA path parsing keeps attachments out of message text",
       "lark-cli doctor passes when installed",
       "gateway_state is running and feishu is connected when gateway is enabled"
     ]
