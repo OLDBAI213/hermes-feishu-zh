@@ -247,7 +247,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
     "find": "FALLBACK_EMOJI_TEXT = \"[Emoji]\"",
-    "replace": "FALLBACK_EMOJI_TEXT = \"[表情]\""
+    "replace": "\"[表情]\""
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
@@ -272,7 +272,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
     "find": "return _web_response(status=400, text=\"Invalid JSON\")",
-    "replace": "return _web_response(status=400, text=\"无效 JSON\")"
+    "replace": "{\"code\": 400, \"msg\": \"无效 JSON\"}"
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
@@ -282,7 +282,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
     "find": "return _web_response(status=400, text=\"Encrypted webhook body not supported\")",
-    "replace": "return _web_response(status=400, text=\"暂不支持加密 webhook 请求体\")"
+    "replace": "{\"code\": 400, \"msg\": \"暂不支持加密 webhook 请求体\"}"
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment.py",
@@ -332,7 +332,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
     "find": "\"User:           {user_open_id}\"",
-    "replace": "\"用户:           {user_open_id}\""
+    "replace": "\"用户:       {user_open_id}\""
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
@@ -342,12 +342,12 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
     "find": "\"Enabled:        {rule.enabled}\"",
-    "replace": "\"启用:       {rule.enabled}\""
+    "replace": "\"  启用:       {rule.enabled}\""
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
     "find": "\"Policy:         {rule.policy}\"",
-    "replace": "\"策略:       {rule.policy}\""
+    "replace": "\"  策略:       {rule.policy}\""
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
@@ -382,6 +382,91 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment_rules.py",
     "find": "print(\"Unknown command\")",
-    "replace": "print(\"未知命令\")"
+    "replace": "print(f\"未知命令: {cmd}\\n\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "lines.append(f\"Actions: {', '.join(actions)}\")",
+    "replace": "lines.append(f\"操作：{', '.join(actions)}\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "degraded_caption = f\"[GIF downgraded to file]\\n{caption}\" if caption else \"[GIF downgraded to file]\"",
+    "replace": "degraded_caption = f\"[GIF 已转为文件发送]\\n{caption}\" if caption else \"[GIF 已转为文件发送]\""
+  },
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "return {\"error\": \"Feishu dependencies not installed. Run: pip install 'hermes-agent[feishu]'\"}",
+    "replace": "return {\"error\": \"飞书依赖未安装。请运行: pip install 'hermes-agent[feishu]'\"}"
+  },
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "return _error(f\"Feishu send failed: {last_result.error}\")",
+    "replace": "return _error(f\"飞书发送失败: {last_result.error}\")"
+  },
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "return _error(f\"Media file not found: {media_path}\")",
+    "replace": "return _error(f\"媒体文件不存在: {media_path}\")"
+  },
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "return _error(f\"Feishu media send failed: {last_result.error}\")",
+    "replace": "return _error(f\"飞书媒体发送失败: {last_result.error}\")"
+  },
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "return {\"error\": \"No deliverable text or media remained after processing MEDIA tags\"}",
+    "replace": "return {\"error\": \"没有可发送的文字或媒体内容\"}"
+  },
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "return _error(f\"Feishu send failed: {e}\")",
+    "replace": "return _error(f\"飞书发送失败: {e}\")"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "        media_urls, media_types = await self._download_feishu_message_resources(\n            message_id=message_id,\n            normalized=normalized,\n        )",
+    "replace": "        media_result = await self._download_feishu_message_resources(\n            message_id=message_id,\n            normalized=normalized,\n        )\n        if len(media_result) == 2:\n            media_urls, media_types = media_result\n            download_notices = []\n        else:\n            media_urls, media_types, download_notices = media_result"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "        return text, inbound_type, media_urls, media_types, list(normalized.mentions)",
+    "replace": "        if download_notices:\n            text = \"\\n\".join(part for part in [text, *download_notices] if part)\n\n        return text, inbound_type, media_urls, media_types, list(normalized.mentions)"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "    ) -> tuple[List[str], List[str]]:\n        media_urls: List[str] = []\n        media_types: List[str] = []",
+    "replace": "    ) -> tuple[List[str], List[str], List[str]]:\n        media_urls: List[str] = []\n        media_types: List[str] = []\n        download_notices: List[str] = []"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "            if cached_path:\n                media_urls.append(cached_path)\n                media_types.append(media_type)\n\n        for media_ref in normalized.media_refs:",
+    "replace": "            if cached_path:\n                media_urls.append(cached_path)\n                media_types.append(media_type)\n            else:\n                download_notices.append(\n                    \"[图片下载失败，可能已过期、权限不足、文件过大或类型不支持]\"\n                )\n\n        for media_ref in normalized.media_refs:"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "            if cached_path:\n                media_urls.append(cached_path)\n                media_types.append(media_type)\n\n        return media_urls, media_types",
+    "replace": "            if cached_path:\n                media_urls.append(cached_path)\n                media_types.append(media_type)\n            else:\n                label = media_ref.file_name or media_ref.resource_type or \"附件\"\n                download_notices.append(\n                    f\"[文件下载失败: {label}，可能已过期、权限不足、文件过大或类型不支持]\"\n                )\n\n        return media_urls, media_types, download_notices"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "        if canonical == \"resume\":\n            return await self._handle_resume_command(event)",
+    "replace": "        if canonical in {\"resume\", \"sessions\"}:\n            return await self._handle_resume_command(event)"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "                lines = [t(\"gateway.resume.list_header\")]\n                for s in titled[:10]:\n                    title = s[\"title\"]\n                    preview = s.get(\"preview\", \"\")[:40]\n                    preview_part = t(\"gateway.resume.list_preview_suffix\", preview=preview) if preview else \"\"\n                    lines.append(t(\"gateway.resume.list_item\", title=title, preview_part=preview_part))\n                lines.append(t(\"gateway.resume.list_footer\"))\n                return \"\\n\".join(lines)",
+    "replace": "                if source.platform == Platform.FEISHU:\n                    lines = [\"📋 可恢复会话\"]\n                    for idx, s in enumerate(titled[:8], 1):\n                        title = str(s.get(\"title\") or \"\").strip()\n                        preview = str(s.get(\"preview\", \"\") or \"\").strip()[:28]\n                        suffix = f\" — {preview}\" if preview else \"\"\n                        lines.append(f\"{idx}. {title}{suffix}\")\n                    lines.append(\"发送 /resume 标题 恢复\")\n                    return \"\\n\".join(lines)\n                lines = [t(\"gateway.resume.list_header\")]\n                for s in titled[:10]:\n                    title = s[\"title\"]\n                    preview = s.get(\"preview\", \"\")[:40]\n                    preview_part = t(\"gateway.resume.list_preview_suffix\", preview=preview) if preview else \"\"\n                    lines.append(t(\"gateway.resume.list_item\", title=title, preview_part=preview_part))\n                lines.append(t(\"gateway.resume.list_footer\"))\n                return \"\\n\".join(lines)"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "            if ctx.compression_count:\n                lines.append(t(\"gateway.usage.label_compressions\", count=ctx.compression_count))\n\n            if account_lines:",
+    "replace": "            if ctx.compression_count:\n                lines.append(t(\"gateway.usage.label_compressions\", count=ctx.compression_count))\n\n            if source.platform == Platform.FEISHU:\n                compact = [\"📊 用量\"]\n                compact.append(f\"模型: {agent.model}\")\n                compact.append(\n                    f\"本轮: 输入 {input_tokens:,} / 输出 {output_tokens:,} / 总计 {agent.session_total_tokens:,}\"\n                )\n                if cache_read or cache_write:\n                    compact.append(f\"缓存: 读 {cache_read:,} / 写 {cache_write:,}\")\n                compact.append(f\"调用: {agent.session_api_calls}\")\n                try:\n                    if cost_result.amount_usd is not None:\n                        prefix = \"~\" if cost_result.status == \"estimated\" else \"\"\n                        compact[-1] += f\"；成本: {prefix}${float(cost_result.amount_usd):.4f}\"\n                    elif cost_result.status == \"included\":\n                        compact[-1] += \"；成本: 已包含\"\n                except Exception:\n                    pass\n                if ctx.last_prompt_tokens:\n                    compact.append(\n                        f\"上下文: {ctx.last_prompt_tokens:,}/{ctx.context_length:,} ({pct:.0f}%)\"\n                    )\n                if ctx.compression_count:\n                    compact[-1] += f\"；压缩: {ctx.compression_count}\"\n                if rl_state and rl_state.has_data:\n                    compact.append(f\"限额: {format_rate_limit_compact(rl_state)}\")\n                if account_lines:\n                    compact.append(\"\")\n                    compact.extend(account_lines)\n                return \"\\n\".join(compact)\n\n            if account_lines:"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "            approx = estimate_messages_tokens_rough(msgs)\n            lines = [",
+    "replace": "            approx = estimate_messages_tokens_rough(msgs)\n            if source.platform == Platform.FEISHU:\n                lines = [\n                    \"📊 会话\",\n                    f\"消息: {len(msgs)}\",\n                    f\"估算上下文: ~{approx:,}\",\n                    \"发送一条消息后可显示详细用量\",\n                ]\n                if account_lines:\n                    lines.append(\"\")\n                    lines.extend(account_lines)\n                return \"\\n\".join(lines)\n            lines = ["
   }
 ]
