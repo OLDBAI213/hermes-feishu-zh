@@ -3,9 +3,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Hermes Agent](https://img.shields.io/badge/Hermes_Agent-%3E%3D0.14.0-9B59B6.svg)](https://github.com/NousResearch/hermes-agent)
 [![Feishu](https://img.shields.io/badge/Feishu-%E4%B8%AD%E6%96%87-4ECDC4.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh/releases)
+[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh/releases)
 
-> **让 Hermes Agent 在飞书里说中文。** 一键安装，77 条汉化规则，不改你现有配置。
+> **让 Hermes Agent 在飞书里说中文。** 一键安装，85 条汉化规则，不改你现有配置。
 
 [English](#english) | 中文
 
@@ -15,7 +15,7 @@
 
 Hermes Agent 默认在飞书里输出英文 — 错误信息看不懂、界面元素是英文、Webhook 报错全是英文。
 
-**hermes-feishu-zh** 是一个社区扩展，把 77 处飞书输出替换为中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
+**hermes-feishu-zh** 是一个社区扩展，把 85 处飞书输出替换为中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
 
 ### 安装前 vs 安装后
 
@@ -45,9 +45,9 @@ iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/insta
 
 ## 功能特性
 
-### 🔤 77 条中文替换规则
+### 🔤 85 条中文替换规则
 
-覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统等。完整列表见 [汉化规则文档](docs/)。
+覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统、错误信息、媒体下载等。完整列表见 [汉化规则文档](docs/)。
 
 ### 📦 lark-cli 工具箱
 
@@ -131,7 +131,7 @@ MIT License
 
 **Make Hermes Agent speak Chinese in Feishu (Lark).**
 
-A community extension that replaces 77 English outputs with Chinese translations in Hermes Agent's Feishu integration. One-click install, preserves your existing config.
+A community extension that replaces 85 English outputs with Chinese translations in Hermes Agent's Feishu integration. One-click install, preserves your existing config.
 
 ### Quick Install
 
@@ -141,7 +141,7 @@ iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/insta
 
 ### Features
 
-- 🔤 77 Chinese translation rules for Feishu messages, webhooks, CLI output
+- 🔤 85 Chinese translation rules for Feishu messages, webhooks, CLI output, error messages
 - 📦 `lark-cli` toolbox for Feishu API operations
 - 🛡️ Safe install with auto-backup and one-click rollback
 - 🔄 Enhanced mode for richer card output (optional)
