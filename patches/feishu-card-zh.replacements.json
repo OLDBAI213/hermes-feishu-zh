@@ -551,13 +551,13 @@
   },
   {
     "file": "hermes-agent/gateway/run.py",
-    "find": "f\"The **{command_name}** skill is installed but disabled.\n\"",
-    "replace": "f\"**{command_name}** 技能已安装但被禁用。\n\""
+    "find": "                if slug == normalized and declared_name in disabled:\n                    return (\n                        f\"The **{command_name}** skill is installed but disabled.\\n\"\n                        f\"Enable it with: `hermes skills config`\"\n                    )",
+    "replace": "                if slug == normalized and declared_name in disabled:\n                    return (\n                        f\"**{command_name}** 技能已安装但被禁用。\\n\"\n                        f\"使用 `hermes skills config` 启用\"\n                    )"
   },
   {
     "file": "hermes-agent/gateway/run.py",
-    "find": "f\"The **{command_name}** skill is available but not installed.\n\"",
-    "replace": "f\"**{command_name}** 技能可用但未安装。\n\""
+    "find": "                    install_path = f\"official/{'/'.join(parts)}\"\n                    return (\n                        f\"The **{command_name}** skill is available but not installed.\\n\"\n                        f\"Install it with: `hermes skills install {install_path}`\"\n                    )\n    except Exception:\n        pass\n    return None",
+    "replace": "                    install_path = f\"official/{'/'.join(parts)}\"\n                    return (\n                        f\"**{command_name}** 技能可用但未安装。\\n\"\n                        f\"使用 `hermes skills install {install_path}` 安装\"\n                    )\n    except Exception:\n        pass\n    return None"
   },
   {
     "file": "hermes-agent/gateway/run.py",
