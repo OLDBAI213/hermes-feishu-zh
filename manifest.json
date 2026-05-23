@@ -2,7 +2,7 @@
   "manifest_version": 1,
   "name": "hermes-feishu-zh",
   "version": "0.2.3",
-  "description": "Hermes Agent community extension for Feishu Chinese display, basic Feishu adaptation, stable post output, and lark-cli toolbox integration.",
+  "description": "Hermes Agent 飞书中文化包。114 条中文化规则，覆盖飞书消息、Webhook 错误、CLI 输出、评论系统、媒体失败提示等。",
   "license": "MIT",
   "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
   "target": {
@@ -15,11 +15,11 @@
   "profiles": {
     "stable": {
       "default": true,
-      "description": "Merge Chinese Feishu display config, install lark-cli toolbox, use Feishu post output, and apply basic Chinese/source adaptation rules."
+      "description": "合并中文化配置、安装 lark-cli 工具箱、使用飞书 post 输出格式、应用中文化和基础适配规则。"
     },
     "enhanced": {
       "default": false,
-      "description": "Stable profile plus optional interactive card output and enhanced Feishu display source patch."
+      "description": "在稳定版基础上，增加可选的交互式卡片输出和增强飞书显示源码补丁。"
     }
   },
   "entrypoints": {
