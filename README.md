@@ -9,6 +9,22 @@
 
 ---
 
+## 飞书套件选择指南
+
+三个独立包，按需安装：
+
+| 你的需求 | 安装 |
+|----------|------|
+| 飞书里显示中文 | 只装 **hermes-feishu-zh** |
+| 中文 + 工具调用记录、状态显示 | 装 **hermes-feishu-zh** + **hermes-feishu-display-plus** |
+| 中文 + 显示 + 图片/文件正确处理 | 三个都装 |
+
+- 每个包独立，可以单独卸载
+- display-plus 和 adapter-optimization 依赖 hermes-feishu-zh（需要先装）
+- 三个包互不冲突，按需组合
+
+---
+
 ## 这是什么？
 
 Hermes Agent 默认在飞书里输出英文 — 错误信息看不懂、界面元素是英文、Webhook 报错全是英文。
