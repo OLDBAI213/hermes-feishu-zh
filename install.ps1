@@ -29,11 +29,17 @@ function Resolve-HermesHome {
     if ($env:HERMES_HOME) { $candidates += $env:HERMES_HOME }
 
     $hermesCommand = Get-Command hermes -ErrorAction SilentlyContinue
+    if ($hermesCommand -and -not $hermesCommand.Source) {
+        $hermesCommand = Get-Command hermes.exe -ErrorAction SilentlyContinue
+    }
     if ($hermesCommand) {
-        $scriptsDir = Split-Path -Parent $hermesCommand.Source
-        $agentRoot = Split-Path -Parent (Split-Path -Parent $scriptsDir)
-        $detectedHome = Split-Path -Parent $agentRoot
-        if ($detectedHome) { $candidates += $detectedHome }
+        $hermesPath = if ($hermesCommand.Source) { $hermesCommand.Source } elseif ($hermesCommand.Path) { $hermesCommand.Path } else { "" }
+        if ($hermesPath) {
+            $scriptsDir = Split-Path -Parent $hermesPath
+            $agentRoot = Split-Path -Parent (Split-Path -Parent $scriptsDir)
+            $detectedHome = Split-Path -Parent $agentRoot
+            if ($detectedHome) { $candidates += $detectedHome }
+        }
     }
 
     # Note: $HermesRoot is script-scope, not available inside this function.

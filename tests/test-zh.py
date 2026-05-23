@@ -119,11 +119,11 @@ def test_source():
             continue
 
         text = target.read_text(encoding="utf-8-sig")
-        if item["find"] in text:
+        if item["replace"] in text:
+            pass_count += 1
+        elif item["find"] in text:
             fail(f"规则{idx}", f"英文仍存在: {item['find'][:40]}...")
             fail_count += 1
-        elif item["replace"] in text:
-            pass_count += 1
         else:
             warn(f"规则{idx}", "标记未找到（可能上游已改动）")
             warn_count += 1
