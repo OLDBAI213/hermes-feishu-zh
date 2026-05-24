@@ -2,6 +2,17 @@
 
 hermes-feishu-zh 的所有重要变更都会记录在此文件。
 
+## [0.2.4] - 2026-05-24
+
+### 修复
+- 修复 `Remove-Installation` 中 `$Python` 变量作用域 bug，卸载功能恢复正常
+- 修复 `FALLBACK_EMOJI_TEXT` 替换丢失变量赋值，运行时不再 NameError
+- 修复 `_web_response()` 被替换成裸 dict，保持 API 响应结构一致
+
+### 优化
+- 完善 README，增加痛点描述和 lark-cli 使用示例
+- 添加 GitHub Topics 提高可发现性
+
 ## [0.2.3] - 2026-05-23
 
 ### 新增
