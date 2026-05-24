@@ -247,7 +247,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
     "find": "FALLBACK_EMOJI_TEXT = \"[Emoji]\"",
-    "replace": "\"[表情]\""
+    "replace": "FALLBACK_EMOJI_TEXT = \"[表情]\""
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
@@ -272,7 +272,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
     "find": "return _web_response(status=400, text=\"Invalid JSON\")",
-    "replace": "{\"code\": 400, \"msg\": \"无效 JSON\"}"
+    "replace": "return _web_response(status=400, text=\"无效 JSON\")"
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
@@ -282,7 +282,7 @@
   {
     "file": "hermes-agent/gateway/platforms/feishu.py",
     "find": "return _web_response(status=400, text=\"Encrypted webhook body not supported\")",
-    "replace": "{\"code\": 400, \"msg\": \"暂不支持加密 webhook 请求体\"}"
+    "replace": "return _web_response(status=400, text=\"暂不支持加密 webhook 请求体\")"
   },
   {
     "file": "hermes-agent/gateway/platforms/feishu_comment.py",

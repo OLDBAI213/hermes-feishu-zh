@@ -330,7 +330,7 @@ function Remove-Installation {
     # 2. Remove lark_cli from config
     $configPath = Join-Path $HermesRoot "config.yaml"
     if (Test-Path -LiteralPath $configPath) {
-        $python = $Python
+        $python = $script:Python
         $removeScript = @'
 import sys
 from pathlib import Path
