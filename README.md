@@ -9,18 +9,13 @@
 
 ---
 
-## 这是什么？
+## 痛点
 
-Hermes Agent 默认在飞书里输出英文 — 错误信息看不懂、界面元素是英文、Webhook 报错全是英文。
+Hermes Agent 默认在飞书里输出英文 — 错误信息看不懂、界面元素是英文、Webhook 报错全是英文。对于中文用户来说，每次看到 `[Rich text message]`、`Rate limit exceeded` 这些提示都很懵。
+
+## 解决方案
 
 **hermes-feishu-zh** 是一个社区扩展，定位是"飞书中文化包"。它把 114 处飞书输出整理成中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
-
-项目边界：
-
-- 本项目负责：飞书中文化、配置合并、`lark-cli-toolbox`、安装/验证/回滚。
-- `hermes-feishu-display-plus` 负责：工具记录、状态栏、结构化正文等显示优化。
-- `hermes-feishu-adapter-optimization` 负责：图片、文件、混合消息、忙碌队列、上下文连续性等飞书适配能力。
-- 任何项目都不能拆东墙补西墙：中文化不能打乱原版显示，显示优化不能丢图片、文件、状态和工具调用信息，适配优化不能改变用户已有配置。
 
 ### 安装前 vs 安装后
 
@@ -68,6 +63,9 @@ lark-cli calendar agenda
 
 # 示例：搜索文档
 lark-cli docs search "关键词"
+
+# 示例：发送消息
+lark-cli messages send --chat "oc_xxx" --text "你好"
 ```
 
 ### 🛡️ 安全安装
@@ -90,6 +88,24 @@ lark-cli docs search "关键词"
 | **验证** | `powershell -ExecutionPolicy Bypass -File .\verify.ps1` |
 | **回滚** | `powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest` |
 | **卸载** | `powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall` |
+
+---
+
+## 飞书套件
+
+这是 **hermes-feishu-zh**，飞书套件的基础包。完整飞书体验需要安装套件的三个包：
+
+| 包 | 定位 | 说明 |
+|----|------|------|
+| **hermes-feishu-zh** | 中文化 | 基础包，必装 |
+| [hermes-feishu-display-plus](https://github.com/OLDBAI213/hermes-feishu-display-plus) | 显示增强 | 工具调用记录、状态显示、结构化正文 |
+| [hermes-feishu-adapter-optimization](https://github.com/OLDBAI213/hermes-feishu-adapter-optimization) | 适配优化 | 图片、文件、音视频、忙碌队列 |
+
+项目边界：
+- 本项目负责：飞书中文化、配置合并、`lark-cli-toolbox`、安装/验证/回滚。
+- `hermes-feishu-display-plus` 负责：工具记录、状态栏、结构化正文等显示优化。
+- `hermes-feishu-adapter-optimization` 负责：图片、文件、混合消息、忙碌队列、上下文连续性等飞书适配能力。
+- 任何项目都不能拆东墙补西墙：中文化不能打乱原版显示，显示优化不能丢图片、文件、状态和工具调用信息，适配优化不能改变用户已有配置。
 
 ---
 
