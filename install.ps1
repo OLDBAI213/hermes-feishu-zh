@@ -225,13 +225,13 @@ function Apply-Replacements {
         }
 
         $text = Get-Content -LiteralPath $target -Raw -Encoding UTF8
-        if ($text.Contains($item.find)) {
-            $text = $text.Replace($item.find, $item.replace)
-            Set-Content -LiteralPath $target -Value $text -Encoding UTF8 -NoNewline
+        if ($text.Contains($item.replace)) {
             $applied++
             continue
         }
-        if ($text.Contains($item.replace)) {
+        if ($text.Contains($item.find)) {
+            $text = $text.Replace($item.find, $item.replace)
+            Set-Content -LiteralPath $target -Value $text -Encoding UTF8 -NoNewline
             $applied++
             continue
         }
