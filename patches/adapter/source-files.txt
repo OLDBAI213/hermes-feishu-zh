@@ -1,0 +1,10 @@
+hermes-agent/gateway/platforms/base.py
+hermes-agent/gateway/platforms/feishu.py
+hermes-agent/gateway/run.py
+hermes-agent/gateway/stream_consumer.py
+hermes-agent/run_agent.py
+hermes-agent/agent/image_routing.py
+hermes-agent/agent/auxiliary_client.py
+hermes-agent/tools/send_message_tool.py
+hermes-agent/tests/agent/test_vision_resolved_args.py
+hermes-agent/tests/run_agent/test_vision_aware_preprocessing.py

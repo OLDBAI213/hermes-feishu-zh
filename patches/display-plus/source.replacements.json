@@ -1,0 +1,37 @@
+[
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "def _progress_text(lines: list) -> str:\n                return \"\\n\".join(str(line) for line in lines)",
+    "replace": "def _progress_text(lines: list) -> str:\n                if _feishu_zh_progress:\n                    numbered = [\n                        f\"{idx}. {str(line)}\"\n                        for idx, line in enumerate(lines, start=1)\n                    ]\n                    return \"🧰 工具调用记录\\n\" + \"\\n\".join(numbered)\n                return \"\\n\".join(str(line) for line in lines)"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "def _build_markdown_post_payload(content: str) -> str:\n    rows = _build_markdown_post_rows(content)",
+    "replace": "def _build_markdown_post_payload(content: str) -> str:\n    rows = _build_markdown_post_rows(_polish_feishu_structured_text(content))"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "def _build_markdown_post_payload(content: str) -> str:\n    rows = _build_markdown_post_rows(_polish_feishu_structured_text(content))\n    return json.dumps(\n        {\n            \"zh_cn\": {\n                \"content\": rows,\n            }\n        },\n        ensure_ascii=False,\n    )",
+    "replace": "def _build_markdown_post_payload(content: str) -> str:\n    rows = _build_markdown_post_rows(_polish_feishu_structured_text(content))\n    return json.dumps(\n        {\n            \"zh_cn\": {\n                \"title\": \"\",\n                \"content\": rows,\n            }\n        },\n        ensure_ascii=False,\n    )"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "def _text_post_element(text: str, **style: bool) -> Dict[str, Any]:\n    element: Dict[str, Any] = {\"tag\": \"text\", \"text\": text}",
+    "replace": "def _text_post_element(text: str, **style: bool) -> Dict[str, Any]:\n    element: Dict[str, Any] = {\"tag\": \"text\", \"text\": text if text else \" \"}"
+  },
+  {
+    "file": "hermes-agent/gateway/platforms/feishu.py",
+    "find": "        provider_label = get_auth_provider_display_name(provider) if provider else \"\"\n        if not provider_label and provider:",
+    "replace": "        provider_label = get_auth_provider_display_name(provider) if provider else \"\"\n        if provider_label == \"Xiaomi MiMo\":\n            provider_label = \"小米 MiMo\"\n        if not provider_label and provider:"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "                            # Transient network errors (ConnectError, timeouts)\n                            # must not permanently disable progress-message",
+    "replace": "                            if platform_key == \"feishu\":\n                                logger.warning(\n                                    \"[Feishu] Progress edit failed; suppressing standalone fallback line\"\n                                )\n                                continue\n                            # Transient network errors (ConnectError, timeouts)\n                            # must not permanently disable progress-message"
+  },
+  {
+    "file": "hermes-agent/gateway/run.py",
+    "find": "                        else:\n                            # Editing unsupported: send just this line\n                            result = await adapter.send(",
+    "replace": "                        else:\n                            if platform_key == \"feishu\":\n                                continue\n                            # Editing unsupported: send just this line\n                            result = await adapter.send("
+  }
+]

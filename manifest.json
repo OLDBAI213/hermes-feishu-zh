@@ -1,8 +1,8 @@
 {
   "manifest_version": 1,
-  "name": "hermes-feishu-zh",
-  "version": "0.2.3",
-  "description": "Hermes Agent 飞书中文化包。114 条中文化规则，覆盖飞书消息、Webhook 错误、CLI 输出、评论系统、媒体失败提示等。",
+  "name": "hermes-feishu",
+  "version": "1.0.0",
+  "description": "Hermes Agent 飞书全套件。中文化、显示增强、媒体适配、工具进度、结构化输出，一键安装。",
   "license": "MIT",
   "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
   "target": {
@@ -12,14 +12,40 @@
       "windows"
     ]
   },
+  "modules": {
+    "zh": {
+      "description": "中文化核心 — 114 条规则，覆盖飞书消息、Webhook 错误、CLI 输出、评论系统",
+      "patches": [
+        "patches/stable.config.yaml",
+        "patches/feishu-card-zh.replacements.json"
+      ]
+    },
+    "display": {
+      "description": "显示增强 — 工具调用记录、三状态显示、结构化正文、移动端可读性",
+      "depends_on": ["zh"],
+      "patches": [
+        "patches/feishu-display-upgrade.replacements.json",
+        "patches/display-plus/source.replacements.json",
+        "patches/display-plus/stable.config.yaml"
+      ]
+    },
+    "adapter": {
+      "description": "媒体适配 — 图片/文件/音视频/混合消息/队列/下载失败诊断",
+      "patches": [
+        "patches/adapter/source.replacements.json"
+      ]
+    }
+  },
   "profiles": {
     "stable": {
       "default": true,
-      "description": "合并中文化配置、安装 lark-cli 工具箱、使用飞书 post 输出格式、应用中文化和基础适配规则。"
+      "modules": ["zh", "adapter"],
+      "description": "中文化 + 媒体适配，适合大多数用户。"
     },
-    "enhanced": {
+    "full": {
       "default": false,
-      "description": "在稳定版基础上，增加可选的交互式卡片输出和增强飞书显示源码补丁。"
+      "modules": ["zh", "display", "adapter"],
+      "description": "全功能 — 中文化 + 显示增强 + 媒体适配。"
     }
   },
   "entrypoints": {
@@ -40,11 +66,13 @@
       "hermes-agent/gateway/platforms/feishu_comment.py",
       "hermes-agent/gateway/platforms/feishu_comment_rules.py",
       "hermes-agent/gateway/run.py",
-      "hermes-agent/tools/send_message_tool.py"
+      "hermes-agent/tools/send_message_tool.py",
+      "hermes-agent/run_agent.py",
+      "hermes-agent/agent/image_routing.py"
     ]
   },
   "backup": {
-    "directory": "backups/hermes-feishu-zh-<timestamp>",
+    "directory": "backups/hermes-feishu-<timestamp>",
     "files": [
       "config.yaml",
       ".env",

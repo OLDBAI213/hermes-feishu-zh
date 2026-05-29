@@ -1,0 +1,27 @@
+[
+  {
+    "file": "hermes-agent/tools/send_message_tool.py",
+    "find": "media_files, cleaned_message = BasePlatformAdapter.extract_media(message)\n    mirror_text = cleaned_message.strip() or message.strip()",
+    "replace": "media_files, cleaned_message = BasePlatformAdapter.extract_media(message)\n    mirror_text = cleaned_message.strip() or _describe_media_for_mirror(media_files)"
+  },
+  {
+    "file": "hermes-agent/run_agent.py",
+    "find": "        try:\n            from agent.models_dev import get_model_capabilities\n            provider = (getattr(self, \"provider\", \"\") or \"\").strip()\n            model = (getattr(self, \"model\", \"\") or \"\").strip()",
+    "replace": "        forced_image_mode: Optional[str] = None\n        try:\n            from hermes_cli.config import load_config\n\n            cfg = load_config() or {}\n            agent_cfg = cfg.get(\"agent\") or {}\n            if isinstance(agent_cfg, dict):\n                image_mode = str(agent_cfg.get(\"image_input_mode\") or \"\").strip().lower()\n                if image_mode in {\"native\", \"text\"}:\n                    forced_image_mode = image_mode\n                if forced_image_mode == \"text\":\n                    return False\n        except Exception:\n            pass\n\n        try:\n            from agent.models_dev import get_model_capabilities\n            provider = (getattr(self, \"provider\", \"\") or \"\").strip()\n            model = (getattr(self, \"model\", \"\") or \"\").strip()"
+  },
+  {
+    "file": "hermes-agent/run_agent.py",
+    "find": "            if caps is None:\n                return False\n            return bool(caps.supports_vision)\n        except Exception:\n            return False",
+    "replace": "            if caps is None:\n                return forced_image_mode == \"native\"\n            return bool(caps.supports_vision)\n        except Exception:\n            return forced_image_mode == \"native\""
+  },
+  {
+    "file": "hermes-agent/agent/image_routing.py",
+    "find": "    if mode_cfg == \"native\":\n        return \"native\"",
+    "replace": "    if mode_cfg == \"native\":\n        supports = _lookup_supports_vision(provider, model)\n        if supports is False:\n            logger.warning(\n                \"image_routing: agent.image_input_mode=native requested, but %s:%s \"\n                \"is known text-only; falling back to text image routing.\",\n                provider,\n                model,\n            )\n            return \"text\"\n        return \"native\""
+  },
+  {
+    "file": "hermes-agent/agent/auxiliary_client.py",
+    "find": "    if base_url:\n        return \"custom\", resolved_model, base_url, api_key, resolved_api_mode",
+    "replace": "    if base_url:\n        if provider and str(provider).strip().lower() not in {\"auto\", \"custom\"}:\n            return provider, resolved_model, base_url, api_key, resolved_api_mode\n        return \"custom\", resolved_model, base_url, api_key, resolved_api_mode"
+  }
+]
