@@ -60,6 +60,13 @@ function Get-HermesPython {
     throw "Python not found. Expected Hermes venv under $AgentRoot."
 }
 
+function Assert-NativeSuccess {
+    param([string]$Step)
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Step failed with exit $LASTEXITCODE"
+    }
+}
+
 $HermesHome = Resolve-HermesHome -Requested $HermesHome
 $AgentRoot = Get-AgentRoot -HermesRoot $HermesHome
 $Python = Get-HermesPython -AgentRoot $AgentRoot
@@ -122,6 +129,7 @@ assert "lark_cli" in (platform_toolsets.get("cli") or [])
 assert "lark_cli" in (platform_toolsets.get("feishu") or [])
 assert "lark_cli" in toolsets
 '@ | & $Python -
+Assert-NativeSuccess "Config"
 
 Write-Step "Source Chinese labels"
 @'
@@ -147,6 +155,19 @@ if missing:
     print("\n".join(missing))
 raise SystemExit(1 if missing else 0)
 '@ | & $Python -
+Assert-NativeSuccess "Source Chinese labels"
+
+Write-Step "Feishu localization audit"
+$AuditScript = Join-Path $AgentRoot "scripts\feishu_localization_audit.py"
+$AuditRules = Join-Path $AgentRoot "locales\feishu_zh_audit_allowlist.yaml"
+if (-not (Test-Path -LiteralPath $AuditScript)) {
+    throw "Feishu localization audit script not found: $AuditScript"
+}
+if (-not (Test-Path -LiteralPath $AuditRules)) {
+    throw "Feishu localization audit rules not found: $AuditRules"
+}
+& $Python $AuditScript --root $AgentRoot --rules $AuditRules --json
+Assert-NativeSuccess "Feishu localization audit"
 
 Write-Step "Plugin"
 @'
@@ -172,6 +193,7 @@ print("lark_cli.tools =", ",".join(tools))
 assert loaded and loaded.enabled
 assert len(tools) >= 10
 '@ | & $Python -
+Assert-NativeSuccess "Plugin"
 
 Write-Step "lark-cli"
 if (Get-Command lark-cli -ErrorAction SilentlyContinue) {
@@ -208,6 +230,7 @@ for extra, label in cases:
         assert msg_type == "interactive"
         assert parsed["elements"][0]["tag"] == "markdown"
 '@ | & $Python -
+Assert-NativeSuccess "Feishu payload modes"
 
 if (-not $SkipGateway) {
     Write-Step "Gateway"

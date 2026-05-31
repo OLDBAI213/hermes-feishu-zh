@@ -10,6 +10,8 @@ $required = @(
     "manifest.json",
     "README.md",
     "LICENSE",
+    "audit\feishu_localization_audit.py",
+    "audit\feishu_zh_audit_allowlist.yaml",
     "patches\stable.config.yaml",
     "patches\enhanced.config.yaml",
     "patches\feishu-card-zh.replacements.json",

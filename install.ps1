@@ -247,6 +247,37 @@ function Apply-Replacements {
     Write-Host "  ✅ 应用 $applied 条规则"
 }
 
+function Install-AuditAssets {
+    param(
+        [string]$HermesRoot,
+        [string]$BackupDir
+    )
+
+    $items = @(
+        @{ Source = "audit\feishu_localization_audit.py"; Target = "hermes-agent\scripts\feishu_localization_audit.py" },
+        @{ Source = "audit\feishu_zh_audit_allowlist.yaml"; Target = "hermes-agent\locales\feishu_zh_audit_allowlist.yaml" }
+    )
+
+    foreach ($item in $items) {
+        $source = Join-Path $PackRoot $item.Source
+        $target = Join-Path $HermesRoot $item.Target
+        if (-not (Test-Path -LiteralPath $source)) {
+            throw "Audit asset missing from package: $source"
+        }
+        $backupName = ($item.Target -replace '[\\\\/]', '__') + ".bak"
+        $backupPath = Join-Path $BackupDir $backupName
+        if ((Test-Path -LiteralPath $target) -and -not (Test-Path -LiteralPath $backupPath)) {
+            Copy-IfExists -Path $target -Destination $backupPath
+        }
+        $parent = Split-Path -Parent $target
+        if ($parent -and -not (Test-Path -LiteralPath $parent)) {
+            New-Item -ItemType Directory -Force -Path $parent | Out-Null
+        }
+        Copy-Item -LiteralPath $source -Destination $target -Force
+    }
+    Write-Host "  Installed Feishu localization audit assets"
+}
+
 function Get-LatestBackup {
     param([string]$HermesRoot)
     $backupRoot = Join-Path $HermesRoot "backups"
@@ -291,6 +322,17 @@ function Restore-Backup {
         Copy-Item -LiteralPath $pluginBackup -Destination $pluginTarget -Recurse -Force
     } elseif (-not $pluginExisted -and (Test-Path -LiteralPath $pluginTarget)) {
         Remove-Item -LiteralPath $pluginTarget -Recurse -Force
+    }
+
+    foreach ($relative in @(
+        "hermes-agent\scripts\feishu_localization_audit.py",
+        "hermes-agent\locales\feishu_zh_audit_allowlist.yaml"
+    )) {
+        $backupPath = Join-Path $backupDir (($relative -replace '[\\\\/]', '__') + ".bak")
+        $target = Join-Path $HermesRoot $relative
+        if (-not (Test-Path -LiteralPath $backupPath) -and (Test-Path -LiteralPath $target)) {
+            Remove-Item -LiteralPath $target -Force
+        }
     }
 
     Get-ChildItem -LiteralPath $backupDir -File -Filter "*.bak" | ForEach-Object {
@@ -403,6 +445,25 @@ print("Config cleaned")
         }
     }
 
+    foreach ($relative in @(
+        "hermes-agent\scripts\feishu_localization_audit.py",
+        "hermes-agent\locales\feishu_zh_audit_allowlist.yaml"
+    )) {
+        $target = Join-Path $HermesRoot $relative
+        $backupPath = if ($backupDir) {
+            Join-Path $backupDir.FullName (($relative -replace '[\\\\/]', '__') + ".bak")
+        } else {
+            $null
+        }
+        if ($backupPath -and (Test-Path -LiteralPath $backupPath)) {
+            continue
+        }
+        if (Test-Path -LiteralPath $target) {
+            Remove-Item -LiteralPath $target -Force
+            Write-Host "  Removed audit asset: $relative"
+        }
+    }
+
     Write-Host ""
     Write-Host "Uninstalled. Restart gateway to apply:"
     Write-Host "  hermes gateway restart"
@@ -472,6 +533,9 @@ if (-not $NoLarkCliToolbox) {
 if (-not $NoSourceZh) {
     Write-Step "Apply Feishu Chinese source labels"
     Apply-Replacements -JsonPath (Join-Path $PackRoot "patches\feishu-card-zh.replacements.json") -RootPath $HermesHome -BackupDir $backupDir
+
+    Write-Step "Install Feishu localization audit"
+    Install-AuditAssets -HermesRoot $HermesHome -BackupDir $backupDir
 }
 
 if ($Profile -eq "enhanced") {

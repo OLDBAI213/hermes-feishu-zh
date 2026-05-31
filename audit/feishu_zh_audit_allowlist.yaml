@@ -1,0 +1,95 @@
+# Feishu Chinese localization audit rules.
+#
+# This file is deliberately a ledger, not a translation catalog.  It records
+# English strings that are allowed to remain in the Feishu-facing code path
+# because they are identifiers, protocol values, config keys, API paths, model
+# names, or debugging-only strings.
+#
+# User-visible English prose should not be added here. Move it to i18n / zh
+# output, or add a narrow exact allow rule with a reason if keeping English is
+# intentional.
+
+scope:
+  files:
+    - gateway/platforms/feishu.py
+    - gateway/platforms/feishu_comment.py
+    - gateway/platforms/feishu_comment_rules.py
+    - gateway/runtime_footer.py
+
+allowed_exact:
+  - text: "Feishu"
+    reason: product name
+  - text: "Lark"
+    reason: product name
+  - text: "Feishu/Lark"
+    reason: product names
+  - text: "Hermes"
+    reason: product name
+  - text: "Typing"
+    reason: Feishu reaction type
+  - text: "CrossMark"
+    reason: Feishu reaction type
+  - text: "OK"
+    reason: Feishu reaction type
+  - text: "NO_REPLY"
+    reason: internal sentinel
+  - text: "ALLOWED"
+    reason: internal enum/debug value
+  - text: "DENIED"
+    reason: internal enum/debug value
+  - text: "Report"
+    reason: upload label for non-zh gateway path
+  - text: "HOME"
+    reason: environment variable
+  - text: "TERMINAL_CWD"
+    reason: environment variable
+  - text: "Xiaomi MiMo"
+    reason: provider display source label mapped to Chinese in runtime footer
+  - text: "(^#{1,6}\\s)|(^\\s*[-*]\\s)|(^\\s*\\d+\\.\\s)|(^\\s*---+\\s*$)|(```)|(`[^`\\n]+`)|(\\*\\*[^*\\n].+?\\*\\*)|(~~[^~\\n].+?~~)|(<u>.+?</u>)|(\\*[^*\\n]+\\*)|(\\[[^\\]]+\\]\\([^)]+\\))|(^>\\s)"
+    reason: markdown detection regex, not displayed text
+  - text: "content format of the post type is incorrect"
+    reason: Feishu API error substring used for fallback detection
+  - text: "[^\\w.\\- ]"
+    reason: filename sanitizer regex, not displayed text
+  - text: "&gt;"
+    reason: HTML escape entity required by Feishu comment text format
+  - text: "&lt;"
+    reason: HTML escape entity required by Feishu comment text format
+  - text: "&amp;"
+    reason: HTML escape entity required by Feishu comment text format
+
+allowed_patterns:
+  - pattern: "^[A-Za-z0-9_.:-]+$"
+    reason: identifier, enum, extension, model id, or config key
+  - pattern: "^/[A-Za-z0-9_./:{}?=&-]+$"
+    reason: API path or URL path
+  - pattern: "^https?://"
+    reason: URL
+  - pattern: "^[A-Z0-9_]+$"
+    reason: constant or protocol enum
+  - pattern: "^[a-z_][a-z0-9_]*(\\.[a-z0-9_]+)+$"
+    reason: dotted i18n or config key
+  - pattern: "^\\{[A-Za-z_][A-Za-z0-9_]*\\}$"
+    reason: format placeholder
+  - pattern: "^%[A-Za-z]$"
+    reason: printf-style formatter
+  - pattern: "^@[A-Za-z0-9_]+$"
+    reason: mention marker
+  - pattern: "^<[^>]+>$"
+    reason: argument placeholder or markup token
+
+forbidden_patterns:
+  - pattern: "Invalid API Key"
+    reason: user-facing auth error must be normalized to Chinese
+  - pattern: "Please provide valid API Key"
+    reason: user-facing auth error must be normalized to Chinese
+  - pattern: "Gateway shutting down"
+    reason: lifecycle message must be Chinese in zh mode
+  - pattern: "Rich text message"
+    reason: Feishu placeholder must be Chinese
+  - pattern: "Rate limit exceeded"
+    reason: webhook error must be Chinese
+  - pattern: "Unsupported media type"
+    reason: webhook error must be Chinese
+  - pattern: "Payload too large"
+    reason: webhook error must be Chinese

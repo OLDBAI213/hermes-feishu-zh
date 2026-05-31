@@ -1,8 +1,8 @@
 # 发布检查
 
-上次本地验证：2026-05-21
+上次本地验证：2026-05-29
 
-在 Windows + Hermes Agent v0.14.0 上验证通过。
+在 Windows + Hermes Agent v0.15.1 上验证通过。
 
 已通过的检查：
 
@@ -14,13 +14,34 @@
 - 重复安装不会产生重复配置条目
 - `install.ps1 -Rollback latest` 回滚
 - 回滚后验证
-- `patches/feishu-card-zh.replacements.json` 覆盖 58 条源码汉化规则
+- `patches/feishu-card-zh.replacements.json` 覆盖 114 条源码汉化规则
+- `audit/feishu_localization_audit.py` 和 `audit/feishu_zh_audit_allowlist.yaml` 会随安装同步到目标 Hermes
+- 飞书用户可见英文审计通过：`scripts/feishu_localization_audit.py` 的 `unapproved_count = 0`
+- Feishu `outbound_format` / `card_mode` 出站路由验收通过：`auto => post`、`text => text`、`post => post`、`card => interactive`
 
 已知说明：
 
 - 远程安装命令中的 `<owner>` 在仓库发布后需替换为实际 GitHub 用户名
 - `lark-cli doctor` 显示 `user_identity` 警告是 `bot-only` 绑定的正常现象
-- 增强模式会修改 Hermes 源码，Hermes 飞书适配器更新后需重新验证
+- 增强模式会修改 Hermes 源码，Hermes 飞书适配器更新后必须重新验证
+
+## 2026-05-29 复审记录
+
+当前 `E:\AI\hermes\hermes-agent` 为 Hermes Agent v0.15.1。
+
+验证命令：
+
+```powershell
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\verify.ps1 -HermesHome E:\AI\hermes -SkipGateway
+```
+
+结果：
+
+- `Source Chinese labels`：114 条规则，missing 0。
+- `Feishu localization audit`：用户可见英文未批准项 0；允许保留项已记录原因。
+- `lark-cli doctor`：ok，只有 `user_identity` 和 CLI 版本提示为警告。
+- `Feishu payload modes`：`auto => post`、`text => text`、`post => post`、`card => interactive`。
+- 结论：本机等级 B，可用但缺真实飞书 PC/手机截图验收，暂不标 A。
 
 ## 2026-05-21 后续更新交接
 

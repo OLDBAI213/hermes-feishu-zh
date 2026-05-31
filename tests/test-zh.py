@@ -22,6 +22,8 @@ from pathlib import Path
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", ""))
 PACK_ROOT = Path(__file__).parent.parent
 PATCH_PATH = PACK_ROOT / "patches" / "feishu-card-zh.replacements.json"
+AUDIT_SCRIPT = HERMES_HOME / "hermes-agent" / "scripts" / "feishu_localization_audit.py"
+AUDIT_RULES = HERMES_HOME / "hermes-agent" / "locales" / "feishu_zh_audit_allowlist.yaml"
 
 # 颜色输出
 GREEN = "\033[92m"
@@ -47,6 +49,10 @@ def warn(name, detail=""):
     d = f" ({detail})" if detail else ""
     print(f"  {YELLOW}!{RESET} {name}{d}")
     return False
+
+
+def check(name, condition, detail=""):
+    return ok(name, detail) if condition else fail(name, detail)
 
 
 def section(title):
@@ -79,17 +85,17 @@ def test_config():
     toolsets = cfg.get("toolsets") or []
 
     results = []
-    results.append(ok("language == zh", str(display.get("language"))))
-    results.append(ok("gateway_locale == zh", str(display.get("gateway_locale"))))
-    results.append(ok("tui_auto_resume_recent == True", str(display.get("tui_auto_resume_recent"))))
-    results.append(ok("streaming == True", str(feishu_display.get("streaming"))))
-    results.append(ok("tool_progress == new", str(feishu_display.get("tool_progress"))))
-    results.append(ok("tool_preview_length >= 120", str(feishu_display.get("tool_preview_length"))))
-    results.append(ok("runtime_footer.enabled == True", str(feishu_display.get("runtime_footer", {}).get("enabled"))))
-    results.append(ok("runtime_footer.style == zh_detailed", str(feishu_display.get("runtime_footer", {}).get("style"))))
-    results.append(ok("outbound_format in [post, card]", str(feishu_platform.get("outbound_format"))))
-    results.append(ok("lark-cli-toolbox in plugins", "lark-cli-toolbox" in plugins_enabled))
-    results.append(ok("lark_cli in toolsets", "lark_cli" in toolsets))
+    results.append(check("language == zh", display.get("language") == "zh", str(display.get("language"))))
+    results.append(check("gateway_locale == zh", display.get("gateway_locale") == "zh", str(display.get("gateway_locale"))))
+    results.append(check("tui_auto_resume_recent == True", display.get("tui_auto_resume_recent") is True, str(display.get("tui_auto_resume_recent"))))
+    results.append(check("streaming == True", feishu_display.get("streaming") is True, str(feishu_display.get("streaming"))))
+    results.append(check("tool_progress in [new, all]", feishu_display.get("tool_progress") in {"new", "all"}, str(feishu_display.get("tool_progress"))))
+    results.append(check("tool_preview_length >= 120", (feishu_display.get("tool_preview_length") or 0) >= 120, str(feishu_display.get("tool_preview_length"))))
+    results.append(check("runtime_footer.enabled == True", feishu_display.get("runtime_footer", {}).get("enabled") is True, str(feishu_display.get("runtime_footer", {}).get("enabled"))))
+    results.append(check("runtime_footer.style == zh_detailed", feishu_display.get("runtime_footer", {}).get("style") == "zh_detailed", str(feishu_display.get("runtime_footer", {}).get("style"))))
+    results.append(check("outbound_format in [post, card]", feishu_platform.get("outbound_format") in {"post", "card"}, str(feishu_platform.get("outbound_format"))))
+    results.append(check("lark-cli-toolbox in plugins", "lark-cli-toolbox" in plugins_enabled, str("lark-cli-toolbox" in plugins_enabled)))
+    results.append(check("lark_cli in toolsets", "lark_cli" in toolsets, str("lark_cli" in toolsets)))
 
     return all(results)
 
@@ -132,6 +138,34 @@ def test_source():
     return fail_count == 0
 
 
+def test_localization_audit():
+    section("2b. 飞书用户可见英文审计")
+    if not AUDIT_SCRIPT.exists():
+        return fail("审计脚本不存在", str(AUDIT_SCRIPT))
+    if not AUDIT_RULES.exists():
+        return fail("审计白名单不存在", str(AUDIT_RULES))
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(AUDIT_SCRIPT),
+            "--root",
+            str(HERMES_HOME / "hermes-agent"),
+            "--rules",
+            str(AUDIT_RULES),
+            "--json",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(result.stdout)
+        print(result.stderr)
+        return fail("审计失败", f"exit={result.returncode}")
+    data = json.loads(result.stdout)
+    return check("未批准英文 == 0", data.get("unapproved_count") == 0, str(data.get("unapproved_count")))
+
+
 # ============================================================
 # 3. 插件检查
 # ============================================================
@@ -140,9 +174,9 @@ def test_plugin():
     plugin = HERMES_HOME / "plugins" / "lark-cli-toolbox"
 
     results = []
-    results.append(ok("插件目录存在", str(plugin)))
-    results.append(ok("plugin.yaml 存在", str((plugin / "plugin.yaml").exists())))
-    results.append(ok("__init__.py 存在", str((plugin / "__init__.py").exists())))
+    results.append(check("插件目录存在", plugin.exists(), str(plugin)))
+    results.append(check("plugin.yaml 存在", (plugin / "plugin.yaml").exists(), str((plugin / "plugin.yaml").exists())))
+    results.append(check("__init__.py 存在", (plugin / "__init__.py").exists(), str((plugin / "__init__.py").exists())))
 
     try:
         sys.path.insert(0, str(HERMES_HOME / "hermes-agent"))
@@ -152,8 +186,8 @@ def test_plugin():
         mgr.discover_and_load(force=True)
         loaded = mgr._plugins.get("lark-cli-toolbox")
         tools = sorted(name for name, entry in registry._tools.items() if entry.toolset == "lark_cli")
-        results.append(ok("插件已加载", str(bool(loaded and loaded.enabled))))
-        results.append(ok(f"工具已注册 ({len(tools)}个)", ", ".join(tools[:5])))
+        results.append(check("插件已加载", bool(loaded and loaded.enabled), str(bool(loaded and loaded.enabled))))
+        results.append(check(f"工具已注册 ({len(tools)}个)", len(tools) >= 10, ", ".join(tools[:5])))
     except Exception as e:
         results.append(fail("插件导入失败", str(e)))
 
@@ -176,8 +210,8 @@ def test_gateway():
         feishu_state = (state.get("platforms") or {}).get("feishu", {}).get("state", "unknown")
 
         results = []
-        results.append(ok("Gateway 运行中", state.get("gateway_state")))
-        results.append(ok("飞书已连接", feishu_state))
+        results.append(check("Gateway 运行中", gw_running, str(state.get("gateway_state"))))
+        results.append(check("飞书已连接", feishu_state == "connected", str(feishu_state)))
         return all(results)
     except Exception as e:
         return fail("状态解析失败", str(e))
@@ -313,6 +347,7 @@ def main():
     tests = {
         "--config": test_config,
         "--source": test_source,
+        "--audit": test_localization_audit,
         "--plugin": test_plugin,
         "--gateway": test_gateway,
         "--feishu": test_feishu_scenario,
@@ -324,6 +359,7 @@ def main():
         results = []
         results.append(("Config", test_config()))
         results.append(("Source", test_source()))
+        results.append(("Audit", test_localization_audit()))
         results.append(("Plugin", test_plugin()))
         results.append(("Gateway", test_gateway()))
         results.append(("Feishu", test_feishu_scenario()))
@@ -347,12 +383,16 @@ def main():
         sys.exit(0 if total_fail == 0 else 1)
     else:
         # Run specific tests
+        failures = 0
         for arg in args:
             if arg in tests:
-                tests[arg]()
+                if not tests[arg]():
+                    failures += 1
             else:
                 print(f"未知参数: {arg}")
                 print(f"可用参数: {', '.join(tests.keys())}")
+                failures += 1
+        sys.exit(0 if failures == 0 else 1)
 
 
 if __name__ == "__main__":
