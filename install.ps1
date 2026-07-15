@@ -184,6 +184,18 @@ def append_unique(items, value):
     if value not in items:
         items.append(value)
 
+def append_if_list_exists(root, path, value):
+    """Append value only if the list already exists. Does NOT create new lists
+    for platform_toolsets to avoid overriding Hermes default tool whitelist."""
+    cur = root
+    for key in path[:-1]:
+        cur = cur.get(key)
+        if not isinstance(cur, dict):
+            return
+    leaf = cur.get(path[-1])
+    if isinstance(leaf, list) and value not in leaf:
+        leaf.append(value)
+
 merge(config, patch)
 
 display = config.setdefault("display", {})
@@ -191,8 +203,8 @@ display["tui_auto_resume_recent"] = True
 
 if install_lark:
     append_unique(ensure_list_path(config, ["plugins", "enabled"]), "lark-cli-toolbox")
-    append_unique(ensure_list_path(config, ["platform_toolsets", "cli"]), "lark_cli")
-    append_unique(ensure_list_path(config, ["platform_toolsets", "feishu"]), "lark_cli")
+    append_if_list_exists(config, ["platform_toolsets", "cli"], "lark_cli")
+    append_if_list_exists(config, ["platform_toolsets", "feishu"], "lark_cli")
     append_unique(ensure_list_path(config, ["toolsets"]), "lark_cli")
 
 with config_path.open("w", encoding="utf-8") as f:
