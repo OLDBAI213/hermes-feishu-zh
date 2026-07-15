@@ -8,7 +8,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Validate PowerShell scripts
         run: |
           find . -name '*.ps1' -exec pwsh -Command "Get-Command -Syntax {}" \; 2>/dev/null || true
