@@ -1,0 +1,7 @@
+[
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "def _build_markdown_post_payload(content: str) -> str:\n    rows = _build_markdown_post_rows(content)\n    return json.dumps(\n        {\n            \"zh_cn\": {\n                \"content\": rows,\n            }\n        },\n        ensure_ascii=False,\n    )",
+    "replace": "def _build_markdown_post_payload(content: str) -> str:\n    rows = _build_markdown_post_rows(content)\n    return json.dumps(\n        {\n            \"zh_cn\": {\n                \"title\": \"\",\n                \"content\": rows,\n            }\n        },\n        ensure_ascii=False,\n    )"
+  }
+]
