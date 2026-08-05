@@ -2,13 +2,11 @@ display:
   platforms:
     feishu:
       runtime_footer:
-        delivery: status_card
         enabled: true
         fields:
         - model
-        - provider
-        - context
-        style: zh_detailed
+        - context_pct
+        - cwd
       streaming: true
       tool_preview_length: 120
       tool_progress: all
