@@ -1,0 +1,91 @@
+scope:
+  files:
+  - plugins/platforms/feishu/adapter.py
+  - plugins/platforms/feishu/feishu_comment.py
+  - plugins/platforms/feishu/feishu_comment_rules.py
+  - plugins/platforms/feishu/feishu_meeting_invite.py
+  - plugins/platforms/feishu/__init__.py
+allowed_exact:
+- text: Feishu
+  reason: product name
+- text: Lark
+  reason: product name
+- text: Feishu/Lark
+  reason: product names
+- text: Hermes
+  reason: product name
+- text: Typing
+  reason: Feishu reaction type
+- text: CrossMark
+  reason: Feishu reaction type
+- text: OK
+  reason: Feishu reaction type
+- text: NO_REPLY
+  reason: internal sentinel
+- text: ALLOWED
+  reason: internal enum/debug value
+- text: DENIED
+  reason: internal enum/debug value
+- text: Report
+  reason: upload label for non-zh gateway path
+- text: HOME
+  reason: environment variable
+- text: TERMINAL_CWD
+  reason: environment variable
+- text: Feishu / Lark
+  reason: product names
+- text: PID
+  reason: process id abbreviation (English technical term)
+- text: '&gt;'
+  reason: HTML entity for > — must stay as-is
+- text: '&lt;'
+  reason: HTML entity for < — must stay as-is
+- text: '&amp;'
+  reason: HTML entity for & — must stay as-is
+- text: OrderedDict[str, Optional[str]]
+  reason: type annotation, not user-visible
+- text: '[^\w.\- ]'
+  reason: regex character class, not user-visible
+allowed_patterns:
+- pattern: ^[A-Za-z0-9_.:-]+$
+  reason: identifier, enum, extension, model id, or config key
+- pattern: ^/[A-Za-z0-9_./:{}?=&-]+$
+  reason: API path or URL path
+- pattern: ^https?://
+  reason: URL
+- pattern: ^[A-Z0-9_]+$
+  reason: constant or protocol enum
+- pattern: ^[a-z_][a-z0-9_]*(\.[a-z0-9_]+)+$
+  reason: dotted i18n or config key
+- pattern: ^\{[A-Za-z_][A-Za-z0-9_]*\}$
+  reason: format placeholder
+- pattern: ^%[A-Za-z]$
+  reason: printf-style formatter
+- pattern: ^@[A-Za-z0-9_]+$
+  reason: mention marker
+- pattern: ^<[^>]+>$
+  reason: argument placeholder or markup token
+- pattern: ^\(.*\\|.*\\|\\s*\\n\\|.*$
+  reason: markdown regex hint literal, not user-visible
+- pattern: ^content format of the post type is incorrect$
+  reason: target ERROR string matched by regex against Feishu's reply — must stay
+    English
+- pattern: ^Feishu _configure_with_overrides called but original_configure is None$
+  reason: internal programming error, developer-facing
+- pattern: ^Feishu adapter is shutting down; SDK executor unavailable$
+  reason: internal shutdown error, developer-facing
+forbidden_patterns:
+- pattern: Invalid API Key
+  reason: user-facing auth error must be normalized to Chinese
+- pattern: Please provide valid API Key
+  reason: user-facing auth error must be normalized to Chinese
+- pattern: Gateway shutting down
+  reason: lifecycle message must be Chinese in zh mode
+- pattern: Rich text message
+  reason: Feishu placeholder must be Chinese
+- pattern: Rate limit exceeded
+  reason: webhook error must be Chinese
+- pattern: Unsupported media type
+  reason: webhook error must be Chinese
+- pattern: Payload too large
+  reason: webhook error must be Chinese

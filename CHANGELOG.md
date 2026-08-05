@@ -2,6 +2,35 @@
 
 hermes-feishu-zh 的所有重要变更都会记录在此文件。
 
+## [0.3.0] - 2026-08-05
+
+### 重大：适配 Hermes Agent v0.20.0 (2026.8.3)
+
+**背景**：Hermes 从 v0.15.1 升到 v0.20.0，飞书源码从 `gateway/platforms/feishu.py`
+重构为 `plugins/platforms/feishu/{adapter,feishu_comment,feishu_comment_rules,feishu_meeting_invite}.py`。
+原 114 条中文化规则全部指向旧文件，已失效。
+
+### 新增/重写
+- **全新 102 条中文化规则**（`patches/feishu-zh-v20.replacements.json`），适配 v0.20.0 新结构：
+  - `adapter.py` 59 条（连接/发送/上传/审批标签/webhook 错误/登录 QR/SSRF/网关占用等）
+  - `feishu_comment_rules.py` 34 条（CLI 全中文化）
+  - `feishu_meeting_invite.py` 9 条（全新文件的会议邀请文案）
+- 补充旧版遗漏：`_APPROVAL_LABEL_MAP` 的 `deny` 键（→ 已拒绝）
+- 更新审计白名单 `feishu_zh_audit_allowlist.yaml`：适配新正则/类型标注/HTML实体豁免
+- 审计缺口：125 → 0（`translated 24 / allowed 1878 / ignored 140`）
+
+### 适配
+- `install.ps1`：主中文规则指向 v20 规则文件
+- `verify.ps1`：Config 检查移除 v0.20.0 已废弃项（`gateway_locale`/`outbound_format`/`card_mode`），
+  改用「飞书平台实际解析 toolset 含 lark_cli」；`Feishu adapter build` 适配新导入路径
+- `manifest.json`：`source_optional` 路径更新到 v0.20.0 新结构
+
+### 说明
+- adapter-optimization（media mirror / image_input_mode / image routing / auxiliary）
+  在 v0.20.0 已全部被官方原生吸收，**不重复应用**，避免冲突
+- display-plus（工具进度编号/正文 polish）补丁依赖的辅助函数未随迁，v0.20.0 已有原生替代，
+  作为可选增强暂缓，按需再实现
+
 ## [0.2.4] - 2026-05-24
 
 ### 修复

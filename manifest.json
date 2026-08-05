@@ -1,11 +1,11 @@
 {
   "manifest_version": 1,
   "name": "hermes-feishu-zh",
-  "version": "0.2.3",
-  "description": "Hermes Agent 飞书中文化包。114 条中文化规则，覆盖飞书消息、Webhook 错误、CLI 输出、评论系统、媒体失败提示等。",
+  "version": "0.3.0",
+  "description": "Hermes Agent 飞书套件基础包（适配 v0.20.0）。102 条中文化规则，覆盖飞书消息、Webhook 错误、CLI 输出、评论系统、会议邀请、媒体失败提示等。",
   "license": "MIT",
   "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
-  "status": "compatible_on_local_hermes_0.15.1",
+  "status": "compatible_on_local_hermes_0.20.0",
   "target": {
     "product": "Hermes Agent",
     "version_range": ">=0.14.0",
@@ -37,11 +37,11 @@
       "plugins/lark-cli-toolbox"
     ],
     "source_optional": [
-      "hermes-agent/gateway/platforms/feishu.py",
-      "hermes-agent/gateway/platforms/feishu_comment.py",
-      "hermes-agent/gateway/platforms/feishu_comment_rules.py",
-      "hermes-agent/gateway/run.py",
-      "hermes-agent/tools/send_message_tool.py"
+      "hermes-agent/plugins/platforms/feishu/adapter.py",
+      "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+      "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+      "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+      "hermes-agent/gateway/run.py"
     ],
     "audit_assets": [
       "hermes-agent/scripts/feishu_localization_audit.py",

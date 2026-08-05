@@ -9,3 +9,5 @@ __pycache__/
 venv/
 node_modules/
 backups/
+# 本地验证工作产物（副本、备份、临时脚本）不入库
+验证/

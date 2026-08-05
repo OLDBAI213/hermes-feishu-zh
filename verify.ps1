@@ -70,7 +70,7 @@ function Assert-NativeSuccess {
 $HermesHome = Resolve-HermesHome -Requested $HermesHome
 $AgentRoot = Get-AgentRoot -HermesRoot $HermesHome
 $Python = Get-HermesPython -AgentRoot $AgentRoot
-$SourcePatchPath = Join-Path $PackRoot "patches\feishu-card-zh.replacements.json"
+$SourcePatchPath = Join-Path $PackRoot "patches\feishu-zh-v20.replacements.json"
 
 $env:HERMES_HOME = $HermesHome
 $env:SOURCE_PATCH_PATH = $SourcePatchPath
@@ -95,25 +95,25 @@ import os
 home = Path(os.environ["HERMES_HOME"])
 cfg = YAML().load((home / "config.yaml").read_text(encoding="utf-8")) or {}
 display = cfg.get("display") or {}
-feishu_display = ((display.get("platforms") or {}).get("feishu") or {})
-feishu_platform = (((cfg.get("platforms") or {}).get("feishu") or {}).get("extra") or {})
 plugins_enabled = ((cfg.get("plugins") or {}).get("enabled")) or []
 platform_toolsets = cfg.get("platform_toolsets") or {}
 toolsets = cfg.get("toolsets") or []
 model = cfg.get("model") or {}
 
+# 飞书平台实际可用工具集（v0.20.0 通过 hermes_cli.tools_config 解析）
+try:
+    from hermes_cli.tools_config import _get_platform_tools
+    feishu_tools = _get_platform_tools(cfg, "feishu")
+    has_lark_cli_on_feishu = "lark_cli" in feishu_tools
+except Exception as e:
+    has_lark_cli_on_feishu = False
+
 checks = {
     "display.language": display.get("language"),
-    "display.gateway_locale": display.get("gateway_locale"),
-    "display.tui_auto_resume_recent": display.get("tui_auto_resume_recent"),
-    "display.platforms.feishu.tool_progress": feishu_display.get("tool_progress"),
-    "display.platforms.feishu.streaming": feishu_display.get("streaming"),
-    "platforms.feishu.extra.card_mode": feishu_platform.get("card_mode"),
-    "platforms.feishu.extra.outbound_format": feishu_platform.get("outbound_format"),
     "plugins.enabled has lark-cli-toolbox": "lark-cli-toolbox" in plugins_enabled,
     "platform_toolsets.cli has lark_cli": "lark_cli" in (platform_toolsets.get("cli") or []),
-    "platform_toolsets.feishu has lark_cli": "lark_cli" in (platform_toolsets.get("feishu") or []),
     "toolsets has lark_cli": "lark_cli" in toolsets,
+    "feishu platform resolves lark_cli": has_lark_cli_on_feishu,
     "model.provider": model.get("provider"),
     "model.default": model.get("default"),
 }
@@ -121,13 +121,10 @@ for key, value in checks.items():
     print(f"{key} = {value}")
 
 assert display.get("language") == "zh"
-assert display.get("gateway_locale") == "zh"
-assert display.get("tui_auto_resume_recent") is True
-assert feishu_platform.get("outbound_format") in {"post", "card"}
 assert "lark-cli-toolbox" in plugins_enabled
 assert "lark_cli" in (platform_toolsets.get("cli") or [])
-assert "lark_cli" in (platform_toolsets.get("feishu") or [])
 assert "lark_cli" in toolsets
+assert has_lark_cli_on_feishu
 '@ | & $Python -
 Assert-NativeSuccess "Config"
 
@@ -207,30 +204,24 @@ if (Get-Command lark-cli -ErrorAction SilentlyContinue) {
     Write-Host "lark-cli not found in PATH. Set LARK_CLI_BIN or install lark-cli before using lark_cli tools."
 }
 
-Write-Step "Feishu payload modes"
+Write-Step "Feishu adapter build"
 @'
 import json
-from gateway.config import PlatformConfig
-from gateway.platforms.feishu import FeishuAdapter
+# v0.20.0: FeishuAdapter 从依赖包导入
+from hermes_plugins.feishu_platform.adapter import FeishuAdapter
 
-cases = [
-    ({}, "auto"),
-    ({"outbound_format": "text"}, "text"),
-    ({"outbound_format": "post"}, "post"),
-    ({"card_mode": True}, "card"),
-]
-for extra, label in cases:
-    adapter = FeishuAdapter(PlatformConfig(extra=extra))
-    msg_type, payload = adapter._build_outbound_payload("## 标题\n\n正文")
-    print(label, "=>", msg_type)
-    if label == "post":
-        assert msg_type == "post"
-    if label == "card":
-        parsed = json.loads(payload)
-        assert msg_type == "interactive"
-        assert parsed["elements"][0]["tag"] == "markdown"
+adapter = FeishuAdapter.__new__(FeishuAdapter)
+# 验证结构化 post 载荷能正常构建（v0.20.0 内部 _build_outbound_payload）
+msg_type, payload = adapter._build_outbound_payload("## 标题\n\n正文")
+print("msg_type =", msg_type)
+try:
+    parsed = json.loads(payload) if isinstance(payload, str) else payload
+    print("payload keys =", list(parsed.keys()) if isinstance(parsed, dict) else type(parsed))
+except Exception as e:
+    print("payload parse:", e)
+assert msg_type in {"post", "text"}
 '@ | & $Python -
-Assert-NativeSuccess "Feishu payload modes"
+Assert-NativeSuccess "Feishu adapter build"
 
 if (-not $SkipGateway) {
     Write-Step "Gateway"

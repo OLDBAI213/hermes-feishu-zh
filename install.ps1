@@ -543,9 +543,8 @@ if (-not $NoLarkCliToolbox) {
 }
 
 if (-not $NoSourceZh) {
-    Write-Step "Apply Feishu Chinese source labels"
-    Apply-Replacements -JsonPath (Join-Path $PackRoot "patches\feishu-card-zh.replacements.json") -RootPath $HermesHome -BackupDir $backupDir
-
+    Write-Step "Apply Feishu Chinese source labels (v0.20.0)"
+    Apply-Replacements -JsonPath (Join-Path $PackRoot "patches\feishu-zh-v20.replacements.json") -RootPath $HermesHome -BackupDir $backupDir
     Write-Step "Install Feishu localization audit"
     Install-AuditAssets -HermesRoot $HermesHome -BackupDir $backupDir
 }

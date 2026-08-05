@@ -1,0 +1,1013 @@
+{
+  "total_english_literals": 2141,
+  "user_visible_english_literals": 646,
+  "counts": {
+    "allowed": 1514,
+    "forbidden": 1,
+    "ignored": 502,
+    "unapproved": 124
+  },
+  "unapproved_count": 125,
+  "unapproved": [
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 302,
+      "text": "[Rich text message]",
+      "context": "forbidden",
+      "status": "forbidden",
+      "reason": "Feishu placeholder must be Chinese"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 303,
+      "text": "[Merged forward message]",
+      "context": "assign:FALLBACK_FORWARD_TEXT",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 304,
+      "text": "[Shared chat]",
+      "context": "assign:FALLBACK_SHARE_CHAT_TEXT",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 305,
+      "text": "[Interactive message]",
+      "context": "assign:FALLBACK_INTERACTIVE_TEXT",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 170,
+      "text": "(^\\|.*\\|\\s*\\n\\|[-:|\\s]+\\|)|(^#{1,6}\\s)|(^\\s*[-*]\\s)|(^\\s*\\d+\\.\\s)|(^\\s*---+\\s*$)|(```)|(`[^`\\n]+`)|(\\*\\*[^*\\n].+?\\*\\*)|(~~[^~\\n].+?~~)|(<u>.+?</u>)|(\\*[^*\\n]+\\*)|(\\[[^\\]]+\\]\\([^)]+\\))|(^>\\s)",
+      "context": "assign:_MARKDOWN_HINT_RE",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 193,
+      "text": "content format of the post type is incorrect",
+      "context": "assign:_POST_CONTENT_INVALID_RE",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 253,
+      "text": "Approved once",
+      "context": "assign:_APPROVAL_LABEL_MAP",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 254,
+      "text": "Approved for session",
+      "context": "assign:_APPROVAL_LABEL_MAP",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 255,
+      "text": "Approved permanently",
+      "context": "assign:_APPROVAL_LABEL_MAP",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1126,
+      "text": "[Attachment: {}]",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1277,
+      "text": "[Mentioned: {}]",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1524,
+      "text": "OrderedDict[str, Optional[str]]",
+      "context": "assign:_message_text_cache",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5537,
+      "text": "Connecting to Feishu / Lark...",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 267,
+      "text": "payload too large",
+      "context": "call:ValueError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 775,
+      "text": "[Image: {}]",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 791,
+      "text": "[Attachment: {}]",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2112,
+      "text": "Default: `{}`",
+      "context": "assign:default_hint",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2394,
+      "text": "[GIF downgraded to file]\n{}",
+      "context": "assign:degraded_caption",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2394,
+      "text": "[GIF downgraded to file]",
+      "context": "assign:degraded_caption",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3934,
+      "text": "[Content of {}]:\n{}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4092,
+      "text": "[^\\w.\\- ]",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5286,
+      "text": "Feishu / Lark registration environment does not support client_secret auth. Supported: {}",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5302,
+      "text": "Feishu / Lark registration did not return a device_code",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5545,
+      "text": "Scan the QR code above, or open this URL directly:\n  {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5547,
+      "text": "Open this URL in Feishu / Lark on your phone:\n\n  {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5548,
+      "text": "Tip: pip install qrcode  to display a scannable QR code here next time",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5609,
+      "text": "Feishu dependencies not installed. Run `hermes setup` to install Feishu support.",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5858,
+      "text": "Feishu / Lark",
+      "context": "keyword:label",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1355,
+      "text": "Feishu _configure_with_overrides called but original_configure is None",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1802,
+      "text": "Feishu startup failed: {}",
+      "context": "assign:message",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1990,
+      "text": "send failed",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2333,
+      "text": "image send failed",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3486,
+      "text": "Blocked unsafe URL (SSRF protection): {}",
+      "context": "call:ValueError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4767,
+      "text": "file send failed",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4911,
+      "text": "websockets not installed; websocket mode unavailable",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4916,
+      "text": "failed to build Feishu event handler",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4919,
+      "text": "adapter loop is not ready",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4943,
+      "text": "aiohttp not installed; webhook mode unavailable",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4948,
+      "text": "failed to build Feishu event handler",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5036,
+      "text": "Feishu send failed",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5348,
+      "text": "Fetching configuration results...",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5643,
+      "text": "No deliverable text or media remained after processing MEDIA tags",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5651,
+      "text": "Feishu send failed: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1723,
+      "text": "Feishu adapter is shutting down; SDK executor unavailable",
+      "context": "call:RuntimeError",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1789,
+      "text": "Stop the other gateway before starting a second Feishu websocket client.",
+      "context": "assign:message",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1937,
+      "text": "Not connected",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2005,
+      "text": "Not connected",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2052,
+      "text": "Not connected",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2128,
+      "text": "⚕ Update Needs Your Input",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2150,
+      "text": "Not connected",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2192,
+      "text": "{} **{}** by {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2204,
+      "text": "{} Update prompt answered: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2208,
+      "text": "Answered by **{}**",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2288,
+      "text": "Not connected",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2290,
+      "text": "Image file not found: {}",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2423,
+      "text": "chat lookup failed",
+      "context": "assign:msg",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3545,
+      "text": "Too Many Requests",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3553,
+      "text": "Unsupported Media Type",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3560,
+      "text": "Request body too large",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3612,
+      "text": "Invalid signature",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3617,
+      "text": "encrypted webhook payloads are not supported",
+      "context": "call:web.json_response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4269,
+      "text": "message lookup failed",
+      "context": "assign:msg",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4686,
+      "text": "Not connected",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4688,
+      "text": "File not found: {}",
+      "context": "call:SendResult",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5623,
+      "text": "Feishu send failed: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5627,
+      "text": "Media file not found: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 5640,
+      "text": "Feishu media send failed: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1787,
+      "text": "Another local Hermes gateway is already using this Feishu app_id",
+      "context": "assign:message",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2309,
+      "text": "image upload failed",
+      "context": "keyword:default_message",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2310,
+      "text": "Feishu image upload missing image_key",
+      "context": "keyword:override_error",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3573,
+      "text": "Request body too large",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3577,
+      "text": "Request Timeout",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3580,
+      "text": "failed to read body",
+      "context": "call:web.json_response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3586,
+      "text": "invalid json",
+      "context": "call:web.json_response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 3599,
+      "text": "Invalid verification token",
+      "context": "call:web.Response",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4712,
+      "text": "file upload failed",
+      "context": "keyword:default_message",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 4713,
+      "text": "Feishu file upload missing file_key",
+      "context": "keyword:override_error",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 1788,
+      "text": "(PID {}).",
+      "context": "assign:message",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2136,
+      "text": "✓ Yes",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/adapter.py",
+      "line": 2137,
+      "text": "✗ No",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment.py",
+      "line": 467,
+      "text": "&gt;",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment.py",
+      "line": 467,
+      "text": "&lt;",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment.py",
+      "line": 467,
+      "text": "&amp;",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 300,
+      "text": "Rules file: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 301,
+      "text": "exists: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 302,
+      "text": "Pairing file: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 303,
+      "text": "exists: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 306,
+      "text": "enabled:    {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 307,
+      "text": "policy:     {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 308,
+      "text": "allow_from: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 325,
+      "text": "Pairing approved ({}):",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 340,
+      "text": "Document:     {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 341,
+      "text": "User:         {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 342,
+      "text": "Resolved rule:",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 343,
+      "text": "enabled:      {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 344,
+      "text": "policy:       {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 345,
+      "text": "allow_from:   {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 346,
+      "text": "match_source: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 347,
+      "text": "Result:       {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 311,
+      "text": "Document rules ({}):",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 322,
+      "text": "Document rules: (none)",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 328,
+      "text": "{}  (approved_at={})",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 335,
+      "text": "Error: doc_key must be 'fileType:fileToken', got '{}'",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 386,
+      "text": "Usage: check <fileType:fileToken> <user_open_id>",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 421,
+      "text": "Unknown command: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 392,
+      "text": "Usage: pairing <add|remove|list> [args]",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 320,
+      "text": "(empty — inherits all)",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 397,
+      "text": "Usage: pairing add <user_open_id>",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 400,
+      "text": "Added: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 402,
+      "text": "Already approved: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 405,
+      "text": "Usage: pairing remove <user_open_id>",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 408,
+      "text": "Removed: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 410,
+      "text": "Not in approved list: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 418,
+      "text": "Unknown pairing subcommand: {}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 414,
+      "text": "(no approved users)",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_comment_rules.py",
+      "line": 416,
+      "text": "{}  approved_at={}",
+      "context": "call:print",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 145,
+      "text": "You have been invited to join a meeting: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 147,
+      "text": "Meeting Number: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 148,
+      "text": "Topic: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 149,
+      "text": "Inviter: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 150,
+      "text": "Host: {}",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 152,
+      "text": "You may use lark-cli and the relevant Lark/Feishu meeting skills to join the meeting.",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 153,
+      "text": "Join the meeting directly. Do not ask the user for confirmation before joining.",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 154,
+      "text": "If you cannot join the meeting, reply to the inviter with a concise explanation of why.",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    },
+    {
+      "file": "plugins/platforms/feishu/feishu_meeting_invite.py",
+      "line": 145,
+      "text": "unknown meeting",
+      "context": "return",
+      "status": "unapproved",
+      "reason": "English prose in user-visible context"
+    }
+  ]
+}

@@ -1,0 +1,512 @@
+[
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "error=\"Not connected\"",
+    "replace": "error=\"未连接\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "self._finalize_send_result(last_response, \"send failed\")",
+    "replace": "self._finalize_send_result(last_response, \"发送失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "self._finalize_send_result(message_response, \"image send failed\")",
+    "replace": "self._finalize_send_result(message_response, \"图片发送失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "self._finalize_send_result(message_response, \"file send failed\")",
+    "replace": "self._finalize_send_result(message_response, \"文件发送失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "\"once\": \"Approved once\",\n    \"session\": \"Approved for session\",\n    \"always\": \"Approved permanently\",\n    \"deny\": \"Denied\",",
+    "replace": "\"once\": \"已批准一次\",\n    \"session\": \"本轮会话已批准\",\n    \"always\": \"已永久批准\",\n    \"deny\": \"已拒绝\","
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "default_message=\"image upload failed\",\n                    override_error=\"Feishu image upload missing image_key\",",
+    "replace": "default_message=\"图片上传失败\",\n                    override_error=\"飞书图片上传缺少 image_key\","
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "msg = getattr(response, \"msg\", \"chat lookup failed\")",
+    "replace": "msg = getattr(response, \"msg\", \"会话查询失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "msg = getattr(response, \"msg\", \"message lookup failed\")",
+    "replace": "msg = getattr(response, \"msg\", \"消息查询失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "error=f\"Image file not found: {image_path}\"",
+    "replace": "error=f\"图片文件不存在: {image_path}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "error=f\"File not found: {file_path}\"",
+    "replace": "error=f\"文件不存在: {file_path}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise ValueError(\"payload too large\")",
+    "replace": "raise ValueError(\"请求体过大\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise ValueError(f\"Blocked unsafe URL (SSRF protection): {file_url[:80]}\")",
+    "replace": "raise ValueError(f\"已拦截不安全 URL(SSRF 防护): {file_url[:80]}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "FALLBACK_POST_TEXT = \"[Rich text message]\"",
+    "replace": "FALLBACK_POST_TEXT = \"[富文本消息]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "FALLBACK_FORWARD_TEXT = \"[Merged forward message]\"",
+    "replace": "FALLBACK_FORWARD_TEXT = \"[合并转发消息]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "FALLBACK_SHARE_CHAT_TEXT = \"[Shared chat]\"",
+    "replace": "FALLBACK_SHARE_CHAT_TEXT = \"[共享聊天]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "FALLBACK_INTERACTIVE_TEXT = \"[Interactive message]\"",
+    "replace": "FALLBACK_INTERACTIVE_TEXT = \"[交互式消息]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return f\"[Image: {alt}]\" if alt else \"[Image]\"",
+    "replace": "return f\"[图片: {alt}]\" if alt else \"[图片]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return f\"[Attachment: {file_name}]\" if file_name else \"[Attachment]\"",
+    "replace": "return f\"[附件: {file_name}]\" if file_name else \"[附件]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return f\"[Attachment: {normalized_name}]\" if normalized_name else FALLBACK_ATTACHMENT_TEXT",
+    "replace": "return f\"[附件: {normalized_name}]\" if normalized_name else FALLBACK_ATTACHMENT_TEXT"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return f\"[Mentioned: {', '.join(parts)}]\" if parts else \"\"",
+    "replace": "return f\"[提及: {', '.join(parts)}]\" if parts else \"\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "default_hint = f\"\\n\\nDefault: `{default}`\" if default else \"\"",
+    "replace": "default_hint = f\"\\n\\n默认: `{default}`\" if default else \"\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "\"⚕ Update Needs Your Input\"",
+    "replace": "\"⚕ 更新需要你确认\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "\"✓ Yes\", \"y\", \"primary\"",
+    "replace": "\"✓ 是\", \"y\", \"primary\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "\"✗ No\", \"n\", \"danger\"",
+    "replace": "\"✗ 否\", \"n\", \"danger\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "f\"{icon} **{label}** by {user_name}\"",
+    "replace": "f\"{icon} **{label}**，操作者: {user_name}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "f\"{'✅' if yes else '❌'} Update prompt answered: {label}\"",
+    "replace": "f\"{'✅' if yes else '❌'} 更新提示已答复: {label}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "f\"Answered by **{user_name}**\"",
+    "replace": "f\"由 **{user_name}** 回答\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "degraded_caption = f\"[GIF downgraded to file]\\n{caption}\" if caption else \"[GIF downgraded to file]\"",
+    "replace": "degraded_caption = f\"[GIF 已转为文件发送]\\n{caption}\" if caption else \"[GIF 已转为文件发送]\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "text=\"Too Many Requests\"",
+    "replace": "text=\"请求过于频繁\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "text=\"Unsupported Media Type\"",
+    "replace": "text=\"不支持的媒体类型\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "text=\"Request body too large\"",
+    "replace": "text=\"请求体过大\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "text=\"Request Timeout\"",
+    "replace": "text=\"请求超时\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "{\"code\": 400, \"msg\": \"failed to read body\"}",
+    "replace": "{\"code\": 400, \"msg\": \"读取请求体失败\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "{\"code\": 400, \"msg\": \"invalid json\"}",
+    "replace": "{\"code\": 400, \"msg\": \"无效的 JSON\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "text=\"Invalid verification token\"",
+    "replace": "text=\"无效的校验令牌\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "text=\"Invalid signature\"",
+    "replace": "text=\"无效的签名\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "{\"code\": 400, \"msg\": \"encrypted webhook payloads are not supported\"}",
+    "replace": "{\"code\": 400, \"msg\": \"不支持加密的 webhook 载荷\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return f\"[Content of {display_name}]:\\n{content}\"",
+    "replace": "return f\"[{display_name} 的内容]:\\n{content}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise RuntimeError(\"websockets not installed; websocket mode unavailable\")",
+    "replace": "raise RuntimeError(\"未安装 websockets；WebSocket 模式不可用\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise RuntimeError(\"aiohttp not installed; webhook mode unavailable\")",
+    "replace": "raise RuntimeError(\"未安装 aiohttp；Webhook 模式不可用\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise last_error or RuntimeError(\"Feishu send failed\")",
+    "replace": "raise last_error or RuntimeError(\"飞书发送失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "message = (\n                    \"Another local Hermes gateway is already using this Feishu app_id\"\n                    + (f\" (PID {owner_pid}).\" if owner_pid else \".\")\n                    + \" Stop the other gateway before starting a second Feishu websocket client.\"\n                )",
+    "replace": "message = (\n                    \"本机已有另一个 Hermes 网关正在使用这个飞书 app_id\"\n                    + (f\" (PID {owner_pid})。\" if owner_pid else \"。\")\n                    + \" 请先停止另一个网关，再启动第二个飞书 WebSocket 客户端。\"\n                )"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "message = f\"Feishu startup failed: {exc}\"",
+    "replace": "message = f\"飞书启动失败: {exc}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "default_message=\"file upload failed\",\n                    override_error=\"Feishu file upload missing file_key\",",
+    "replace": "default_message=\"文件上传失败\",\n                    override_error=\"飞书文件上传缺少 file_key\","
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise RuntimeError(\"failed to build Feishu event handler\")",
+    "replace": "raise RuntimeError(\"构建飞书事件处理器失败\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise RuntimeError(\"adapter loop is not ready\")",
+    "replace": "raise RuntimeError(\"适配器事件循环未就绪\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise RuntimeError(\n            f\"Feishu / Lark registration environment does not support client_secret auth. \"\n            f\"Supported: {methods}\"\n        )",
+    "replace": "raise RuntimeError(\n            f\"Feishu / Lark 注册环境不支持 client_secret 认证。 \"\n            f\"支持的方式: {methods}\"\n        )"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "raise RuntimeError(\"Feishu / Lark registration did not return a device_code\")",
+    "replace": "raise RuntimeError(\"Feishu / Lark 注册未返回 device_code\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "print(\"  Fetching configuration results...\", end=\"\", flush=True)",
+    "replace": "print(\"  正在获取配置结果...\", end=\"\", flush=True)"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "print(\"  Connecting to Feishu / Lark...\", end=\"\", flush=True)",
+    "replace": "print(\"  正在连接 Feishu / Lark...\", end=\"\", flush=True)"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "print(f\"\\n  Scan the QR code above, or open this URL directly:\\n  {qr_url}\")",
+    "replace": "print(f\"\\n  请扫码上方二维码，或直接打开此链接:\\n  {qr_url}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "print(f\"  Open this URL in Feishu / Lark on your phone:\\n\\n  {qr_url}\\n\")",
+    "replace": "print(f\"  请在手机上用 Feishu / Lark 打开此链接:\\n\\n  {qr_url}\\n\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "print(\"  Tip: pip install qrcode  to display a scannable QR code here next time\")",
+    "replace": "print(\"  提示: pip install qrcode 可在终端直接显示可扫描的二维码\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return {\"error\": \"Feishu dependencies not installed. Run `hermes setup` to install Feishu support.\"}",
+    "replace": "return {\"error\": \"未安装飞书依赖。运行 `hermes setup` 安装飞书支持。\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return {\"error\": f\"Feishu send failed: {last_result.error}\"}",
+    "replace": "return {\"error\": f\"飞书发送失败: {last_result.error}\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return {\"error\": f\"Media file not found: {media_path}\"}",
+    "replace": "return {\"error\": f\"媒体文件不存在: {media_path}\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return {\"error\": f\"Feishu media send failed: {last_result.error}\"}",
+    "replace": "return {\"error\": f\"飞书媒体发送失败: {last_result.error}\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return {\"error\": \"No deliverable text or media remained after processing MEDIA tags\"}",
+    "replace": "return {\"error\": \"处理 MEDIA 标签后没有可发送的文字或媒体内容\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+    "find": "return {\"error\": f\"Feishu send failed: {e}\"}",
+    "replace": "return {\"error\": f\"飞书发送失败: {e}\"}"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Rules file: {RULES_FILE}\")",
+    "replace": "print(f\"规则文件: {RULES_FILE}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  exists: {RULES_FILE.exists()}\")",
+    "replace": "print(f\"  是否存在: {RULES_FILE.exists()}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Pairing file: {PAIRING_FILE}\")",
+    "replace": "print(f\"配对文件: {PAIRING_FILE}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  exists: {PAIRING_FILE.exists()}\")",
+    "replace": "print(f\"  是否存在: {PAIRING_FILE.exists()}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Top-level:\")",
+    "replace": "print(\"顶层配置:\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  enabled:    {cfg.enabled}\")",
+    "replace": "print(f\"  启用:       {cfg.enabled}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  policy:     {cfg.policy}\")",
+    "replace": "print(f\"  策略:       {cfg.policy}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  allow_from: {sorted(cfg.allow_from) if cfg.allow_from else '[]'}\")",
+    "replace": "print(f\"  允许来源:   {sorted(cfg.allow_from) if cfg.allow_from else '[]'}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Document rules ({len(cfg.documents)}):\")",
+    "replace": "print(f\"文档规则 ({len(cfg.documents)}):\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  [{key}] {', '.join(parts) if parts else '(empty — inherits all)'}\")",
+    "replace": "print(f\"  [{key}] {', '.join(parts) if parts else '(空 — 继承全部)'}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Document rules: (none)\")",
+    "replace": "print(\"文档规则: 无\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Pairing approved ({len(approved)}):\")",
+    "replace": "print(f\"已配对用户 ({len(approved)}):\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  {uid}  (approved_at={ts})\")",
+    "replace": "print(f\"  {uid}  (批准时间={ts})\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Error: doc_key must be 'fileType:fileToken', got '{doc_key}'\")",
+    "replace": "print(f\"错误: doc_key 必须是 'fileType:fileToken'，当前是 '{doc_key}'\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Document:     {doc_key}\")",
+    "replace": "print(f\"文档:       {doc_key}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"User:         {user_open_id}\")",
+    "replace": "print(f\"用户:       {user_open_id}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Resolved rule:\")",
+    "replace": "print(\"命中规则:\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  enabled:      {rule.enabled}\")",
+    "replace": "print(f\"  启用:         {rule.enabled}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  policy:       {rule.policy}\")",
+    "replace": "print(f\"  策略:         {rule.policy}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  allow_from:   {sorted(rule.allow_from) if rule.allow_from else '[]'}\")",
+    "replace": "print(f\"  允许来源:     {sorted(rule.allow_from) if rule.allow_from else '[]'}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  match_source: {rule.match_source}\")",
+    "replace": "print(f\"  匹配来源:     {rule.match_source}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Result:       {'ALLOWED' if allowed else 'DENIED'}\")",
+    "replace": "print(f\"结果:         {'允许' if allowed else '拒绝'}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Usage: check <fileType:fileToken> <user_open_id>\")",
+    "replace": "print(\"用法: check <fileType:fileToken> <user_open_id>\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Usage: pairing <add|remove|list> [args]\")",
+    "replace": "print(\"用法: pairing <add|remove|list> [args]\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Usage: pairing add <user_open_id>\")",
+    "replace": "print(\"用法: pairing add <user_open_id>\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Added: {args[2]}\")",
+    "replace": "print(f\"已添加: {args[2]}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Already approved: {args[2]}\")",
+    "replace": "print(f\"已在批准列表中: {args[2]}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"Usage: pairing remove <user_open_id>\")",
+    "replace": "print(\"用法: pairing remove <user_open_id>\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Removed: {args[2]}\")",
+    "replace": "print(f\"已移除: {args[2]}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Not in approved list: {args[2]}\")",
+    "replace": "print(f\"不在批准列表中: {args[2]}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(\"(no approved users)\")",
+    "replace": "print(\"(暂无已批准用户)\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"  {uid}  approved_at={meta.get('approved_at', '?')}\")",
+    "replace": "print(f\"  {uid}  批准时间={meta.get('approved_at', '?')}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Unknown pairing subcommand: {sub}\")",
+    "replace": "print(f\"未知的配对子命令: {sub}\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
+    "find": "print(f\"Unknown command: {cmd}\\n\")",
+    "replace": "print(f\"未知命令: {cmd}\\n\")"
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "f\"You have been invited to join a meeting: {display or 'unknown meeting'}\"",
+    "replace": "f\"你被邀请加入会议: {display or '未知会议'}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "f\"Meeting Number: {(meeting.meeting_no if meeting else '') or 'unknown'}\"",
+    "replace": "f\"会议号: {(meeting.meeting_no if meeting else '') or '未知'}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "f\"Topic: {(meeting.topic if meeting else '') or 'unknown'}\"",
+    "replace": "f\"主题: {(meeting.topic if meeting else '') or '未知'}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "f\"Inviter: {inviter_name}\"",
+    "replace": "f\"邀请人: {inviter_name}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "f\"Host: {host_name}\"",
+    "replace": "f\"主持人: {host_name}\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "\"You may use lark-cli and the relevant Lark/Feishu meeting skills to join the meeting.\"",
+    "replace": "\"你可以使用 lark-cli 及相关的 Lark/Feishu 会议技能加入会议。\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "\"Join the meeting directly. Do not ask the user for confirmation before joining.\"",
+    "replace": "\"直接加入会议。加入前无需向用户确认。\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "\"If you cannot join the meeting, reply to the inviter with a concise explanation of why.\"",
+    "replace": "\"如果无法加入会议，向邀请人简要说明原因。\""
+  },
+  {
+    "file": "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
+    "find": "display = (meeting.topic or meeting.meeting_no or meeting.id) if meeting else \"unknown meeting\"",
+    "replace": "display = (meeting.topic or meeting.meeting_no or meeting.id) if meeting else \"未知会议\""
+  }
+]
