@@ -56,18 +56,21 @@ ai/feishu-zh-v20/
 - [x] Step 1：迁移「可复用旧翻译」55 处到 v0.20.0 新文件（改 file 路径 + 更新上下文）
 - [x] Step 2：新增翻译 67 处（会议邀请、登录 QR、webhook 错误、fallback 占位符等）
 - [x] Step 3：补 `_APPROVAL_LABEL_MAP.deny` 等遗漏 + 处理误报（allowlist 豁免）
-- [ ] Step 4：装回 lark-cli-toolbox 插件 + 配置项适配（config.yaml 的 outbound_format/gateway_locale 等）
-- [ ] Step 5：适配 install.ps1 / verify.ps1 / manifest.json 到新路径
-- [x] Step 6：应用 102 条规则到真实 Hermes 源码（备份）+ 跑 verify.ps1 全量验证，输出通过证据
-- [ ] Step 7：更新 CHANGELOG / manifest 版本号，提交回仓库
+- [x] Step 4：lark-cli 安装 + lark-cli-toolbox 插件装回 + config 适配 + user-default 绑定授权
+- [x] Step 5：适配 install.ps1 / verify.ps1 / manifest.json 到 v0.20.0 新路径
+- [x] Step 6：应用 102 条规则到真实 Hermes 源码（备份）+ verify.ps1 全量通过
+- [x] Step 7：更新 CHANGELOG / manifest 版本号（v0.3.0），提交推送回 GitHub
 
-> **进度说明（2026-08-05）**：
-> - Step 0-3 已在验证副本上完成并验证——102 条中文化规则构建 + 应用后审计缺口 125→0。
-> - **Step 6 已完成**：102 条规则已应用到真实 Hermes 源码（adapter 59 + comment_rules 34 + meeting_invite 9），
->   语法通过、审计 unapproved=0、gateway 以中文源码稳定运行、`hermes send --to feishu` 中文消息发送成功。
-> - Step 4 部分：已确认 `outbound_format`/`card_mode`/`gateway_locale` 在 v0.20.0 已废弃（新版飞书 adapter 不读取），
->   不强行迁移；lark-cli-toolbox 插件依赖的 `lark-cli` 命令当前系统未安装（另需手动装）。
-> - Step 5/7 待续：install.ps1/verify.ps1/manifest 仍指向旧路径，尚未适配。
+> **最终进度（2026-08-05 22:00，全部完成）**：
+> - **中文化 102 条**已应用到真实 Hermes 源码（adapter 59 + comment_rules 34 + meeting_invite 9），
+>   语法通过、审计 unapproved=0。
+> - **显示优化**：display.platforms.feishu config（streaming/tool_progress/tool_preview_length/runtime_footer）
+>   + post payload title 增强，已在真实环境生效。
+> - **lark-cli**：v1.0.83 安装 + lark-cli-toolbox 插件启用（12工具）+ user-default 绑定 + 设备授权完成
+>   （用户 焦富桐），doctor 全绿。
+> - **兼容优化**：adapter-optimization/media/don-image-routing 等能力 v0.20.0 已原生覆盖，验证后不重复打补丁。
+> - **verify.ps1 全量通过**：`hermes-feishu-zh verification passed.`（gateway running, feishu connected）。
+> - **仓库**：v0.3.0（README/manifest/CHANGELOG 已对齐），GitHub 已推送（最新 commit `b31ef38`）。
 
 ## 五、铁律（来自 AGENTS.md）
 
