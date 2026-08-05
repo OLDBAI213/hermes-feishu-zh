@@ -1,23 +1,25 @@
 # hermes-feishu-zh
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Hermes Agent](https://img.shields.io/badge/Hermes_Agent-%3E%3D0.14.0-9B59B6.svg)](https://github.com/NousResearch/hermes-agent)
+[![Hermes Agent](https://img.shields.io/badge/Hermes_Agent-v0.20.0-9B59B6.svg)](https://github.com/NousResearch/hermes-agent)
 [![Feishu](https://img.shields.io/badge/Feishu-%E4%B8%AD%E6%96%87-4ECDC4.svg)](https://github.com/OLDBAI213/hermes-feishu-zh)
-[![Version](https://img.shields.io/badge/version-0.2.3-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh/releases)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](https://github.com/OLDBAI213/hermes-feishu-zh/releases)
 
-> **让 Hermes Agent 在飞书里说中文。** 一键安装，114 条中文化规则，不改你现有配置。
+> **让 Hermes Agent 在飞书里说中文。** 一键安装，102 条中文化规则，适配 Hermes Agent v0.20.0，不改你现有配置。
 
 ---
 
-## 2026-05-29 复审结论
+## 2026-08-05 适配结论
 
-当前 `E:\AI\hermes\hermes-agent` 已更新到 Hermes Agent v0.15.1。基础配置、插件、源码中文化规则和 Feishu 出站模式已按当前 Hermes 重新适配。
+本包已适配 **Hermes Agent v0.20.0 (2026.8.3)**。Hermes 飞书源码从旧的 `gateway/platforms/feishu.py`
+重构为 `plugins/platforms/feishu/{adapter,feishu_comment,feishu_comment_rules,feishu_meeting_invite}.py`，
+原 114 条规则已重写为 **102 条 v0.20.0 兼容规则**。
 
-- `verify.ps1` 已修复 PowerShell 误报：Python 子检查失败时现在会直接失败，不再继续打印“verification passed”。
-- 当前复审命令：`pwsh -ExecutionPolicy Bypass -File E:\AI\github\hermes-feishu-zh\verify.ps1 -HermesHome E:\AI\hermes -SkipGateway`。
-- 当前结果：配置、插件、`lark-cli doctor`、114 条源码中文化规则、飞书用户可见英文审计、`text/post/card` 出站模式检查全部通过。
-
-结论：本包在老白本机 Hermes v0.15.1 上可用，等级 B。还不能升到 A，因为没有补真实飞书 PC/手机截图验收，也还没有把审计脚本作为通用安装内容发布。
+- `verify.ps1` 已适配 v0.20.0：移除废弃配置检查（`gateway_locale`/`outbound_format`/`card_mode`），
+  改用「飞书平台实际解析 toolset」验证。
+- 当前结果：中文化 102 条全部应用、飞书用户可见英文审计 `unapproved=0`、Config/Plugin/lark-cli 检查通过。
+- 审计脚本已作为标准安装内容落位（`scripts/feishu_localization_audit.py` + `locales/feishu_zh_audit_allowlist.yaml`）。
+- 适配优化（media mirror / image_input_mode / image routing / media_refs）已被 v0.20.0 原生吸收，不重复打补丁。
 
 ---
 
@@ -27,7 +29,7 @@ Hermes Agent 默认在飞书里输出英文 — 错误信息看不懂、界面�
 
 ## 解决方案
 
-**hermes-feishu-zh** 是一个社区扩展，定位是"飞书中文化包"。它把 114 处飞书输出整理成中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
+**hermes-feishu-zh** 是一个社区扩展，定位是"飞书中文化包"。它把 102 处飞书输出整理成中文，同时提供稳定的 `post` 输出格式和 `lark-cli` 工具箱。
 
 ### 安装前 vs 安装后
 
@@ -61,9 +63,9 @@ iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/boots
 
 ## 功能特性
 
-### 🔤 114 条中文化规则
+### 🔤 102 条中文化规则（v0.20.0）
 
-覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统、媒体失败提示、`/usage`、`/resume` 和 `/status` 等用户可见文案。完整列表见 [汉化规则文档](docs/)。
+覆盖飞书消息占位符、Webhook 错误、CLI 输出、评论系统、会议邀请、媒体失败提示、`/usage`、`/resume` 和 `/status` 等用户可见文案。完整列表见 [汉化规则文档](docs/)。
 
 ### 🧾 汉化总账
 
@@ -128,7 +130,7 @@ lark-cli messages send --chat "oc_xxx" --text "你好"
 ## 环境要求
 
 - Windows PowerShell 或 PowerShell 7
-- Hermes Agent >= 0.14.0 已安装
+- Hermes Agent v0.20.0 已安装
 - 飞书 Gateway 已配置
 - 可选：`lark-cli` 已安装（用于工具箱功能）
 

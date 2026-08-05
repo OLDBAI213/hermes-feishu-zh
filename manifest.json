@@ -8,7 +8,7 @@
   "status": "compatible_on_local_hermes_0.20.0",
   "target": {
     "product": "Hermes Agent",
-    "version_range": ">=0.14.0",
+    "version_range": ">=0.20.0",
     "platforms": [
       "windows"
     ]
