@@ -1,0 +1,277 @@
+[
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_header(\"Feishu / Lark\")",
+  "replace": "print_header(\"飞书 / Lark\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(\"Feishu / Lark is already configured.\")",
+  "replace": "print_success(\"飞书 / Lark 已配置。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "if not prompt_yes_no(\"Reconfigure Feishu / Lark?\", False):",
+  "replace": "if not prompt_yes_no(\"重新配置飞书 / Lark？\", False):"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"How would you like to set up Feishu / Lark?\",",
+  "replace": "\"你想如何设置飞书 / Lark？\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Scan QR code to create a new bot automatically (recommended)\",",
+  "replace": "\"扫描二维码自动创建新机器人（推荐）\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Enter existing App ID and App Secret manually\",",
+  "replace": "\"手动输入已有的 App ID 和 App Secret\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(\"Feishu / Lark setup cancelled.\")",
+  "replace": "print_warning(\"飞书 / Lark 设置已取消。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(f\"QR registration failed: {exc}\")",
+  "replace": "print_warning(f\"二维码注册失败: {exc}\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"QR setup did not complete. Continuing with manual input.\")",
+  "replace": "print_info(\"二维码设置未完成。继续手动输入。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Go to https://open.feishu.cn/ (or https://open.larksuite.com/ for Lark)\")",
+  "replace": "print_info(\"前往 https://open.feishu.cn/（Lark 国际版用 https://open.larksuite.com/）\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Create an app, enable the Bot capability, and copy the credentials.\")",
+  "replace": "print_info(\"创建一个应用，开启机器人能力，并复制凭据。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(\"Skipped — Feishu / Lark won't work without an App ID.\")",
+  "replace": "print_warning(\"已跳过 — 没有 App ID，飞书 / Lark 无法工作。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(\"Skipped — Feishu / Lark won't work without an App Secret.\")",
+  "replace": "print_warning(\"已跳过 — 没有 App Secret，飞书 / Lark 无法工作。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "domain_idx = prompt_choice(\"Domain\", [\"feishu (China)\", \"lark (International)\"], 0)",
+  "replace": "domain_idx = prompt_choice(\"区域\", [\"飞书（中国）\", \"Lark（国际版）\"], 0)"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(f\"Credentials verified — bot: {bot_name or 'unnamed'}\")",
+  "replace": "print_success(f\"凭据验证通过 — 机器人: {bot_name or '未命名'}\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(\"Could not verify bot connection. Credentials saved anyway.\")",
+  "replace": "print_warning(\"无法验证机器人连接。凭据已保存。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(f\"Credential verification skipped: {exc}\")",
+  "replace": "print_warning(f\"凭据验证已跳过: {exc}\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Connection mode\",",
+  "replace": "\"连接模式\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"WebSocket (recommended — no public URL needed)\",",
+  "replace": "\"WebSocket（推荐 — 无需公网地址）\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Webhook (requires a reachable HTTP endpoint)\",",
+  "replace": "\"Webhook（需要可访问的 HTTP 端点）\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Webhook defaults: 127.0.0.1:8765/feishu/webhook\")",
+  "replace": "print_info(\"Webhook 默认: 127.0.0.1:8765/feishu/webhook\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Override with FEISHU_WEBHOOK_HOST / FEISHU_WEBHOOK_PORT / FEISHU_WEBHOOK_PATH\")",
+  "replace": "print_info(\"可用 FEISHU_WEBHOOK_HOST / FEISHU_WEBHOOK_PORT / FEISHU_WEBHOOK_PATH 覆盖\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"For signature verification, set FEISHU_ENCRYPT_KEY and FEISHU_VERIFICATION_TOKEN\")",
+  "replace": "print_info(\"如需签名验证，设置 FEISHU_ENCRYPT_KEY 和 FEISHU_VERIFICATION_TOKEN\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(f\"Bot created: {bot_name}\")",
+  "replace": "print_success(f\"机器人已创建: {bot_name}\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"How should direct messages be authorized?\",",
+  "replace": "\"如何授权私信？\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Use DM pairing approval (recommended)\",",
+  "replace": "\"使用私信配对批准（推荐）\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Allow all direct messages\",",
+  "replace": "\"允许所有私信\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Only allow listed user IDs\",",
+  "replace": "\"仅允许指定的用户 ID\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(\"DM pairing enabled.\")",
+  "replace": "print_success(\"私信配对已启用。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Unknown users can request access; approve with `hermes pairing approve`.\")",
+  "replace": "print_info(\"未知用户可以请求访问；用 `hermes pairing approve` 批准。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_warning(\"Open DM access enabled for Feishu / Lark.\")",
+  "replace": "print_warning(\"飞书 / Lark 已开启开放式私信访问。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Allowed user IDs (comma-separated)\", default_allow, password=False",
+  "replace": "\"允许的用户 ID（逗号分隔）\", default_allow, password=False"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(\"Allowlist saved.\")",
+  "replace": "print_success(\"白名单已保存。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"How should group chats be handled?\",",
+  "replace": "\"如何处理群聊？\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Respond only when @mentioned in groups (recommended)\",",
+  "replace": "\"仅在群内被 @ 时回复（推荐）\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "\"Disable group chats\",",
+  "replace": "\"禁用群聊\","
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Group chats enabled (bot must be @mentioned).\")",
+  "replace": "print_info(\"群聊已启用（机器人需被 @ 才会回复）。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Group chats disabled.\")",
+  "replace": "print_info(\"群聊已禁用。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\n        \"Leave blank to clear a previously saved home channel \"\n        \"(cron / notifications).\"\n    )",
+  "replace": "print_info(\n        \"留空可清除之前保存的默认接收聊天 \"\n        \"（定时任务 / 通知）。\"\n    )"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "home_channel = prompt(\"Home chat ID (optional, for cron/notifications)\", password=False).strip()",
+  "replace": "home_channel = prompt(\"默认接收聊天 ID（可选，用于定时任务/通知）\", password=False).strip()"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(f\"Home channel set to {home_channel}\")",
+  "replace": "print_success(f\"默认接收聊天已设为 {home_channel}\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_info(\"Home channel cleared.\")",
+  "replace": "print_info(\"默认接收聊天已清除。\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/adapter.py",
+  "find": "print_success(\"🪽 Feishu / Lark configured!\")",
+  "replace": "print_success(\"🪽 飞书 / Lark 已配置完成！\")"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f'The user added a reply in \"{doc_title}\".'",
+  "replace": "f'用户已在 \"{doc_title}\" 中添加了一条回复。'"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f'Current user comment text: \"{_truncate(target_reply_text)}\"'",
+  "replace": "f'当前用户评论内容: \"{_truncate(target_reply_text)}\"'"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f'Original comment text: \"{_truncate(root_comment_text)}\"'",
+  "replace": "f'原始评论内容: \"{_truncate(root_comment_text)}\"'"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f'Quoted content: \"{_truncate(quote_text, 500)}\"'",
+  "replace": "f'引用内容: \"{_truncate(quote_text, 500)}\"'"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "\"This comment mentioned you (@mention is for routing, not task content).\"",
+  "replace": "\"此评论提及了你（@提及仅用于路由，不是任务内容）。\""
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f\"Document link: {doc_url}\"",
+  "replace": "f\"文档链接: {doc_url}\""
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "\"Current commented document:\"",
+  "replace": "\"当前被评论的文档:\""
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f\"Current comment card timeline ({len(selected)}/{len(timeline)} entries):\"",
+  "replace": "f\"当前评论卡片时间线（{len(selected)}/{len(timeline)} 条）:\""
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f'The user added a comment in \"{doc_title}\".'",
+  "replace": "f'用户已在 \"{doc_title}\" 中添加了一条评论。'"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f'Current user comment text: \"{_truncate(comment_text)}\"'",
+  "replace": "f'当前用户评论内容: \"{_truncate(comment_text)}\"'"
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "\"This is a whole-document comment.\"",
+  "replace": "\"这是一条整篇文档评论。\""
+ },
+ {
+  "file": "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
+  "find": "f\"Whole-document comment timeline ({len(selected)}/{len(timeline)} entries):\"",
+  "replace": "f\"整篇文档评论时间线（{len(selected)}/{len(timeline)} 条）:\""
+ }
+]

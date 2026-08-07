@@ -121,6 +121,8 @@ def test_v20_patch_contains_gateway_status_and_progress_integration() -> None:
     assert "render_status_card" in combined
     assert "__feishu_tool_completed__" in combined
     assert "🧰 执行过程" in combined
+    assert 'tool_name != "clarify"' in combined
+    assert "legacy_find" in PATCH_PATH.read_text(encoding="utf-8")
 
 
 def test_stable_display_config_uses_v20_fields_and_quiet_heartbeat() -> None:
