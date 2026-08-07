@@ -89,14 +89,15 @@ feishu_platform = (((cfg.get("platforms") or {}).get("feishu") or {}).get("extra
 
 checks = [
     ("display.language == zh", display.get("language") == "zh"),
-    ("display.gateway_locale == zh", display.get("gateway_locale") == "zh"),
     ("display.tui_auto_resume_recent == True", display.get("tui_auto_resume_recent") is True),
     ("feishu.streaming == True", feishu_display.get("streaming") is True),
-    ("feishu.tool_progress == new", feishu_display.get("tool_progress") == "new"),
+    ("feishu.tool_progress == all", feishu_display.get("tool_progress") == "all"),
+    ("feishu.realtime_cards == True", feishu_display.get("realtime_cards") is True),
+    ("feishu.tool_progress_grouping == accumulate", feishu_display.get("tool_progress_grouping") == "accumulate"),
     ("feishu.tool_preview_length >= 120", (feishu_display.get("tool_preview_length") or 0) >= 120),
-    ("feishu.runtime_footer.enabled == True", feishu_display.get("runtime_footer", {}).get("enabled") is True),
-    ("feishu.runtime_footer.style == zh_detailed", feishu_display.get("runtime_footer", {}).get("style") == "zh_detailed"),
-    ("feishu.outbound_format in [post, card]", feishu_platform.get("outbound_format") in {"post", "card"}),
+    ("feishu.runtime_footer.enabled == False", feishu_display.get("runtime_footer", {}).get("enabled") is False),
+    ("feishu.long_running_notifications == False", feishu_display.get("long_running_notifications") is False),
+    ("feishu.busy_ack_detail == False", feishu_display.get("busy_ack_detail") is False),
 ]
 
 results = {"pass": 0, "fail": 0}
@@ -223,20 +224,13 @@ from gateway.platforms.feishu import FeishuAdapter
 
 cases = [
     ({}, "auto"),
-    ({"outbound_format": "text"}, "text"),
-    ({"outbound_format": "post"}, "post"),
-    ({"card_mode": True}, "card"),
 ]
 for extra, label in cases:
     try:
         adapter = FeishuAdapter(PlatformConfig(extra=extra))
         msg_type, payload = adapter._build_outbound_payload("## 标题\n\n正文")
         ok = True
-        if label == "post":
-            ok = msg_type == "post"
-        if label == "card":
-            parsed = json.loads(payload)
-            ok = msg_type == "interactive" and parsed["elements"][0]["tag"] == "markdown"
+        ok = msg_type in {"post", "text"}
         print(json.dumps({"check": f"payload mode: {label} => {msg_type}", "status": "PASS" if ok else "FAIL"}))
     except Exception as e:
         print(json.dumps({"check": f"payload mode: {label}", "status": "FAIL", "detail": str(e)}))

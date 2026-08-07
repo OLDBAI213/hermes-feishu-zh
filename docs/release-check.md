@@ -1,8 +1,8 @@
 # 发布检查
 
-上次本地验证：2026-05-29
+本次本地验证：2026-08-07
 
-在 Windows + Hermes Agent v0.15.1 上验证通过。
+目标环境：PowerShell 7 + Hermes Agent v0.20.0 (`1be70d635`)。
 
 已通过的检查：
 
@@ -14,10 +14,14 @@
 - 重复安装不会产生重复配置条目
 - `install.ps1 -Rollback latest` 回滚
 - 回滚后验证
-- `patches/feishu-card-zh.replacements.json` 覆盖 114 条源码汉化规则
+- `patches/feishu-zh-v20.replacements.json` 覆盖 102 条源码汉化规则
+- `patches/display-plus-v20.replacements.json` 覆盖 22 条实时显示规则
+- 状态卡、执行过程卡和最终回复的渲染单元测试通过
+- 隔离安装：22/22 规则应用、Python 编译通过、重复安装幂等、第一次备份回滚恢复
 - `audit/feishu_localization_audit.py` 和 `audit/feishu_zh_audit_allowlist.yaml` 会随安装同步到目标 Hermes
 - 飞书用户可见英文审计通过：`scripts/feishu_localization_audit.py` 的 `unapproved_count = 0`
-- Feishu `outbound_format` / `card_mode` 出站路由验收通过：`auto => post`、`text => text`、`post => post`、`card => interactive`
+- Feishu `realtime_cards=true`、`tool_progress=all`、`tool_progress_grouping=accumulate` 配置检查通过
+- `runtime_footer.enabled=false`、`long_running_notifications=false`、`busy_ack_detail=false` 检查通过
 
 已知说明：
 
@@ -27,12 +31,12 @@
 
 ## 2026-05-29 复审记录
 
-当前 `E:\AI\hermes\hermes-agent` 为 Hermes Agent v0.15.1。
+当前生产 Hermes 目录为 `C:\Users\Administrator\AppData\Local\hermes`；本次仓库验证不直接修改生产目录。
 
 验证命令：
 
 ```powershell
-pwsh -NoProfile -ExecutionPolicy Bypass -File .\verify.ps1 -HermesHome E:\AI\hermes -SkipGateway
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\verify.ps1 -HermesHome <临时 Hermes 副本> -SkipGateway
 ```
 
 结果：

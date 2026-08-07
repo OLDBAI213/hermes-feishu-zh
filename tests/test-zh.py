@@ -22,6 +22,7 @@ from pathlib import Path
 HERMES_HOME = Path(os.environ.get("HERMES_HOME", ""))
 PACK_ROOT = Path(__file__).parent.parent
 PATCH_PATH = PACK_ROOT / "patches" / "feishu-card-zh.replacements.json"
+DISPLAY_PATCH_PATH = PACK_ROOT / "patches" / "display-plus-v20.replacements.json"
 AUDIT_SCRIPT = HERMES_HOME / "hermes-agent" / "scripts" / "feishu_localization_audit.py"
 AUDIT_RULES = HERMES_HOME / "hermes-agent" / "locales" / "feishu_zh_audit_allowlist.yaml"
 
@@ -80,20 +81,20 @@ def test_config():
 
     display = cfg.get("display") or {}
     feishu_display = (display.get("platforms") or {}).get("feishu") or {}
-    feishu_platform = ((cfg.get("platforms") or {}).get("feishu") or {}).get("extra") or {}
     plugins_enabled = (cfg.get("plugins") or {}).get("enabled") or []
     toolsets = cfg.get("toolsets") or []
 
     results = []
     results.append(check("language == zh", display.get("language") == "zh", str(display.get("language"))))
-    results.append(check("gateway_locale == zh", display.get("gateway_locale") == "zh", str(display.get("gateway_locale"))))
     results.append(check("tui_auto_resume_recent == True", display.get("tui_auto_resume_recent") is True, str(display.get("tui_auto_resume_recent"))))
     results.append(check("streaming == True", feishu_display.get("streaming") is True, str(feishu_display.get("streaming"))))
-    results.append(check("tool_progress in [new, all]", feishu_display.get("tool_progress") in {"new", "all"}, str(feishu_display.get("tool_progress"))))
+    results.append(check("tool_progress == all", feishu_display.get("tool_progress") == "all", str(feishu_display.get("tool_progress"))))
+    results.append(check("realtime_cards == True", feishu_display.get("realtime_cards") is True, str(feishu_display.get("realtime_cards"))))
+    results.append(check("tool_progress_grouping == accumulate", feishu_display.get("tool_progress_grouping") == "accumulate", str(feishu_display.get("tool_progress_grouping"))))
     results.append(check("tool_preview_length >= 120", (feishu_display.get("tool_preview_length") or 0) >= 120, str(feishu_display.get("tool_preview_length"))))
-    results.append(check("runtime_footer.enabled == True", feishu_display.get("runtime_footer", {}).get("enabled") is True, str(feishu_display.get("runtime_footer", {}).get("enabled"))))
-    results.append(check("runtime_footer.style == zh_detailed", feishu_display.get("runtime_footer", {}).get("style") == "zh_detailed", str(feishu_display.get("runtime_footer", {}).get("style"))))
-    results.append(check("outbound_format in [post, card]", feishu_platform.get("outbound_format") in {"post", "card"}, str(feishu_platform.get("outbound_format"))))
+    results.append(check("runtime_footer.enabled == False", feishu_display.get("runtime_footer", {}).get("enabled") is False, str(feishu_display.get("runtime_footer", {}).get("enabled"))))
+    results.append(check("long_running_notifications == False", feishu_display.get("long_running_notifications") is False, str(feishu_display.get("long_running_notifications"))))
+    results.append(check("busy_ack_detail == False", feishu_display.get("busy_ack_detail") is False, str(feishu_display.get("busy_ack_detail"))))
     results.append(check("lark-cli-toolbox in plugins", "lark-cli-toolbox" in plugins_enabled, str("lark-cli-toolbox" in plugins_enabled)))
     results.append(check("lark_cli in toolsets", "lark_cli" in toolsets, str("lark_cli" in toolsets)))
 

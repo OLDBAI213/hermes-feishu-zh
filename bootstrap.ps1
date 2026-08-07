@@ -8,6 +8,11 @@
 
 $ErrorActionPreference = "Stop"
 
+$pwsh = Get-Command pwsh -ErrorAction SilentlyContinue
+if (-not $pwsh) {
+    throw "需要 PowerShell 7（pwsh）。请先安装 PowerShell 7，再重新运行引导脚本。"
+}
+
 $RepoUrl = "https://github.com/OLDBAI213/hermes-feishu-zh.git"
 $TempDir = Join-Path $env:TEMP "hermes-feishu-zh-$(Get-Date -Format 'yyyyMMddHHmmss')"
 
@@ -30,7 +35,7 @@ try {
     
     # 执行安装
     $installScript = Join-Path $TempDir "install.ps1"
-    & $installScript @args
+    & $pwsh.Source -NoProfile -ExecutionPolicy Bypass -File $installScript @args
     
 } catch {
     Write-Host "❌ 安装失败: $_" -ForegroundColor Red

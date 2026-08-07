@@ -14,7 +14,7 @@ Hermes 已于 2026-08-05 从 v0.18.2 升级到 v0.20.0。飞书实现从旧路�
 （adapter.py + feishu_comment.py + feishu_comment_rules.py + feishu_meeting_invite.py）。
 原汉化包 114 条替换规则全部指向旧文件，已全部失效。
 
-本次任务：**在原有汉化包基础上，把飞书中文化移植/适配到 v0.20.0 新结构，并做优化。**
+本次任务：**在原有汉化包基础上，把飞书中文化移植/适配到 v0.20.0 新结构，并完成真实事件驱动的实时显示。**
 
 ## 二、结构说明
 
@@ -29,9 +29,10 @@ ai/feishu-zh-v20/
 │       ├── REPORT_v20.0.md     （完整缺口审计 125 处）
 │       ├── V20_RESEARCH.md     （研判清单：可复用/需新翻/误报）
 │       └── v20_audit.json      （机器可读 JSON）
-├── patches/                ← 替换规则（改造中）
-│   ├── feishu-card-zh.replacements.json     （114 条，需迁移到 v0.20.0）
-│   └── feishu-display-upgrade.replacements.json （显示增强）
+├── patches/                ← 配置和替换规则
+│   ├── feishu-zh-v20.replacements.json       （102 条中文化）
+│   ├── display-plus-v20.replacements.json    （22 条实时显示）
+│   └── display-plus/feishu_realtime_display.py（纯渲染模块）
 ├── plugins/lark-cli-toolbox/  ← 需装回 v0.20.0
 ├── install.ps1 / verify.ps1   ← 需适配新路径
 └── tests/                   ← 测试（先测试后写码）
@@ -60,17 +61,22 @@ ai/feishu-zh-v20/
 - [x] Step 5：适配 install.ps1 / verify.ps1 / manifest.json 到 v0.20.0 新路径
 - [x] Step 6：应用 102 条规则到真实 Hermes 源码（备份）+ verify.ps1 全量通过
 - [x] Step 7：更新 CHANGELOG / manifest 版本号（v0.3.0），提交推送回 GitHub
+- [x] Step 8：按真实工具事件实现状态卡、执行过程卡和独立最终回复
+- [x] Step 9：补齐安装器幂等、CRLF 匹配、回滚和包级验证
 
-> **最终进度（2026-08-05 22:00，全部完成）**：
+> **当前进度（2026-08-07，仓库分支 `codex/feishu-display-cards`）**：
 > - **中文化 102 条**已应用到真实 Hermes 源码（adapter 59 + comment_rules 34 + meeting_invite 9），
 >   语法通过、审计 unapproved=0。
-> - **显示优化**：display.platforms.feishu config（streaming/tool_progress/tool_preview_length/runtime_footer）
->   + post payload title 增强，已在真实环境生效。
+> - **实时显示**：一张状态卡持续编辑，一张执行过程卡累积真实工具开始/完成/失败事件，最终回复独立发送。
+> - **显示配置**：`realtime_cards=true`、`tool_progress=all`、`tool_progress_grouping=accumulate`；
+>   footer、长任务提醒和 busy ack 细节均关闭，避免重复气泡。
+> - **真实数据约束**：模型/provider/context 由当前 agent 快照提供；没有 token 统计时不显示上下文。
 > - **lark-cli**：v1.0.83 安装 + lark-cli-toolbox 插件启用（12工具）+ user-default 绑定 + 设备授权完成
 >   （用户 焦富桐），doctor 全绿。
 > - **兼容优化**：adapter-optimization/media/don-image-routing 等能力 v0.20.0 已原生覆盖，验证后不重复打补丁。
-> - **verify.ps1 全量通过**：`hermes-feishu-zh verification passed.`（gateway running, feishu connected）。
-> - **仓库**：v0.3.0（README/manifest/CHANGELOG 已对齐），GitHub 已推送（最新 commit `b31ef38`）。
+> - **隔离安装验证**：22/22 规则、Python 编译、重复安装幂等、第一次备份回滚全部通过。
+> - **聚焦测试**：12 passed；包级检查和 PowerShell 7 语法检查通过。
+> - **生产状态**：本轮尚未修改生产 Hermes，也未启动网关；需仓库推送验证绿后再应用。
 
 ## 五、铁律（来自 AGENTS.md）
 

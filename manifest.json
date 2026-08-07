@@ -1,8 +1,8 @@
 {
   "manifest_version": 1,
   "name": "hermes-feishu-zh",
-  "version": "0.3.0",
-  "description": "Hermes Agent 飞书套件基础包（适配 v0.20.0）。102 条中文化规则，覆盖飞书消息、Webhook 错误、CLI 输出、评论系统、会议邀请、媒体失败提示等。",
+  "version": "0.4.0",
+  "description": "Hermes Agent v0.20.0 飞书中文化与实时显示包。提供 102 条中文化规则、真实运行状态卡和单卡累积工具进度。",
   "license": "MIT",
   "homepage": "https://github.com/OLDBAI213/hermes-feishu-zh",
   "status": "compatible_on_local_hermes_0.20.0",
@@ -16,11 +16,11 @@
   "profiles": {
     "stable": {
       "default": true,
-      "description": "合并中文化配置、安装 lark-cli 工具箱、使用飞书 post 输出格式、应用中文化和基础适配规则。"
+      "description": "合并中文化与安静实时显示配置，安装 lark-cli 工具箱，并应用 v0.20.0 中文化和实时卡片补丁。"
     },
     "enhanced": {
       "default": false,
-      "description": "在稳定版基础上，增加可选的交互式卡片输出和增强飞书显示源码补丁；发布前必须重新跑 verify。"
+      "description": "在稳定版基础上增加更长的工具预览；实时状态卡和执行过程卡在两个配置中均启用。"
     }
   },
   "entrypoints": {
@@ -41,7 +41,9 @@
       "hermes-agent/plugins/platforms/feishu/feishu_comment.py",
       "hermes-agent/plugins/platforms/feishu/feishu_comment_rules.py",
       "hermes-agent/plugins/platforms/feishu/feishu_meeting_invite.py",
-      "hermes-agent/gateway/run.py"
+      "hermes-agent/gateway/run.py",
+      "hermes-agent/gateway/turn_context.py",
+      "hermes-agent/gateway/feishu_realtime_display.py"
     ],
     "audit_assets": [
       "hermes-agent/scripts/feishu_localization_audit.py",
@@ -58,12 +60,13 @@
     ]
   },
   "verify": {
-    "command": "powershell -ExecutionPolicy Bypass -File .\\verify.ps1",
+    "command": "pwsh -NoProfile -File .\\verify.ps1",
     "checks": [
       "Hermes CLI resolves",
       "display.language == zh",
-      "display.gateway_locale == zh",
-      "Feishu outbound_format/card_mode routes text, post, and interactive payloads correctly",
+      "Feishu realtime_cards is enabled and tool progress accumulates",
+      "Runtime footer, long-running bubbles, and detailed busy acknowledgements are disabled",
+      "Realtime renderer exists and all v0.20.0 display patch markers are present",
       "lark-cli-toolbox plugin loads",
       "lark_cli tools are registered",
       "Feishu source Chinese labels and compact mobile markers are present",

@@ -7,7 +7,7 @@
 发布后将 `<owner>` 替换为 GitHub 仓库所有者：
 
 ```powershell
-iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/install.ps1)
+iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/bootstrap.ps1)
 ```
 
 ## 本地安装
@@ -15,7 +15,7 @@ iex (irm https://raw.githubusercontent.com/OLDBAI213/hermes-feishu-zh/main/insta
 从本仓库：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
 ## 参数选项
@@ -23,44 +23,44 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 稳定模式（默认）：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Profile stable
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -Profile stable
 ```
 
 增强模式：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Profile enhanced
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -Profile enhanced
 ```
 
 仅验证：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -VerifyOnly
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -VerifyOnly
 ```
 
 回滚：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -Rollback latest
 ```
 
 安装后重启 Gateway：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -RestartGateway
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -RestartGateway
 ```
 
 卸载：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
+pwsh -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -Uninstall
 ```
 
 ## 模式说明
 
-`stable` 是默认模式。它会合并配置、安装 `lark-cli-toolbox` 插件，并使用飞书 `post` 输出格式。
+`stable` 是默认模式。它会合并中文化与实时显示配置、安装 `lark-cli-toolbox` 插件，并应用状态卡与执行过程卡补丁。
 
-`enhanced` 会额外补丁 Hermes 飞书源码，让普通回复也能使用交互式卡片输出。仅在你接受 Hermes 升级后可能需要重新打补丁的情况下使用。
+`enhanced` 与 stable 使用同一套实时卡片补丁，只把工具预览长度从 120 提高到 180。
 
 ## lark-cli 绑定
 

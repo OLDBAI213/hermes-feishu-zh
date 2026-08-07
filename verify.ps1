@@ -71,9 +71,11 @@ $HermesHome = Resolve-HermesHome -Requested $HermesHome
 $AgentRoot = Get-AgentRoot -HermesRoot $HermesHome
 $Python = Get-HermesPython -AgentRoot $AgentRoot
 $SourcePatchPath = Join-Path $PackRoot "patches\feishu-zh-v20.replacements.json"
+$DisplayPatchPath = Join-Path $PackRoot "patches\display-plus-v20.replacements.json"
 
 $env:HERMES_HOME = $HermesHome
 $env:SOURCE_PATCH_PATH = $SourcePatchPath
+$env:DISPLAY_PATCH_PATH = $DisplayPatchPath
 $scripts = Join-Path $AgentRoot "venv\Scripts"
 if (-not (Test-Path -LiteralPath $scripts)) {
     $scripts = Join-Path $AgentRoot ".venv\Scripts"
@@ -95,6 +97,7 @@ import os
 home = Path(os.environ["HERMES_HOME"])
 cfg = YAML().load((home / "config.yaml").read_text(encoding="utf-8")) or {}
 display = cfg.get("display") or {}
+feishu_display = (display.get("platforms") or {}).get("feishu") or {}
 plugins_enabled = ((cfg.get("plugins") or {}).get("enabled")) or []
 platform_toolsets = cfg.get("platform_toolsets") or {}
 toolsets = cfg.get("toolsets") or []
@@ -116,6 +119,12 @@ checks = {
     "feishu platform resolves lark_cli": has_lark_cli_on_feishu,
     "model.provider": model.get("provider"),
     "model.default": model.get("default"),
+    "feishu.realtime_cards": feishu_display.get("realtime_cards"),
+    "feishu.tool_progress": feishu_display.get("tool_progress"),
+    "feishu.tool_progress_grouping": feishu_display.get("tool_progress_grouping"),
+    "feishu.runtime_footer.enabled": (feishu_display.get("runtime_footer") or {}).get("enabled"),
+    "feishu.long_running_notifications": feishu_display.get("long_running_notifications"),
+    "feishu.busy_ack_detail": feishu_display.get("busy_ack_detail"),
 }
 for key, value in checks.items():
     print(f"{key} = {value}")
@@ -125,6 +134,12 @@ assert "lark-cli-toolbox" in plugins_enabled
 assert "lark_cli" in (platform_toolsets.get("cli") or [])
 assert "lark_cli" in toolsets
 assert has_lark_cli_on_feishu
+assert feishu_display.get("realtime_cards") is True
+assert feishu_display.get("tool_progress") == "all"
+assert feishu_display.get("tool_progress_grouping") == "accumulate"
+assert (feishu_display.get("runtime_footer") or {}).get("enabled") is False
+assert feishu_display.get("long_running_notifications") is False
+assert feishu_display.get("busy_ack_detail") is False
 '@ | & $Python -
 Assert-NativeSuccess "Config"
 
@@ -153,6 +168,32 @@ if missing:
 raise SystemExit(1 if missing else 0)
 '@ | & $Python -
 Assert-NativeSuccess "Source Chinese labels"
+
+Write-Step "Realtime Feishu display assets"
+@'
+import json
+import os
+from pathlib import Path
+
+home = Path(os.environ["HERMES_HOME"])
+patch_path = Path(os.environ["DISPLAY_PATCH_PATH"])
+renderer = home / "hermes-agent" / "gateway" / "feishu_realtime_display.py"
+if not renderer.exists():
+    print(f"missing renderer: {renderer}")
+    raise SystemExit(1)
+items = json.loads(patch_path.read_text(encoding="utf-8-sig"))
+missing = []
+for idx, item in enumerate(items, 1):
+    target = home / item["file"]
+    if not target.exists() or item["replace"] not in target.read_text(encoding="utf-8-sig"):
+        missing.append(f"{idx}: {item['file']}")
+print("display_rule_count =", len(items))
+print("display_missing =", len(missing))
+if missing:
+    print("\n".join(missing))
+raise SystemExit(1 if missing else 0)
+'@ | & $Python -
+Assert-NativeSuccess "Realtime Feishu display assets"
 
 Write-Step "Feishu localization audit"
 $AuditScript = Join-Path $AgentRoot "scripts\feishu_localization_audit.py"

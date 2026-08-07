@@ -237,12 +237,16 @@ function Apply-Replacements {
         }
 
         $text = Get-Content -LiteralPath $target -Raw -Encoding UTF8
-        if ($text.Contains($item.replace)) {
+        # Patch rules use LF so they also match Hermes files checked out with CRLF.
+        $lineEnding = if ($text.Contains("`r`n")) { "`r`n" } else { "`n" }
+        $normalizedText = $text -replace "`r`n", "`n"
+        if ($normalizedText.Contains($item.replace)) {
             $applied++
             continue
         }
-        if ($text.Contains($item.find)) {
-            $text = $text.Replace($item.find, $item.replace)
+        if ($normalizedText.Contains($item.find)) {
+            $normalizedText = $normalizedText.Replace($item.find, $item.replace)
+            $text = $normalizedText.Replace("`n", $lineEnding)
             Set-Content -LiteralPath $target -Value $text -Encoding UTF8 -NoNewline
             $applied++
             continue
@@ -288,6 +292,28 @@ function Install-AuditAssets {
         Copy-Item -LiteralPath $source -Destination $target -Force
     }
     Write-Host "  Installed Feishu localization audit assets"
+}
+
+function Install-DisplayAssets {
+    param(
+        [string]$HermesRoot,
+        [string]$BackupDir
+    )
+
+    $relativeSource = "patches\display-plus\feishu_realtime_display.py"
+    $relativeTarget = "hermes-agent\gateway\feishu_realtime_display.py"
+    $source = Join-Path $PackRoot $relativeSource
+    $target = Join-Path $HermesRoot $relativeTarget
+    if (-not (Test-Path -LiteralPath $source)) {
+        throw "Realtime display asset missing from package: $source"
+    }
+    $backupName = ($relativeTarget -replace '[\\/]', '__') + ".bak"
+    $backupPath = Join-Path $BackupDir $backupName
+    if ((Test-Path -LiteralPath $target) -and -not (Test-Path -LiteralPath $backupPath)) {
+        Copy-IfExists -Path $target -Destination $backupPath
+    }
+    Copy-Item -LiteralPath $source -Destination $target -Force
+    Write-Host "  Installed Feishu realtime display renderer"
 }
 
 function Get-LatestBackup {
@@ -338,7 +364,8 @@ function Restore-Backup {
 
     foreach ($relative in @(
         "hermes-agent\scripts\feishu_localization_audit.py",
-        "hermes-agent\locales\feishu_zh_audit_allowlist.yaml"
+        "hermes-agent\locales\feishu_zh_audit_allowlist.yaml",
+        "hermes-agent\gateway\feishu_realtime_display.py"
     )) {
         $backupPath = Join-Path $backupDir (($relative -replace '[\\\\/]', '__') + ".bak")
         $target = Join-Path $HermesRoot $relative
@@ -429,6 +456,10 @@ feishu_display.pop("runtime_footer", None)
 feishu_display.pop("interim_assistant_messages", None)
 feishu_display.pop("show_reasoning", None)
 feishu_display.pop("cleanup_progress", None)
+feishu_display.pop("busy_ack_detail", None)
+feishu_display.pop("long_running_notifications", None)
+feishu_display.pop("realtime_cards", None)
+feishu_display.pop("tool_progress_grouping", None)
 
 # Reset feishu platform extra
 feishu_platform = config.get("platforms", {}).get("feishu", {}).get("extra", {})
@@ -459,7 +490,8 @@ print("Config cleaned")
 
     foreach ($relative in @(
         "hermes-agent\scripts\feishu_localization_audit.py",
-        "hermes-agent\locales\feishu_zh_audit_allowlist.yaml"
+        "hermes-agent\locales\feishu_zh_audit_allowlist.yaml",
+        "hermes-agent\gateway\feishu_realtime_display.py"
     )) {
         $target = Join-Path $HermesRoot $relative
         $backupPath = if ($backupDir) {
@@ -549,10 +581,9 @@ if (-not $NoSourceZh) {
     Install-AuditAssets -HermesRoot $HermesHome -BackupDir $backupDir
 }
 
-if ($Profile -eq "enhanced") {
-    Write-Step "Apply enhanced Feishu display patch"
-    Apply-Replacements -JsonPath (Join-Path $PackRoot "patches\feishu-display-upgrade.replacements.json") -RootPath $HermesHome -BackupDir $backupDir
-}
+Write-Step "Install Feishu realtime display"
+Install-DisplayAssets -HermesRoot $HermesHome -BackupDir $backupDir
+Apply-Replacements -JsonPath (Join-Path $PackRoot "patches\display-plus-v20.replacements.json") -RootPath $HermesHome -BackupDir $backupDir
 
 if ($RestartGateway) {
     Write-Step "Restart Gateway"
