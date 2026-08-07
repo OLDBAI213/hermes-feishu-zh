@@ -9,7 +9,7 @@ display:
       long_running_notifications: false
       realtime_cards: true
       runtime_footer:
-        enabled: false
+        enabled: true
         fields:
         - model
         - context_pct
@@ -17,8 +17,7 @@ display:
       show_reasoning: false
       streaming: true
       tool_preview_length: 120
-      tool_progress: all
-      tool_progress_grouping: accumulate
+      tool_progress: new
 platforms:
   feishu:
     enabled: true

@@ -98,7 +98,7 @@ function Set-HermesProcessEnv {
 
 function New-Backup {
     param([string]$HermesRoot)
-    $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+    $stamp = Get-Date -Format "yyyyMMdd-HHmmssfff"
     $backupRoot = Join-Path $HermesRoot "backups"
     $backupDir = Join-Path $backupRoot "$PackageName-$stamp"
     New-Item -ItemType Directory -Force -Path $backupDir | Out-Null
@@ -211,6 +211,33 @@ with config_path.open("w", encoding="utf-8") as f:
     yaml.dump(config, f)
 '@
     $mergeScript | & $Python - $ConfigPath $PatchPath $installLarkText
+}
+
+function Assert-ReplacementsApplicable {
+    param(
+        [string]$JsonPath,
+        [string]$RootPath
+    )
+
+    $items = Get-Content -LiteralPath $JsonPath -Raw | ConvertFrom-Json
+    $missing = @()
+    foreach ($item in $items) {
+        $target = Join-Path $RootPath $item.file
+        if (-not (Test-Path -LiteralPath $target)) {
+            $missing += "$($item.file): file missing"
+            continue
+        }
+        $text = Get-Content -LiteralPath $target -Raw -Encoding UTF8
+        $normalizedText = $text -replace "`r`n", "`n"
+        if (-not $normalizedText.Contains($item.find) -and
+            -not $normalizedText.Contains($item.replace)) {
+            $missing += "$($item.file): marker missing"
+        }
+    }
+    if ($missing.Count -gt 0) {
+        throw "Display patch preflight failed ($($missing.Count) rules):`n$($missing -join "`n")"
+    }
+    Write-Host "  Display patch preflight passed: $($items.Count) rules"
 }
 
 function Apply-Replacements {
@@ -539,6 +566,8 @@ if ($Uninstall) {
 $ConfigPath = Join-Path $HermesHome "config.yaml"
 $EnvPath = Join-Path $HermesHome ".env"
 $PatchPath = Join-Path $PackRoot "patches\$Profile.config.yaml"
+$DisplayPatchPath = Join-Path $PackRoot "patches\display-plus-v20.replacements.json"
+$DisplayAssetPath = Join-Path $PackRoot "patches\display-plus\feishu_realtime_display.py"
 $PluginSourceRoot = Join-Path $PackRoot "plugins\lark-cli-toolbox"
 $PluginTargetRoot = Join-Path $HermesHome "plugins\lark-cli-toolbox"
 
@@ -551,6 +580,8 @@ Write-Host "HermesHome: $HermesHome"
 Write-Host "Profile: $Profile"
 if (-not (Test-Path -LiteralPath $ConfigPath)) { throw "config.yaml not found: $ConfigPath" }
 if (-not (Test-Path -LiteralPath $EnvPath)) { Write-Host "Warning: .env not found: $EnvPath" }
+if (-not (Test-Path -LiteralPath $DisplayAssetPath)) { throw "Realtime display asset missing: $DisplayAssetPath" }
+Assert-ReplacementsApplicable -JsonPath $DisplayPatchPath -RootPath $HermesHome
 
 $backupDir = New-Backup -HermesRoot $HermesHome
 $pluginExistedBefore = Test-Path -LiteralPath $PluginTargetRoot
@@ -583,7 +614,7 @@ if (-not $NoSourceZh) {
 
 Write-Step "Install Feishu realtime display"
 Install-DisplayAssets -HermesRoot $HermesHome -BackupDir $backupDir
-Apply-Replacements -JsonPath (Join-Path $PackRoot "patches\display-plus-v20.replacements.json") -RootPath $HermesHome -BackupDir $backupDir
+Apply-Replacements -JsonPath $DisplayPatchPath -RootPath $HermesHome -BackupDir $backupDir
 
 if ($RestartGateway) {
     Write-Step "Restart Gateway"

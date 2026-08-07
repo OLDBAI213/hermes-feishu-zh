@@ -191,3 +191,18 @@ def test_bootstrap_runs_installer_with_powershell_7() -> None:
 
     assert "Get-Command pwsh" in bootstrap
     assert "& $pwsh.Source" in bootstrap
+
+
+def test_installer_preflights_all_display_rules_before_creating_backup() -> None:
+    installer = (MODULE_PATH.parents[2] / "install.ps1").read_text(encoding="utf-8")
+
+    assert "Assert-ReplacementsApplicable" in installer
+    assert installer.index("Assert-ReplacementsApplicable -JsonPath") < installer.index(
+        "$backupDir = New-Backup"
+    )
+
+
+def test_installer_backup_names_include_milliseconds() -> None:
+    installer = (MODULE_PATH.parents[2] / "install.ps1").read_text(encoding="utf-8")
+
+    assert 'Get-Date -Format "yyyyMMdd-HHmmssfff"' in installer

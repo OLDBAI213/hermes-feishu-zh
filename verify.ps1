@@ -135,11 +135,11 @@ assert "lark_cli" in (platform_toolsets.get("cli") or [])
 assert "lark_cli" in toolsets
 assert has_lark_cli_on_feishu
 assert feishu_display.get("realtime_cards") is True
-assert feishu_display.get("tool_progress") == "all"
-assert feishu_display.get("tool_progress_grouping") == "accumulate"
-assert (feishu_display.get("runtime_footer") or {}).get("enabled") is False
-assert feishu_display.get("long_running_notifications") is False
-assert feishu_display.get("busy_ack_detail") is False
+assert feishu_display.get("tool_progress") == "new"
+assert feishu_display.get("tool_progress_grouping") is None
+assert (feishu_display.get("runtime_footer") or {}).get("enabled") is True
+assert feishu_display.get("long_running_notifications") in (None, False)
+assert feishu_display.get("busy_ack_detail") in (None, False)
 '@ | & $Python -
 Assert-NativeSuccess "Config"
 
