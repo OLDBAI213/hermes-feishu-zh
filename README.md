@@ -9,21 +9,9 @@
 
 ---
 
-## 2026-08-05 适配结论
+## 版本兼容
 
-本包已适配 **Hermes Agent v0.20.0 (2026.8.3)**。Hermes 飞书源码从旧的 `gateway/platforms/feishu.py`
-重构为 `plugins/platforms/feishu/{adapter,feishu_comment,feishu_comment_rules,feishu_meeting_invite}.py`，
-原 114 条规则已重写为 **102 条 v0.20.0 兼容规则**。
-
-- `verify.ps1` 已适配 v0.20.0：移除废弃配置检查（`gateway_locale`/`outbound_format`/`card_mode`），
-  改用「飞书平台实际解析 toolset」验证。
-- 当前结果：中文化 102 条全部应用、飞书用户可见英文审计 `unapproved=0`、Config/Plugin/lark-cli 检查通过。
-- 审计脚本已作为标准安装内容落位（`scripts/feishu_localization_audit.py` + `locales/feishu_zh_audit_allowlist.yaml`）。
-- 飞书实时显示已按 Hermes `1be70d6` 专项适配：一张状态卡持续编辑、一张执行过程卡累积真实工具事件，最终回复独立发送。
-- 模型、服务商和上下文占用从当前 agent 读取；没有真实 token 数据时不显示上下文，不填假值。
-- 适配优化（media mirror / image_input_mode / image routing / media_refs）已被 v0.20.0 原生吸收，不重复打补丁。
-
----
+已适配 **Hermes Agent v0.20.0 (2026.8.3)**。内部适配与验证记录见 `docs/`。
 
 ## 痛点
 
